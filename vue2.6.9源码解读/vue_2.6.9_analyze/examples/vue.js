@@ -1509,7 +1509,7 @@
         }
       }
     }
-    debugger
+    // debugger
   }
 
   function assertObjectType(name, value, vm) {
@@ -1535,7 +1535,7 @@
       checkComponents(child);
     }
 
-    debugger
+    // debugger
     if (typeof child === 'function') {
       child = child.options;
     }
@@ -1548,6 +1548,7 @@
     // but only if it is a raw options object that isn't
     // the result of another mergeOptions call.
     // Only merged options has the _base property.
+    debugger
     if (!child._base) {
       if (child.extends) {
         parent = mergeOptions(parent, child.extends, vm);

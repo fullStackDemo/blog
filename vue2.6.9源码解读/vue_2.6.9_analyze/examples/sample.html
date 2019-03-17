@@ -10,14 +10,36 @@
   <body>
     <div id="app">
       <div v-color="color">{{ message }}</div>
-      <input type="text" placeholder="Hello" v-focus >
+      <input type="text" placeholder="Hello" v-focus>
+      <div class="profile"></div>
     </div>
     <script>
+      //mixins
+      const mixins = {
+        data(){
+          return {
+            mixins: 'mixins'
+          }
+        },
+        created() {
+          this.hello();
+        },
+        methods: {
+          hello(){
+            console.log('mixins hook called');
+          }
+        },
+      }
+
       var app = new Vue({
         el: '#app',
         data: {
           message: '88',
-          color:'red'
+          color:'red',
+        },
+        created(){
+          console.log('component hook called');
+          
         },
         props:{
           name: {
@@ -37,9 +59,20 @@
             console.log(binding); 
             el.style.color = binding.value;
           }
-        }
+        },
+        mixins: [mixins]
       })
-      
+      //extend
+      const Profile = Vue.extend({
+        data:function(){
+          return {
+            name: 'alex'
+          }
+        },
+        props:['age'],
+        template:'<div>subclass: {{name}} {{age}}</div>'
+      });
+      new Profile().$mount('.profile')
     </script>
   </body>
 </html>

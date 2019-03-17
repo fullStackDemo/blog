@@ -183,7 +183,8 @@ export function mergeOptions (
     checkComponents(child)
   }
 
-  //child === {el, data, props} 如果不是Object, 则走下面
+  //第一次child === {el, data, props} 如果不是Object, 则走下面
+  //如果 vue.extend 扩展子类组件的时候 type 就是function
   if (typeof child === 'function') {
     child = child.options
   }
@@ -220,6 +221,7 @@ export function mergeOptions (
     }
     
     ===格式化后===
+    
     directives:{
       //object
       focus: {
@@ -246,6 +248,8 @@ export function mergeOptions (
   // but only if it is a raw options object that isn't
   // the result of another mergeOptions call.
   // Only merged options has the _base property.
+  
+  //只有合并过的options才有_base, 初始化对象才可以有以下处理
   if (!child._base) {
     if (child.extends) {
       parent = mergeOptions(parent, child.extends, vm)
