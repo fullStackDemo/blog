@@ -97,6 +97,8 @@ Vue.prototype._init = function (options?: Object) {
 `vm._uid` vue 给当前的 vm 赋予了唯一的 `_uid` ，然后设置`vue._isVue`(监听对象变化时过滤vm)。
 `options._isComponent`在内部创建子组件的时候才是`true`，目前例子中走`else`里面的逻辑。`mergeOptions`是用来合并两个对象，并且对数据做了一定的操作，不只是`Object.assign`的简单合并。
 
+### `resolveConstructorOptions`
+
 `resolveConstructorOptions`方法在`Vue.extend`中做了详细的解释，它的作用是合并构造器及构造器父级上定义的`options`。
 
 ~~~js
@@ -128,6 +130,8 @@ export function resolveConstructorOptions (Ctor: Class<Component>) {
 
 `Ctor == vm.constructor == Vue对象`，`ctor.options`正是我们在`src/core/index.js`里面`initGlobalApi(Vue)`产生的，代码如下在`src/core/global-api/index.js`中：
 
+### `Ctor.options == Vue.options`
+
 ~~~js
  Vue.options = Object.create(null)
  // ASSET_TYPES = [
@@ -157,6 +161,8 @@ so, `Ctor.options` 如图
 
 ![](./images/ctor.png)
 
+
+`Ctor.super`是在调用`Vue.extend`时，才会添加的属性，这里先直接跳过。所以`mergeOptions`的第一个参数就是上面的`Ctor.options`，第二个参数是我们传入的`options`，第三个参数是当前对象`vm`。
 
 
 
