@@ -1434,6 +1434,7 @@
    * Object-based format.
    */
   function normalizeProps(options, vm) {
+    // debugger
     var props = options.props;
     if (!props) { return }
     var res = {};
@@ -1473,6 +1474,7 @@
   function normalizeInject(options, vm) {
     var inject = options.inject;
     if (!inject) { return }
+    debugger
     var normalized = options.inject = {};
     if (Array.isArray(inject)) {
       for (var i = 0; i < inject.length; i++) {
@@ -1507,6 +1509,7 @@
         }
       }
     }
+    debugger
   }
 
   function assertObjectType(name, value, vm) {
@@ -1532,6 +1535,7 @@
       checkComponents(child);
     }
 
+    debugger
     if (typeof child === 'function') {
       child = child.options;
     }
@@ -5027,7 +5031,7 @@
 
   function resolveConstructorOptions(Ctor) {
     var options = Ctor.options;
-    debugger
+    // debugger
     if (Ctor.super) {
       var superOptions = resolveConstructorOptions(Ctor.super);
       var cachedSuperOptions = Ctor.superOptions;

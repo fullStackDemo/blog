@@ -32,7 +32,7 @@ function Vue (options) {
 ~~~
 
 	
-### `this._init`
+## `this._init`
 
 ~~~js
 //this._init
@@ -97,7 +97,7 @@ Vue.prototype._init = function (options?: Object) {
 `vm._uid` vue 给当前的 vm 赋予了唯一的 `_uid` ，然后设置`vue._isVue`(监听对象变化时过滤vm)。
 `options._isComponent`在内部创建子组件的时候才是`true`，目前例子中走`else`里面的逻辑。`mergeOptions`是用来合并两个对象，并且对数据做了一定的操作，不只是`Object.assign`的简单合并。
 
-### `resolveConstructorOptions`
+## `resolveConstructorOptions`
 
 `resolveConstructorOptions`方法在`Vue.extend`中做了详细的解释，它的作用是合并构造器及构造器父级上定义的`options`。
 
@@ -163,6 +163,117 @@ so, `Ctor.options` 如图
 
 
 `Ctor.super`是在调用`Vue.extend`时，才会添加的属性，这里先直接跳过。所以`mergeOptions`的第一个参数就是上面的`Ctor.options`，第二个参数是我们传入的`options`，第三个参数是当前对象`vm`。
+
+## `mergeOptions`
+
+`mergeOptions`是`Vue`中处理属性的合并策略的
+
+~~~js
+/**
+ * Merge two option objects into a new one.
+ * Core utility used in both instantiation and inheritance.
+ */
+export function mergeOptions (
+  parent: Object,
+  child: Object,
+  vm?: Component
+): Object {
+  if (process.env.NODE_ENV !== 'production') {
+  	 //如果有options.components, 判断组件是否合法
+    checkComponents(child)
+  }
+
+  //child === {el, data, props} 如果不是Object, 则走下面
+  if (typeof child === 'function') {
+    child = child.options
+  }
+
+  /**
+  * 格式化 props
+  * 只能是 Array or Object
+  * props: [propName] 
+  * or
+  * props: {propName:{handle:function(), deep: Boolean}}
+  */
+  normalizeProps(child, vm)
+  
+  /**
+  * 格式化 inject
+  * 
+  */
+  normalizeInject(child, vm)
+  
+  /**
+  * 格式化指令 directive
+  * directives:{
+      //object
+      focus: {
+        inserted: function(el){
+          el.focus()
+        }
+      },
+      //function
+      color: function(el, binding){
+        console.log(binding); 
+        el.style.color = binding.value;
+      }
+    }
+    
+    ===格式化后===
+    directives:{
+      //object
+      focus: {
+        inserted: function(el){
+          el.focus()
+        }
+      },
+      //function
+      color: {
+      	bind:function(el, binding){
+    		console.log(binding); 
+    		el.style.color = binding.value;
+      	},
+      	update:function(el, binding){
+    		console.log(binding); 
+    		el.style.color = binding.value;
+      	},
+      }
+    }
+  */
+  normalizeDirectives(child)
+
+  // Apply extends and mixins on the child options,
+  // but only if it is a raw options object that isn't
+  // the result of another mergeOptions call.
+  // Only merged options has the _base property.
+  if (!child._base) {
+    if (child.extends) {
+      parent = mergeOptions(parent, child.extends, vm)
+    }
+    if (child.mixins) {
+      for (let i = 0, l = child.mixins.length; i < l; i++) {
+        parent = mergeOptions(parent, child.mixins[i], vm)
+      }
+    }
+  }
+
+  const options = {}
+  let key
+  for (key in parent) {
+    mergeField(key)
+  }
+  for (key in child) {
+    if (!hasOwn(parent, key)) {
+      mergeField(key)
+    }
+  }
+  function mergeField (key) {
+    const strat = strats[key] || defaultStrat
+    options[key] = strat(parent[key], child[key], vm, key)
+  }
+  return options
+}
+~~~
 
 
 

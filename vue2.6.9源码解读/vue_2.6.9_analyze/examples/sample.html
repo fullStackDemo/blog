@@ -9,15 +9,37 @@
   </head>
   <body>
     <div id="app">
-      {{ message }}
+      <div v-color="color">{{ message }}</div>
+      <input type="text" placeholder="Hello" v-focus >
     </div>
     <script>
       var app = new Vue({
         el: '#app',
         data: {
-          message: '88'
+          message: '88',
+          color:'red'
+        },
+        props:{
+          name: {
+            handler: function(){},
+            deep: true
+          },
+        },
+        directives:{
+          //object
+          focus: {
+            inserted: function(el){
+              el.focus()
+            }
+          },
+          //function
+          color: function(el, binding){
+            console.log(binding); 
+            el.style.color = binding.value;
+          }
         }
       })
+      
     </script>
   </body>
 </html>
