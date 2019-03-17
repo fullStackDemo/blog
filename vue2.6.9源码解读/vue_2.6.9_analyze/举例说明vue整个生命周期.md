@@ -94,6 +94,70 @@ Vue.prototype._init = function (options?: Object) {
 }
 ~~~
 
+`vm._uid` vue 给当前的 vm 赋予了唯一的 `_uid` ，然后设置`vue._isVue`(监听对象变化时过滤vm)。
+`options._isComponent`在内部创建子组件的时候才是`true`，目前例子中走`else`里面的逻辑。`mergeOptions`是用来合并两个对象，并且对数据做了一定的操作，不只是`Object.assign`的简单合并。
+
+`resolveConstructorOptions`方法在`Vue.extend`中做了详细的解释，它的作用是合并构造器及构造器父级上定义的`options`。
+
+~~~js
+export function resolveConstructorOptions (Ctor: Class<Component>) {
+  let options = Ctor.options;
+  //有super属性，说明是Ctor是通过`Vue.extend()`创建的子类
+  if (Ctor.super) {
+    const superOptions = resolveConstructorOptions(Ctor.super)
+    const cachedSuperOptions = Ctor.superOptions
+    if (superOptions !== cachedSuperOptions) {
+      // super option changed,
+      // need to resolve new options.
+      Ctor.superOptions = superOptions
+      // check if there are any late-modified/attached options (#4976)
+      const modifiedOptions = resolveModifiedOptions(Ctor)
+      // update base extend options
+      if (modifiedOptions) {
+        extend(Ctor.extendOptions, modifiedOptions)
+      }
+      options = Ctor.options = mergeOptions(superOptions, Ctor.extendOptions)
+      if (options.name) {
+        options.components[options.name] = Ctor
+      }
+    }
+  }
+  return options
+}
+~~~
+
+`Ctor == vm.constructor == Vue对象`，`ctor.options`正是我们在`src/core/index.js`里面`initGlobalApi(Vue)`产生的，代码如下在`src/core/global-api/index.js`中：
+
+~~~js
+ Vue.options = Object.create(null)
+ // ASSET_TYPES = [
+ // 'component',
+ // 'directive',
+ // 'filter'
+ // ]
+
+  //Vue.options.components | Vue.options.directivea | Vue.options.filters
+  ASSET_TYPES.forEach(type => {
+    Vue.options[type + 's'] = Object.create(null)
+  })
+
+  // this is used to identify the "base" constructor to extend all plain-object
+  // components with in Weex's multi-instance scenarios.
+  
+  //Vue.options._base 等于本身
+  Vue.options._base = Vue
+  
+  //builtInComponents == keepAlive
+  //Vue.options.components.KeepAlive
+  extend(Vue.options.components, builtInComponents)
+  
+~~~
+
+so, `Ctor.options` 如图
+
+![](./images/ctor.png)
+
+
 
 
 
