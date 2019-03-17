@@ -1261,7 +1261,7 @@
     childVal,
     vm
   ) {
-    debugger
+    // debugger
     if (!vm) {
       if (childVal && typeof childVal !== 'function') {
         warn(
@@ -1573,7 +1573,6 @@
       options[key] = strat(parent[key], child[key], vm, key);
     }
     console.log('config', config);
-    debugger
     return options
   }
 
@@ -4979,7 +4978,7 @@
           ctor: vm.constructor,
           resolveConstructorOptions: resolveConstructorOptions(vm.constructor),
           options,
-          vm
+          $options: vm.$options
         });
       }
       /* istanbul ignore else */

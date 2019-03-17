@@ -416,6 +416,26 @@ function mergeDataOrFn(
 ~~~
 这里`vm`且`data`都不为空，所以会走到 else if，返回的是`mergedInstanceDataFn`方法。关于`mergedInstanceDataFn`方法，我们都知道，子组件中定义`data`时，必须是一个函数，这里简单的判断了是函数就执行，不是就返回自身的值。然后通过`mergeData`去合并，其实就是递归把`defaultData`合并到`instanceData`，并观察。
 
+~~~js
+
+vue.$options:
+
+	components: {}
+	created: [ƒ]
+	data: ƒ mergedInstanceDataFn()
+	directives: {focus: {…}, color: {…}}
+	el: "#app"
+	filters: {}
+	props: {name: {…}}
+	render: ƒ anonymous( )
+	staticRenderFns: []
+	_base: ƒ Vue(options)
+	_propKeys: ["name"]
+	__proto__: Object
+	
+~~~
+
+
 
 
 
