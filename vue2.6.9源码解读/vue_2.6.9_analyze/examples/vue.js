@@ -1535,7 +1535,6 @@
       checkComponents(child);
     }
 
-    // debugger
     if (typeof child === 'function') {
       child = child.options;
     }
@@ -1548,7 +1547,6 @@
     // but only if it is a raw options object that isn't
     // the result of another mergeOptions call.
     // Only merged options has the _base property.
-    debugger
     if (!child._base) {
       if (child.extends) {
         parent = mergeOptions(parent, child.extends, vm);
@@ -1570,6 +1568,7 @@
         mergeField(key);
       }
     }
+    debugger
     function mergeField(key) {
       var strat = strats[key] || defaultStrat;
       options[key] = strat(parent[key], child[key], vm, key);
@@ -4967,8 +4966,7 @@
         // internal component options needs special treatment.
         initInternalComponent(vm, options);
       } else {
-        console.log('>>>Vue._init()');
-        console.trace()
+        console.log('>>>Vue._init()>>>'+ vm._uid  + '<<<<<<<<<<');
 
         vm.$options = mergeOptions(
           resolveConstructorOptions(vm.constructor),
