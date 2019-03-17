@@ -1261,6 +1261,7 @@
     childVal,
     vm
   ) {
+    debugger
     if (!vm) {
       if (childVal && typeof childVal !== 'function') {
         warn(
@@ -1474,7 +1475,6 @@
   function normalizeInject(options, vm) {
     var inject = options.inject;
     if (!inject) { return }
-    debugger
     var normalized = options.inject = {};
     if (Array.isArray(inject)) {
       for (var i = 0; i < inject.length; i++) {
@@ -1568,11 +1568,12 @@
         mergeField(key);
       }
     }
-    debugger
     function mergeField(key) {
       var strat = strats[key] || defaultStrat;
       options[key] = strat(parent[key], child[key], vm, key);
     }
+    console.log('config', config);
+    debugger
     return options
   }
 

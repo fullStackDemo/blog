@@ -279,6 +279,148 @@ export function mergeOptions (
 }
 ~~~
 
+前面和`components`、`props`、`directives`、`extends`、`mixins`相关的内容我们暂且忽略，我们知道`Vue`提供了配置`optionMergeStrategies`对象，来让我们手动去控制属性的合并策略，这里的`strats[key]`就是key属性的合并方法。
+
+~~~js
+ *
+ * When a vm is present (instance creation), we need to do
+ * a three-way merge between constructor options, instance
+ * options and parent options.
+ */
+function mergeAssets (
+  parentVal: ?Object,
+  childVal: ?Object,
+  vm?: Component,
+  key: string
+): Object {
+  const res = Object.create(parentVal || null)
+  if (childVal) {
+    process.env.NODE_ENV !== 'production' && assertObjectType(key, childVal, vm)
+    return extend(res, childVal)
+  } else {
+    return res
+  }
+}
+
+ASSET_TYPES.forEach(function (type) {
+  strats[type + 's'] = mergeAssets
+})
+~~~
+
+`ASSET_TYPES`就是`components`、`directives`、`filters`，这三个的合并策略都一样，这里我们都返回了`parentVal`的一个子对象。
+
+data属性的合并策略，是也是Vue内置的，如下：
+
+~~~js
+/**
+ * Helper that recursively merges two data objects together.
+ */
+function mergeData (to: Object, from: ?Object): Object {
+  if (!from) return to
+  let key, toVal, fromVal
+
+  const keys = hasSymbol
+    ? Reflect.ownKeys(from)
+    : Object.keys(from)
+
+  for (let i = 0; i < keys.length; i++) {
+    key = keys[i]
+    // in case the object is already observed...
+    if (key === '__ob__') continue
+    toVal = to[key]
+    fromVal = from[key]
+    if (!hasOwn(to, key)) {
+      set(to, key, fromVal)
+    } else if (
+      toVal !== fromVal &&
+      isPlainObject(toVal) &&
+      isPlainObject(fromVal)
+    ) {
+      mergeData(toVal, fromVal)
+    }
+  }
+  return to;
+}
+~~~
+
+~~~js
+strats.data = function (
+  parentVal: any,
+  childVal: any,
+  vm?: Component
+): ?Function {
+  if (!vm) {
+    if (childVal && typeof childVal !== 'function') {
+      process.env.NODE_ENV !== 'production' && warn(
+        'The "data" option should be a function ' +
+        'that returns a per-instance value in component ' +
+        'definitions.',
+        vm
+      )
+
+      return parentVal
+    }
+    return mergeDataOrFn(parentVal, childVal)
+  }
+
+  return mergeDataOrFn(parentVal, childVal, vm)
+}
+~~~
+### `mergeDataOrFn`
+
+~~~js
+/**
+* Data
+*/
+function mergeDataOrFn(
+	parentVal,
+	childVal,
+	vm
+) {
+	if (!vm) {
+	  // in a Vue.extend merge, both should be functions
+	  if (!childVal) {
+	    return parentVal
+	  }
+	  if (!parentVal) {
+	    return childVal
+	  }
+	  // when parentVal & childVal are both present,
+	  // we need to return a function that returns the
+	  // merged result of both functions... no need to
+	  // check if parentVal is a function here because
+	  // it has to be a function to pass previous merges.
+	  return function mergedDataFn() {
+	    return mergeData(
+	      typeof childVal === 'function' ? childVal.call(this, this) : childVal,
+	      typeof parentVal === 'function' ? parentVal.call(this, this) : parentVal
+	    )
+	  }
+	} else {
+	  return function mergedInstanceDataFn() {
+	    // instance merge
+	    var instanceData = typeof childVal === 'function'
+	      ? childVal.call(vm, vm)
+	      : childVal;
+	    var defaultData = typeof parentVal === 'function'
+	      ? parentVal.call(vm, vm)
+	      : parentVal;
+	    if (instanceData) {
+	      return mergeData(instanceData, defaultData)
+	    } else {
+	      return defaultData
+	    }
+	  }
+	}
+}
+~~~
+这里`vm`且`data`都不为空，所以会走到 else if，返回的是`mergedInstanceDataFn`方法。关于`mergedInstanceDataFn`方法，我们都知道，子组件中定义`data`时，必须是一个函数，这里简单的判断了是函数就执行，不是就返回自身的值。然后通过`mergeData`去合并，其实就是递归把`defaultData`合并到`instanceData`，并观察。
+
+
+
+
+
+
 
 
 
