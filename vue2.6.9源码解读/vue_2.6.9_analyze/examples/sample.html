@@ -41,12 +41,12 @@
           console.log('component hook called');
           
         },
-        props:{
-          name: {
-            handler: function(){},
-            deep: true
-          },
-        },
+        // props:{
+        //   name: {
+        //     handler: function(){},
+        //     deep: true
+        //   },
+        // },
         directives:{
           //object
           focus: {
@@ -60,20 +60,20 @@
             el.style.color = binding.value;
           }
         },
-        mixins: [mixins]
+        mixins: [mixins],
       })
 
       //extend
-      const Profile = Vue.extend({
-        data:function(){
-          return {
-            name: 'alex'
-          }
-        },
-        props:['age'],
-        template:'<div>subclass: {{name}} {{age}}</div>'
-      });
-      new Profile().$mount('.profile')
+      // const Profile = Vue.extend({
+      //   data:function(){
+      //     return {
+      //       name: 'alex'
+      //     }
+      //   },
+      //   props:['age'],
+      //   template:'<div>subclass: {{name}} {{age}}</div>'
+      // });
+      // new Profile().$mount('.profile')
     </script>
   </body>
 </html>
