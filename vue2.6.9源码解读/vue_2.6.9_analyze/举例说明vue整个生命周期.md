@@ -435,11 +435,178 @@ vue.$options:
 	
 ~~~
 
+## `proxy`
+
+_init()里面接下来代码是判断是否走代理，开发环境，则vm._renderProxy值为一个Proxy代理对象，生产环境就是vm自身,稍后再讲解proxy
+
+~~~js
+/* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      initProxy(vm)
+    } else {
+      vm._renderProxy = vm
+    }
+    
+    //initProxy
+    initProxy = function initProxy (vm) {
+    if (hasProxy) {
+      // determine which proxy handler to use
+      const options = vm.$options
+      const handlers = options.render && options.render._withStripped
+        ? getHandler
+        : hasHandler
+      vm._renderProxy = new Proxy(vm, handlers)
+    } else {
+      vm._renderProxy = vm
+    }
+  }
+~~~
 
 
+接下来就是初始化生命周期
+
+## `initLifecycle`
+
+~~~js
+
+export function initLifecycle (vm: Component) {
+  const options = vm.$options
+
+  // locate first non-abstract parent
+  let parent = options.parent
+  if (parent && !options.abstract) {
+    while (parent.$options.abstract && parent.$parent) {
+      parent = parent.$parent
+    }
+    parent.$children.push(vm)
+  }
+
+  vm.$parent = parent
+  vm.$root = parent ? parent.$root : vm
+
+  vm.$children = []
+  vm.$refs = {}
+
+  vm._watcher = null
+  vm._inactive = null
+  vm._directInactive = false
+  vm._isMounted = false
+  vm._isDestroyed = false
+  vm._isBeingDestroyed = false
+}
+~~~
+
+该过程主要就是给vm对象添加了`$parent`、`$root`、`$children`属性，以及一些其它的生命周期相关的标识。
+
+`options.abstract`用于判断是否是抽象组件，组件的父子关系建立会跳过抽象组件，抽象组件比如`keep-alive`、`transition`等。所有的子组件`$root`都指向顶级组件。
+
+## `initEvents `
+
+~~~js
+export function initEvents (vm: Component) {
+  vm._events = Object.create(null)
+  vm._hasHookEvent = false
+  // init parent attached events
+  const listeners = vm.$options._parentListeners
+  if (listeners) {
+    updateComponentListeners(vm, listeners)
+  }
+}
+~~~
+
+该方法初始化事件相关的属性，_parentListeners是父组件中绑定在自定义标签上的事件，供子组件处理
+
+~~~js
+export function initRender (vm: Component) {
+  vm._vnode = null // the root of the child tree
+  vm._staticTrees = null // v-once cached trees
+  const options = vm.$options
+  const parentVnode = vm.$vnode = options._parentVnode // the placeholder node in parent tree
+  const renderContext = parentVnode && parentVnode.context
+  vm.$slots = resolveSlots(options._renderChildren, renderContext)
+  vm.$scopedSlots = emptyObject
+  // bind the createElement fn to this instance
+  // so that we get proper render context inside it.
+  // args order: tag, data, children, normalizationType, alwaysNormalize
+  // internal version is used by render functions compiled from templates
+  vm._c = (a, b, c, d) => createElement(vm, a, b, c, d, false)
+  // normalization is always applied for the public version, used in
+  // user-written render functions.
+  vm.$createElement = (a, b, c, d) => createElement(vm, a, b, c, d, true)
+
+  // $attrs & $listeners are exposed for easier HOC creation.
+  // they need to be reactive so that HOCs using them are always updated
+  const parentData = parentVnode && parentVnode.data
+
+  /* istanbul ignore else */
+  if (process.env.NODE_ENV !== 'production') {
+    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, () => {
+      !isUpdatingChildComponent && warn(`$attrs is readonly.`, vm)
+    }, true)
+    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, () => {
+      !isUpdatingChildComponent && warn(`$listeners is readonly.`, vm)
+    }, true)
+  } else {
+    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true)
+    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true)
+  }
+}
+~~~
+
+这里给vm添加了一些虚拟dom、slot等相关的属性和方法
+
+然后开始调用`beforeCreate`钩子方法
+
+~~~js
+
+callHook(vm, 'beforeCreate')
+
+~~~
 
 
+接下来在 data / props 处理之前，进行 `注入` 操作
 
+## `initInjections `
+
+~~~js
+
+//initProvide
+export function initProvide (vm: Component) {
+  const provide = vm.$options.provide
+  if (provide) {
+    vm._provided = typeof provide === 'function'
+      ? provide.call(vm)
+      : provide
+  }
+}
+
+
+//initInjections
+export function initInjections (vm: Component) {
+  const result = resolveInject(vm.$options.inject, vm)
+  if (result) {
+    //不会被观察到
+    toggleObserving(false)
+    Object.keys(result).forEach(key => {
+      /* istanbul ignore else */
+      if (process.env.NODE_ENV !== 'production') {
+        defineReactive(vm, key, result[key], () => {
+          warn(
+            `Avoid mutating an injected value directly since the changes will be ` +
+            `overwritten whenever the provided component re-renders. ` +
+            `injection being mutated: "${key}"`,
+            vm
+          )
+        })
+      } else {
+        defineReactive(vm, key, result[key])
+      }
+    })
+    toggleObserving(true)
+  }
+}
+~~~
+这两个配套使用，用于将父组件_provided中定义的值，通过inject注入到子组件，且这些属性不会被观察。简单的例子如下：
 
 
 

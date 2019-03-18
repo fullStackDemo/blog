@@ -1547,6 +1547,7 @@
     // but only if it is a raw options object that isn't
     // the result of another mergeOptions call.
     // Only merged options has the _base property.
+    debugger
     if (!child._base) {
       if (child.extends) {
         parent = mergeOptions(parent, child.extends, vm);
@@ -1572,7 +1573,6 @@
       var strat = strats[key] || defaultStrat;
       options[key] = strat(parent[key], child[key], vm, key);
     }
-    console.log('config', config);
     return options
   }
 
@@ -4973,6 +4973,7 @@
           options || {},
           vm
         );
+        console.trace()
         console.dir({
           Vue,
           ctor: vm.constructor,
