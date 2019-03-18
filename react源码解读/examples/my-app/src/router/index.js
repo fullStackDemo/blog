@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from "react-router-dom";
+import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 // console.log(Router, Route, Link);
 
@@ -46,23 +47,42 @@ function Topic2({ match }) {
   )
 }
 
+function ComponentWithRegex({ match }) {
+  return (
+    <div>
+      only asc or desc is allowed: {match.params.direction}
+    </div>
+  )
+}
+
 
 function Header() {
+  const activeStyle = {
+    fontWeight: "bold",
+    color: "red"
+  };
+  const activeEvent = (match, location) => {
+    if (!match) return false
+    // console.log(match, location);
+    //只有about 添加active
+    // return (match.url).indexOf('about') > -1;
+    return true
+  }
   return (
     <div>
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink to="/" strict exact activeStyle={activeStyle} isActive={activeEvent}>Index</NavLink>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <NavLink to="/about" strict activeStyle={activeStyle} isActive={activeEvent}>about</NavLink>
           </li>
           <li>
-            <Link to="/users">Users</Link>
+            <NavLink to="/users" strict activeStyle={activeStyle} isActive={activeEvent}>users</NavLink>
           </li>
           <li>
-            <Link to="/topics">Topics</Link>
+            <NavLink to="/topics" strict activeStyle={activeStyle} isActive={activeEvent}>topics</NavLink>
           </li>
         </ul>
       </nav>
@@ -79,6 +99,7 @@ function AppRouter() {
         <Route path="/about" component={About}></Route>
         <Route path="/users" component={Users}></Route>
         <Route path="/topics" component={Topics}></Route>
+        <Route path="/order/:direction(asc|desc)" component={ComponentWithRegex}></Route>
       </div>
     </Router>
   )
