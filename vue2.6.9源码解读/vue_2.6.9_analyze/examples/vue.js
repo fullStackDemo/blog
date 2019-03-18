@@ -1547,7 +1547,7 @@
     // but only if it is a raw options object that isn't
     // the result of another mergeOptions call.
     // Only merged options has the _base property.
-    debugger
+    // debugger
     if (!child._base) {
       if (child.extends) {
         parent = mergeOptions(parent, child.extends, vm);
@@ -2442,6 +2442,7 @@
   }
 
   function initInjections(vm) {
+    // debugger
     var result = resolveInject(vm.$options.inject, vm);
     if (result) {
       toggleObserving(false);
@@ -4995,6 +4996,9 @@
       initInjections(vm); // resolve injections before data/props
       initState(vm);
       initProvide(vm); // resolve provide after data/props
+
+      console.log('vm', vm);
+      
       callHook(vm, 'created');
 
       /* istanbul ignore if */

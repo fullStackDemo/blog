@@ -608,7 +608,180 @@ export function initInjections (vm: Component) {
 ~~~
 这两个配套使用，用于将父组件_provided中定义的值，通过inject注入到子组件，且这些属性不会被观察。简单的例子如下：
 
+~~~js
+  <div id="app">
+  	<Demo /> /** demo bar bar1 **/
+  </div>
+  
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: '88',
+      color:'red',
+    },
+    created(){
+      console.log('component hook called');    
+    },
+    provide:{
+      foo: 'bar',
+      foo1: 'bar1',
+    },
+    components:{
+      Demo: {
+        inject:['foo', 'foo1'],
+        template: '<div>demo {{foo}} {{foo1}}</div>'
+      }
+    }
+  })
 
+</script>
+~~~
 
+## `initState(vm)`
+~~~js
+export function initState (vm: Component) {
+  vm._watchers = []
+  const opts = vm.$options
+  if (opts.props) initProps(vm, opts.props)
+  if (opts.methods) initMethods(vm, opts.methods)
+  if (opts.data) {
+    initData(vm)
+  } else {
+    observe(vm._data = {}, true /* asRootData */)
+  }
+  if (opts.computed) initComputed(vm, opts.computed)
+  if (opts.watch && opts.watch !== nativeWatch) {
+    initWatch(vm, opts.watch)
+  }
+}
+~~~
 
+这里主要就是操作数据了，`props`、`methods`、`data`、`computed`、`watch`，从这里开始就涉及到了`Observer`、`Dep`和`Watcher`，网上讲解双向绑定的文章很多，之后我也会单独去讲解这一块。而且，这里对数据操作也比较多，在讲完双向绑定的内容后，有时间我们再来说一说`Vue`对我们传入的数据都进行了什么操作。
 
+到这一步，我们看看我们的`vm`对象变成了什么样：
+
+~~~js
+$attrs: (...)
+$children: [VueComponent]
+$createElement: ƒ (a, b, c, d)
+$el: div#app
+$listeners: (...)
+$options:
+components: {Demo: {…}}
+created: (2) [ƒ, ƒ]
+data: ƒ mergedInstanceDataFn()
+directives: {focus: {…}, color: {…}}
+el: "#app"
+filters: {}
+methods: {hello: ƒ}
+mixins: [{…}]
+provide: ƒ mergedInstanceDataFn()
+render: ƒ anonymous( )
+staticRenderFns: []
+_base: ƒ Vue(options)
+__proto__: Object
+$parent: undefined
+$refs: {}
+$root: Vue {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+$scopedSlots: {}
+$slots: {}
+$vnode: undefined
+color: (...)
+hello: ƒ ()
+message: (...)
+mixins: (...)
+__VUE_DEVTOOLS_ROOT_UID__: 1
+__VUE_DEVTOOLS_UID__: "1:0"
+_c: ƒ (a, b, c, d)
+_data: {__ob__: Observer}
+_directInactive: false
+_events: {hook:beforeDestroy: Array(1)}
+_hasHookEvent: true
+_inactive: null
+_isBeingDestroyed: false
+_isDestroyed: false
+_isMounted: true
+_isVue: true
+_provided: {foo: "bar", foo1: "bar1"}
+_renderProxy: Proxy {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+_self: Vue {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+_staticTrees: null
+_uid: 0
+_vnode: VNode {tag: "div", data: {…}, children: Array(7), text: undefined, elm: div#app, …}
+_watcher: Watcher {vm: Vue, deep: false, user: false, lazy: false, sync: false, …}
+_watchers: [Watcher]
+$data: (...)
+$isServer: (...)
+$props: (...)
+$ssrContext: (...)
+get $attrs: ƒ reactiveGetter()
+set $attrs: ƒ reactiveSetter(newVal)
+get $listeners: ƒ reactiveGetter()
+set $listeners: ƒ reactiveSetter(newVal)
+get color: ƒ proxyGetter()
+set color: ƒ proxySetter(val)
+get message: ƒ proxyGetter()
+set message: ƒ proxySetter(val)
+get mixins: ƒ proxyGetter()
+set mixins: ƒ proxySetter(val)
+__proto__: Object
+
+~~~
+
+~~~js
+每个阶段产物不同：
+//_init
+vm._uid = 0
+vm._isVue = true
+vm.$options = {
+	components:{Demo:{...}},
+	filters:{},
+	directives:{focus:{...}, color:{...}},
+	el:'#app',
+	_base: Vue,
+	....	
+}
+
+vm._renderProxy = vm
+vm._self = vm;
+
+// initLifeCycle
+vm.$parent = parent;
+vm.$root = parent ? parent.$root : vm;
+
+vm.$children = [];
+vm.$refs = {};
+
+vm._watcher = null;
+vm._inactive = null;
+vm._directInactive = false;
+vm._isMounted = false;
+vm._isDestroyed = false;
+vm._isBeingDestroyed = false;
+
+// initEvents
+vm._events = Object.create(null);
+vm._hasHookEvent = false;
+
+// initRender
+vm._vnode = null; // the root of the child tree
+vm._staticTrees = null; // v-once cached trees
+vm.$slots = resolveSlots(options._renderChildren, renderContext);
+vm.$scopedSlots = emptyObject;
+// bind the createElement fn to this instance
+// so that we get proper render context inside it.
+// args order: tag, data, children, normalizationType, alwaysNormalize
+// internal version is used by render functions compiled from templates
+vm._c = function (a, b, c, d) { return createElement(vm, a, b, c, d, false); };
+// normalization is always applied for the public version, used in
+// user-written render functions.
+vm.$createElement = function (a, b, c, d) { return createElement(vm, a, b, c, d, true); };
+
+// initState
+vm._data
+vm._watchers = []
+
+~~~
+然后，就会调用我们的`created`钩子函数。
+
+我们看到`create`阶段，基本就是对传入数据的格式化、数据的双向绑定、以及一些属性的初始化。

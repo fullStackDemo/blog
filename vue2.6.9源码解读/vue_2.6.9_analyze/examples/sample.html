@@ -12,6 +12,7 @@
       <div v-color="color">{{ message }}</div>
       <input type="text" placeholder="Hello" v-focus>
       <div class="profile"></div>
+      <Demo></Demo>
     </div>
     <script>
       //mixins
@@ -38,15 +39,12 @@
           color:'red',
         },
         created(){
-          console.log('component hook called');
-          
+          console.log('component hook called');    
         },
-        // props:{
-        //   name: {
-        //     handler: function(){},
-        //     deep: true
-        //   },
-        // },
+        provide:{
+          foo: 'bar',
+          foo1: 'bar1',
+        },
         directives:{
           //object
           focus: {
@@ -61,6 +59,12 @@
           }
         },
         mixins: [mixins],
+        components:{
+          Demo: {
+            inject:['foo', 'foo1'],
+            template: '<div>demo {{foo}} {{foo1}}</div>'
+          }
+        }
       })
 
       //extend
