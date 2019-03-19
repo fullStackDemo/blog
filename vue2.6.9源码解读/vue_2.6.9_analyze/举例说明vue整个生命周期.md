@@ -1332,9 +1332,13 @@ constructor (
     return value
   }
 ~~~
-在构造函数中，我们会把expOrFn也就是updateComponent赋值给this.getter，并且在获取this.value的值时会调用this.get()，这里的this.lazy默认值是false，在computed属性中创建的Watcher会传入true。
+在构造函数中，我们会把`expOrFn`也就是`updateComponent`赋值给`this.getter`，并且在获取`this.value`的值时会调用`this.get()`，这里的`this.lazy`默认值是`false`，在`computed`属性中创建的`Watcher`会传入`true`。
 
-在this.get()中，我们会调用this.getter，所以上面的例子中，updateComponent方法会被调用，所以接下来沿着updateComponent再一路找下去.
+在`this.get()`中，我们会调用`this.getter`，所以上面的例子中，`updateComponent`方法会被调用，所以接下来沿着`updateComponent`再一路找下去。
+
+---
+
+==下一章节==，[双向数据绑定](./双向数据绑定.md)
 
 
 
