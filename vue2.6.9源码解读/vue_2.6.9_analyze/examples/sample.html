@@ -8,12 +8,12 @@
     <script src="./vue.js"></script>
   </head>
   <body>
-    <div id="app">
-      <div v-color="color">{{ message }}</div>
-      <input type="text" placeholder="Hello" v-focus>
-      <div class="profile"></div>
-      <Demo></Demo>
-    </div>
+    <div id="app">{{message}}<span id="test">555</span></div>
+      <!-- <div v-color="color">{{ message }}</div> -->
+      <!-- <input type="text" placeholder="Hello" v-focus>
+      <div class="profile"></div> -->
+      <!-- <Demo></Demo> -->
+    <!-- </div> -->
     <script>
       //mixins
       const mixins = {
@@ -38,33 +38,33 @@
           message: '88',
           color:'red',
         },
-        created(){
-          console.log('component hook called');    
-        },
-        provide:{
-          foo: 'bar',
-          foo1: 'bar1',
-        },
-        directives:{
-          //object
-          focus: {
-            inserted: function(el){
-              el.focus()
-            }
-          },
-          //function
-          color: function(el, binding){
-            console.log(binding); 
-            el.style.color = binding.value;
-          }
-        },
-        mixins: [mixins],
-        components:{
-          Demo: {
-            inject:['foo', 'foo1'],
-            template: '<div>demo {{foo}} {{foo1}}</div>'
-          }
-        }
+        // created(){
+        //   console.log('component hook called');    
+        // },
+        // provide:{
+        //   foo: 'bar',
+        //   foo1: 'bar1',
+        // },
+        // directives:{
+        //   //object
+        //   focus: {
+        //     inserted: function(el){
+        //       el.focus()
+        //     }
+        //   },
+        //   //function
+        //   color: function(el, binding){
+        //     console.log(binding); 
+        //     el.style.color = binding.value;
+        //   }
+        // },
+        // mixins: [mixins],
+        // components:{
+        //   Demo: {
+        //     inject:['foo', 'foo1'],
+        //     template: '<div>demo {{foo}} {{foo1}}</div>'
+        //   }
+        // }
       })
 
       //extend

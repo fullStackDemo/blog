@@ -785,3 +785,428 @@ vm._watchers = []
 然后，就会调用我们的`created`钩子函数。
 
 我们看到`create`阶段，基本就是对传入数据的格式化、数据的双向绑定、以及一些属性的初始化。
+
+## `$mount`
+~~~js
+ var mount = Vue.prototype.$mount;
+  Vue.prototype.$mount = function (
+    el,
+    hydrating
+  ) {
+    el = el && query(el);
+
+    /* istanbul ignore if */
+    if (el === document.body || el === document.documentElement) {
+      warn(
+        "Do not mount Vue to <html> or <body> - mount to normal elements instead."
+      );
+      return this
+    }
+
+    var options = this.$options;
+    // resolve template/el and convert to render function
+    if (!options.render) {
+      var template = options.template;
+      if (template) {
+        if (typeof template === 'string') {
+          if (template.charAt(0) === '#') {
+            template = idToTemplate(template);
+            /* istanbul ignore if */
+            if (!template) {
+              warn(
+                ("Template element not found or is empty: " + (options.template)),
+                this
+              );
+            }
+          }
+        } else if (template.nodeType) {
+          template = template.innerHTML;
+        } else {
+          {
+            warn('invalid template option:' + template, this);
+          }
+          return this
+        }
+      } else if (el) {
+        template = getOuterHTML(el);
+      }
+      if (template) {
+        /* istanbul ignore if */
+        if (config.performance && mark) {
+          mark('compile');
+        }
+
+        var ref = compileToFunctions(template, {
+          outputSourceRange: "development" !== 'production',
+          shouldDecodeNewlines: shouldDecodeNewlines,
+          shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
+          delimiters: options.delimiters,
+          comments: options.comments
+        }, this);
+        var render = ref.render;
+        var staticRenderFns = ref.staticRenderFns;
+        options.render = render;
+        options.staticRenderFns = staticRenderFns;
+
+        /* istanbul ignore if */
+        if (config.performance && mark) {
+          mark('compile end');
+          measure(("vue " + (this._name) + " compile"), 'compile', 'compile end');
+        }
+      }
+    }
+    return mount.call(this, el, hydrating)
+  };
+~~~
+
+首先，通过`mount = Vue.prototype.$mount`保存之前定义的`$mount`方法，然后重写。
+
+这里的`query`可以理解为`document.querySelector`，只不过内部判断了一下el是不是字符串，不是的话就直接返回，所以我们的el也可以直接传入dom元素。
+
+之后判断是否有`render`函数，如果有就不做处理直接执行`mount.call(this, el, hydrating)`。如果没有`render`函数，则获取`template`，`template`可以是#id、模板字符串、dom元素，如果没有`template`，则获取el以及其子内容作为模板。
+
+`compileToFunctions`是对我们最后生成的模板进行解析，生成`render`。这里的内容也比较多，简单说一下：
+
+~~~js
+
+// `createCompilerCreator` allows creating compilers that use alternative
+// parser/optimizer/codegen, e.g the SSR optimizing compiler.
+// Here we just export a default compiler using the default parts.
+export const createCompiler = createCompilerCreator(function baseCompile (
+  template: string,
+  options: CompilerOptions
+): CompiledResult {
+  const ast = parse(template.trim(), options)
+  if (options.optimize !== false) {
+    optimize(ast, options)
+  }
+  const code = generate(ast, options)
+  return {
+    ast,
+    render: code.render,
+    staticRenderFns: code.staticRenderFns
+  }
+})
+
+//createCompilerCreator
+function createCompilerCreator(baseCompile) {
+    return function createCompiler(baseOptions) {
+      function compile(
+        template,
+        options
+      ) {
+        var finalOptions = Object.create(baseOptions);
+        var errors = [];
+        var tips = [];
+
+        var warn = function (msg, range, tip) {
+          (tip ? tips : errors).push(msg);
+        };
+
+        if (options) {
+          if (options.outputSourceRange) {
+            // $flow-disable-line
+            var leadingSpaceLength = template.match(/^\s*/)[0].length;
+
+            warn = function (msg, range, tip) {
+              var data = { msg: msg };
+              if (range) {
+                if (range.start != null) {
+                  data.start = range.start + leadingSpaceLength;
+                }
+                if (range.end != null) {
+                  data.end = range.end + leadingSpaceLength;
+                }
+              }
+              (tip ? tips : errors).push(data);
+            };
+          }
+          // merge custom modules
+          if (options.modules) {
+            finalOptions.modules =
+              (baseOptions.modules || []).concat(options.modules);
+          }
+          // merge custom directives
+          if (options.directives) {
+            finalOptions.directives = extend(
+              Object.create(baseOptions.directives || null),
+              options.directives
+            );
+          }
+          // copy other options
+          for (var key in options) {
+            if (key !== 'modules' && key !== 'directives') {
+              finalOptions[key] = options[key];
+            }
+          }
+        }
+
+        finalOptions.warn = warn;
+
+        var compiled = baseCompile(template.trim(), finalOptions);
+        {
+          detectErrors(compiled.ast, warn);
+        }
+        compiled.errors = errors;
+        compiled.tips = tips;
+        return compiled
+      }
+
+      return {
+        compile: compile,
+        compileToFunctions: createCompileToFunctionFn(compile)
+      }
+    }
+  }
+  
+  //createCompileToFunctionFn
+  function createCompileToFunctionFn(compile) {
+    var cache = Object.create(null);
+
+    return function compileToFunctions(
+      template,
+      options,
+      vm
+    ) {
+      options = extend({}, options);
+      var warn$$1 = options.warn || warn;
+      delete options.warn;
+
+      /* istanbul ignore if */
+      {
+        // detect possible CSP restriction
+        try {
+          new Function('return 1');
+        } catch (e) {
+          if (e.toString().match(/unsafe-eval|CSP/)) {
+            warn$$1(
+              'It seems you are using the standalone build of Vue.js in an ' +
+              'environment with Content Security Policy that prohibits unsafe-eval. ' +
+              'The template compiler cannot work in this environment. Consider ' +
+              'relaxing the policy to allow unsafe-eval or pre-compiling your ' +
+              'templates into render functions.'
+            );
+          }
+        }
+      }
+
+      // check cache
+      var key = options.delimiters
+        ? String(options.delimiters) + template
+        : template;
+      if (cache[key]) {
+        return cache[key]
+      }
+
+      // compile
+      var compiled = compile(template, options);
+
+      // check compilation errors/tips
+      {
+        if (compiled.errors && compiled.errors.length) {
+          if (options.outputSourceRange) {
+            compiled.errors.forEach(function (e) {
+              warn$$1(
+                "Error compiling template:\n\n" + (e.msg) + "\n\n" +
+                generateCodeFrame(template, e.start, e.end),
+                vm
+              );
+            });
+          } else {
+            warn$$1(
+              "Error compiling template:\n\n" + template + "\n\n" +
+              compiled.errors.map(function (e) { return ("- " + e); }).join('\n') + '\n',
+              vm
+            );
+          }
+        }
+        if (compiled.tips && compiled.tips.length) {
+          if (options.outputSourceRange) {
+            compiled.tips.forEach(function (e) { return tip(e.msg, vm); });
+          } else {
+            compiled.tips.forEach(function (msg) { return tip(msg, vm); });
+          }
+        }
+      }
+
+      // turn code into functions
+      var res = {};
+      var fnGenErrors = [];
+      res.render = createFunction(compiled.render, fnGenErrors);
+      res.staticRenderFns = compiled.staticRenderFns.map(function (code) {
+        return createFunction(code, fnGenErrors)
+      });
+
+      // check function generation errors.
+      // this should only happen if there is a bug in the compiler itself.
+      // mostly for codegen development use
+      /* istanbul ignore if */
+      {
+        if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
+          warn$$1(
+            "Failed to generate render function:\n\n" +
+            fnGenErrors.map(function (ref) {
+              var err = ref.err;
+              var code = ref.code;
+
+              return ((err.toString()) + " in\n\n" + code + "\n");
+            }).join('\n'),
+            vm
+          );
+        }
+      }
+
+      return (cache[key] = res)
+    }
+  }
+~~~
+`compileToFunctions`中调用了`compile`，`compile`中调用了`baseCompile`。主要的操作就是`baseCompile`中的三步:
+
+第一步， `const ast = parse(template.trim(), options)`。这里是解析`template`，生成`ast`。我们的例子生成的`ast`如下：
+
+~~~js
+type: 1,
+tag: 'div',
+plain: false,
+parent: false,
+attrs:[{name: 'id', value: 'app'}],
+attrsList: [{name: 'id', value: 'app'}],
+attrMap:{id: 'app'},
+children:[
+	{
+		type: 2,
+		text: "{{message}}",
+		expression: "_s(message)"
+	}
+]
+~~~
+
+第二步，optimize(ast, options)主要是对ast进行优化，分析出静态不变的内容部分，增加了部分属性：
+
+~~~js
+
+type: 1,
+tag: 'div',
+plain: false,
+parent: false,
+attrs:[{name: 'id', value: 'app'}],
+attrsList: [{name: 'id', value: 'app'}],
+attrMap:{id: 'app'},
+children:[
+	{
+		type: 2,
+		text: "{{message}}",
+		expression: "_s(message)",
+		static: false
+	}
+],
+static: false,
+staticRoot: false
+
+这里是动态的 {{message}} 所以都是 false
+
+假如是：
+<div id="app">{{message}}<span class="test">555</span></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## `mountComponent `
+~~~js
+function mountComponent(
+    vm,
+    el,
+    hydrating
+  ) {
+    vm.$el = el;
+    if (!vm.$options.render) {
+      vm.$options.render = createEmptyVNode;
+      {
+        /* istanbul ignore if */
+        if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
+          vm.$options.el || el) {
+          warn(
+            'You are using the runtime-only build of Vue where the template ' +
+            'compiler is not available. Either pre-compile the templates into ' +
+            'render functions, or use the compiler-included build.',
+            vm
+          );
+        } else {
+          warn(
+            'Failed to mount component: template or render function not defined.',
+            vm
+          );
+        }
+      }
+    }
+    callHook(vm, 'beforeMount');
+
+    var updateComponent;
+    /* istanbul ignore if */
+    if (config.performance && mark) {
+      updateComponent = function () {
+        var name = vm._name;
+        var id = vm._uid;
+        var startTag = "vue-perf-start:" + id;
+        var endTag = "vue-perf-end:" + id;
+
+        mark(startTag);
+        var vnode = vm._render();
+        mark(endTag);
+        measure(("vue " + name + " render"), startTag, endTag);
+
+        mark(startTag);
+        vm._update(vnode, hydrating);
+        mark(endTag);
+        measure(("vue " + name + " patch"), startTag, endTag);
+      };
+    } else {
+      updateComponent = function () {
+        vm._update(vm._render(), hydrating);
+      };
+    }
+
+    // we set this to vm._watcher inside the watcher's constructor
+    // since the watcher's initial patch may call $forceUpdate (e.g. inside child
+    // component's mounted hook), which relies on vm._watcher being already defined
+    new Watcher(vm, updateComponent, noop, {
+      before: function before() {
+        if (vm._isMounted && !vm._isDestroyed) {
+          callHook(vm, 'beforeUpdate');
+        }
+      }
+    }, true /* isRenderWatcher */);
+    hydrating = false;
+
+    // manually mounted instance, call mounted on self
+    // mounted is called for render-created child components in its inserted hook
+    if (vm.$vnode == null) {
+      vm._isMounted = true;
+      callHook(vm, 'mounted');
+    }
+    return vm
+  }
+~~~
