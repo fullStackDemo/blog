@@ -11822,7 +11822,7 @@
     options
   ) {
     var ast = parse(template.trim(), options);
-    debugger
+    // debugger
     if (options.optimize !== false) {
       optimize(ast, options);
     }
