@@ -1108,14 +1108,65 @@ staticRoot: false
 假如是：
 <div id="app">{{message}}<span class="test">555</span></div>
 
+type: 1,
+tag: 'div',
+plain: false,
+parent: false,
+attrs:[{name: 'id', value: 'app'}],
+attrsList: [{name: 'id', value: 'app'}],
+attrMap:{id: 'app'},
+children:[
+	{
+		type: 2,
+		text: "{{message}}",
+		expression: "_s(message)",
+		static: false
+	},
+	{
+		...
+		static: true
+		staticClass: ""test""
+		staticInFor: false
+		staticRoot: false
+		tag: "span"
+		type: 1
+	}
+],
+static: false,
+staticRoot: false
 
+~~~
 
+最后生成的render如下：
 
+~~~js
+render = "with(this){return _c('div',{attrs:{"id":"app"}},[_v(_s(message)),_c('span',{staticClass:"test"},[_v("555")])])}"
 
+~~~
 
+在`src/core/instance/render-helper/index.js`中，我们曾经添加过如下多个函数，这里和render内返回值调用一一对应。
 
-
-
+~~~js
+export function installRenderHelpers (target: any) {
+  target._o = markOnce
+  target._n = toNumber
+  target._s = toString
+  target._l = renderList
+  target._t = renderSlot
+  target._q = looseEqual
+  target._i = looseIndexOf
+  target._m = renderStatic
+  target._f = resolveFilter
+  target._k = checkKeyCodes
+  target._b = bindObjectProps
+  target._v = createTextVNode
+  target._e = createEmptyVNode
+  target._u = resolveScopedSlots
+  target._g = bindObjectListeners
+  target._d = bindDynamicKeys
+  target._p = prependModifier
+}
+~~~
 
 
 
