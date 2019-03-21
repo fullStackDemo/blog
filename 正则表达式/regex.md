@@ -3,10 +3,11 @@
 ### `Basic topics`  ###   
 
 * ^ and $
+ 
+>^The  ----->   matches any string that starts with The
 
-~~~js
-  ^The  ----->   matches any string that starts with The
-  
+
+~~~js  
   var str = 'The end';
   
   var rgx = /^The/;
