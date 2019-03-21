@@ -351,7 +351,7 @@ str.match(rgx)  ==>  ["abc"]
 ~~~js
 http://stackoverflow.com/
 https://stackoverflow.com/questions/tagged/regex
-(https?|ftp)://([^/\r\n]+)(/[^\r\n]*)?
+(https?|ftp):\/\/([^\/\r\n]+)(\/[^\r\n]*)?
 ~~~
 会看到
  
@@ -373,7 +373,7 @@ Match "https://stackoverflow.com/questions/tagged/regex"
 But I don't care about the protocol -- I just want the host and path of the URL. So, I change the regex to include the non-capturing group (?:).
 
 ~~~js
-(?:https?|ftp)://([^/\r\n]+)(/[^\r\n]*)?
+(?:https?|ftp):\/\/([^\/\r\n]+)(\/[^\r\n]*)?
 ~~~
 
 Now, my result looks like this:
