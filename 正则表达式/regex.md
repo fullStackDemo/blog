@@ -259,6 +259,67 @@ str.match(rgx)  ==> ["ab", "ac"]
 
 ~~~
 
+> `^.[$()|*+?{\` -----> 匹配特殊字符 需要使用反斜杠 \
+
+~~~js
+
+var str = 'ab_ 899 a.c a$ a| a\ a?';
+  
+var rgx = /a[\.\$\|\?\\]/g;
+
+str.match(rgx)  ==> ["a.", "a$", "a|", "a?"]
+
+~~~
+
+> 需要注意一些不打印的字符比如 tabs `\t`, new-lines `\n`, carriage returns `\r`.
+
+
+### Flags ###
+
+
+* `g (global)` does not return after the first match, restarting the subsequent searches from the end of the previous match
+
+  全局匹配 `g` 会一直搜索所有结果 最后返回。
+ 
+~~~js
+
+var str = 'ab ac';
+  
+var rgx = /a/g;
+
+str.match(rgx)  ==>  ["a", "a"]
+
+~~~
+
+* `m (multi-line)` when enabled ^ and $ will match the start and end of a line, instead of the whole string
+
+  多行匹配 `m`, 当启用`^`和`$`将匹配一行的开始和结束,而不是整个字符串
+  
+~~~js
+
+var str = 'ab ac';
+  
+var rgx = /^a/mg;
+
+str.match(rgx)  ==>  ["a"]
+
+~~~
+
+* `i (insensitive)` makes the whole expression case-insensitive (for instance /aBc/i would match AbC)
+
+  忽略大小写 `i` 
+ 
+~~~js
+
+var str = 'ab ac';
+  
+var rgx = /^A/ig;
+
+str.match(rgx)  ==>  ["a"]
+
+~~~
+
+
 
 
 
