@@ -305,7 +305,7 @@ str.match(rgx)  ==>  ["a"]
 
 ~~~
 
-* `i (insensitive)` makes the whole expression case-insensitive (for instance /aBc/i would match AbC)
+* `i (insensitive)` makes the whole expression case-insensitive (for instance `/aBc/i` would match `AbC`)
 
   忽略大小写 `i` 
  
@@ -319,15 +319,75 @@ str.match(rgx)  ==>  ["a"]
 
 ~~~
 
+## Intermediate topics ##
 
+### Grouping and capturing — `()` ###
 
+> `a(bc)` ---> parentheses create a capturing group with value `bc`
 
+~~~js
 
+var str = 'abc ac';
+  
+var rgx = /a(bc)/g;
 
+str.match(rgx)  ==>  ["abc"]
 
+~~~
 
+> `a(?:bc)*` --->  using `?:` we disable the capturing group
 
+~~~js
 
+var str = 'abc ac abcbc';
+  
+var rgx = /a(?:bc)*/g;
 
+str.match(rgx)  ==>  ["abc"]
+
+~~~
+
+假设：
+~~~js
+http://stackoverflow.com/
+https://stackoverflow.com/questions/tagged/regex
+(https?|ftp)://([^/\r\n]+)(/[^\r\n]*)?
+~~~
+会看到
+ 
+
+~~~js
+
+Match "http://stackoverflow.com/"
+     Group 1: "http"
+     Group 2: "stackoverflow.com"
+     Group 3: "/"
+
+Match "https://stackoverflow.com/questions/tagged/regex"
+     Group 1: "https"
+     Group 2: "stackoverflow.com"
+     Group 3: "/questions/tagged/regex"
+
+~~~
+
+But I don't care about the protocol -- I just want the host and path of the URL. So, I change the regex to include the non-capturing group (?:).
+
+~~~js
+(?:https?|ftp)://([^/\r\n]+)(/[^\r\n]*)?
+~~~
+
+Now, my result looks like this:
+
+~~~js
+Match "http://stackoverflow.com/"
+     Group 1: "stackoverflow.com"
+     Group 2: "/"
+
+Match "https://stackoverflow.com/questions/tagged/regex"
+     Group 1: "stackoverflow.com"
+     Group 2: "/questions/tagged/regex"
+~~~
+
+看到了吗?第一组没有被捕获。解析器使用它来匹配的文本,但之后在最终结果忽略了它
 
 
