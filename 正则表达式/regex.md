@@ -390,4 +390,19 @@ Match "https://stackoverflow.com/questions/tagged/regex"
 
 看到了吗?第一组没有被捕获。解析器使用它来匹配的文本,但之后在最终结果忽略了它
 
+> `a(?<foo>bc)` --->  using `?<foo>` we put a name to the group
+
+  为 `bc` 这个`group`起名字叫做 `foo`
+  
+~~~js
+'abc'.match(/a(?<foo>bc)/g)
+
+Full matcth : abc
+Group `foo`	:	bc  
+  
+'abc'.match(/a(bc)/g)
+
+Full matcth : abc
+Group 1   	:	bc  
+~~~
 
