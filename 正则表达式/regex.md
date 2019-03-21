@@ -4,7 +4,7 @@
 
 ## `Basic topics`  ##
 
-###Anchors — ` ^ and $` ###
+### Anchors — `^ and $` ###
  
 > `^The`  ----->   matches any string that starts with The
 
