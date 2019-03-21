@@ -28,7 +28,7 @@ str.match(rgx)  ==> ['end']
 
 ~~~
 
-> ^The end$   exact string match (starts and ends with The end)
+> ^The end$ ---->  exact string match (starts and ends with The end)
 
 ~~~js
 var str = 'The end';
