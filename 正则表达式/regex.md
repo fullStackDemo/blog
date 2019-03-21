@@ -397,12 +397,52 @@ Match "https://stackoverflow.com/questions/tagged/regex"
 ~~~js
 'abc'.match(/a(?<foo>bc)/g)
 
-Full matcth : abc
-Group `foo`	:	bc  
+Full matcth: abc
+Group `foo`:	bc  
   
 'abc'.match(/a(bc)/g)
 
-Full matcth : abc
-Group 1   	:	bc  
+Full matcth: abc
+Group 1:	bc  
+~~~
+
+### Bracket expressions — `[]` ###
+
+> `[abc]` ---> matches a string that has either an a or a b or a c -> is the same as `a|b|c`
+
+> [a-c] --> same as previous
+
+~~~js
+
+var str = 'abc ac abcbc';
+  
+var rgx = /[abc]|[a-c]/g;
+
+str.match(rgx)  ==>   ["a", "b", "c", "a", "c", "a", "b", "c", "b", "c"]
+
+~~~
+
+> `[a-fA-F0-9]` ---> a string that represents a single hexadecimal digit, case insensitively
+
+~~~js
+
+var str = 'abc 0999 op';
+  
+var rgx = /[a-fA-F0-9]/g;
+
+str.match(rgx)  ==>  ["a", "b", "c", "0", "9", "9", "9"] 
+
+~~~
+
+> `[0-9]%` ---> a string that has a character from 0 to 9 before a % sign
+
+~~~js
+
+var str = 'ab%c 0999% op';
+  
+var rgx = /[a-fA-F0-9]%/g;
+
+str.match(rgx)  ==>  ["a", "b", "c", "0", "9", "9", "9"] 
+
 ~~~
 
