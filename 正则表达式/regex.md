@@ -9,17 +9,20 @@
 > `^The`  ----->   matches any string that starts with The
 
 
-~~~js  
+~~~js 
+
 var str = 'The end';
 
 var rgx = /^The/g;
 
-str.match(rgx)  ==> ['The']  
+str.match(rgx)  ==> ['The'] 
+
 ~~~
 
 > `end$` ----->   matches a string that ends with end
 
 ~~~js
+
 var str = 'The end';
   
 var rgx = /end$/g;
@@ -31,6 +34,7 @@ str.match(rgx)  ==> ['end']
 > `^The end$` ---->  exact string match (starts and ends with The end)
 
 ~~~js
+
 var str = 'The end';
   
 var rgx = /^The end$/g;
@@ -44,6 +48,7 @@ str.match(rgx)  ==> ['The end']
 > `abc*`  ----->  matches a string that has ab followed by zero or more c 
 
 ~~~js
+
 var str = 'ab abc abcc';
   
 var rgx = /abc*/g;
@@ -55,6 +60,7 @@ str.match(rgx)  ==> ["ab", "abc", "abcc"]
 > `abc+`  ---->      matches a string that has ab followed by one or more c
 
 ~~~js
+
 var str = 'ab abc abcc';
   
 var rgx = /abc+/g;
@@ -66,6 +72,7 @@ str.match(rgx)  ==> ["abc", "abcc"]
 > `abc?`  ---->  matches a string that has ab followed by zero or one c
 
 ~~~js
+
 var str = 'ab abc abcc';
   
 var rgx = /abc?/g;
@@ -77,6 +84,7 @@ str.match(rgx)  ==> ["ab", "abc", "abc"]
 > abc{2} --->  matches a string that has ab followed by 2 c
 
 ~~~js
+
 var str = 'ab abc abcc';
   
 var rgx = /abc{2}/g;
@@ -85,9 +93,10 @@ str.match(rgx)  ==> ["abc"]
 
 ~~~
 
-> abc{2,} --->  matches a string that has ab followed by 2 or more c
+> `abc{2,}` --->  matches a string that has ab followed by 2 or more c
 
 ~~~js
+
 var str = 'ab abc abcc abccc';
   
 var rgx = /abc{2,}/g;
@@ -96,9 +105,10 @@ str.match(rgx)  ==> ["abcc", "abccc"]
 
 ~~~
 
-> abc{2,5} --->  matches a string that has ab followed by 2 up to 5 c
+> `abc{2,5}` --->  matches a string that has ab followed by 2 up to 5 c
 
 ~~~js
+
 var str = 'ab abc abcc abccc abccccc abcccc';
   
 // 2,5中间不能用空格 否则不生效  
@@ -108,9 +118,10 @@ str.match(rgx)  ==> ["abcc", "abccc", "abccccc", "abcccc"]
 
 ~~~
 
-> a(bc)* ---> matches a string that has a followed by zero or more copies of the sequence bc
+> `a(bc)*` ---> matches a string that has a followed by zero or more copies of the sequence bc
 
 ~~~js
+
 var str = 'ab abc abcc abccc';
   
 var rgx = /a(bc)*/g;
@@ -119,10 +130,11 @@ str.match(rgx)  ==> ["a", "abc", "abc", "abc"]
 
 ~~~
 
-> a(bc){2,5} ---> matches a string that has a followed by 2 up to 5 copies of the sequence bc 
+> `a(bc){2,5}` ---> matches a string that has a followed by 2 up to 5 copies of the sequence bc 
 
 
 ~~~js
+
 var str = 'ab abc abcbc abcbcbc, abcbcbcbcbcbcbc';
   
 var rgx = /a(bc){2,5}/g;
@@ -133,10 +145,11 @@ str.match(rgx)  ==>  ["abcbc", "abcbcbc", "abcbcbcbcbc"]
 
 ### OR operator — `| or []` ###
 
-> a(b|c) --->  matches a string that has a followed by b or c
+> `a(b|c)` --->  matches a string that has a followed by b or c
 
 
 ~~~js
+
 var str = 'ab abc abcc abccc';
   
 var rgx = /a(b|c)/g;
@@ -145,9 +158,10 @@ str.match(rgx)  ==> ["ab", "ab", "ab", "ab"]
 
 ~~~
 
-> a[bc] --->   same as previous
+> `a[bc]` --->   same as previous
 
 ~~~js
+
 var str = 'ab abc abcc abccc';
   
 var rgx = /a[bc]/g;
@@ -156,6 +170,94 @@ str.match(rgx)  ==> ["ab", "ab", "ab", "ab"]
 
 ~~~
 
+### Character classes — `\d \w \s and .` ###
+
+> `\d`  --->   matches a single character that is a digit 
+
+~~~js
+
+var str = 'ab abc abcc abccc 899';
+  
+var rgx = /\d/g;
+
+str.match(rgx)  ==> ["8", "9", "9"]
+
+~~~
+
+> `\D`  --->  matches a single non-digit character 
+
+~~~js
+
+//和 `\d` 相反
+var str = 'ab abc abcc abccc 899';
+  
+var rgx = /\D/g;
+
+str.match(rgx)  ==> ["a", "b", " ", "a", "b", "c", " ", "a", "b", "c", "c", " ", "a", "b", "c", "c", "c", " "]
+
+~~~
+
+> `\w` ---> matches a word character (alphanumeric character plus underscore)
+
+~~~js
+
+//字母数字下划线
+var str = 'ab_ 899';
+  
+var rgx = /\w/g;
+
+str.match(rgx)  ==> ["a", "b", "_", "8", "9", "9"]
+
+~~~
+
+> `\W` ---> matches a no word character (no alphanumeric character plus underscore)
+
+~~~js
+
+var str = 'ab_ 899';
+  
+var rgx = /\W/g;
+
+str.match(rgx)  ==> [" "]
+
+~~~
+
+> `\s` ---> matches a whitespace character (includes tabs and line breaks) 
+
+~~~js
+
+//空格 tab
+var str = 'ab_ 899';
+  
+var rgx = /\s/g;
+
+str.match(rgx)  ==> [" "]
+
+~~~
+
+> `\S` ---> matches a no whitespace character (includes no tabs and line breaks) 
+
+~~~js
+
+var str = 'ab_ 899';
+  
+var rgx = /\S/g;
+
+str.match(rgx)  ==> ["a", "b", "_", "8", "9", "9"]
+
+~~~
+
+> `.` ---> matches any character
+
+~~~js
+
+var str = 'ab_ 899 ac';
+  
+var rgx = /a./g;
+
+str.match(rgx)  ==> ["ab", "ac"]
+
+~~~
 
 
 
