@@ -685,3 +685,25 @@ var rgx = /<([a-z]+)([^>]+)*(?:>(.*)<\/\1|\s+\/>)/g;
 str.match(rgx)  ==> ["<a>8888 <b>666</b></a", "<span>0000</span", "<b>99</b"]
 
 ~~~
+
+### 获取url中参数value  [try it](https://regex101.com/r/vRX52G/2/)###
+
+~~~js
+
+(\\?|(?<=&))(address|name|age)=([^&]*)((?=&)|$)
+
+https://regex101.com?name=alex&age=21&address=us
+
+~~~
+
+~~~js
+
+var str = 'https://regex101.com?name=alex&age=21&address=us';
+
+var rgx = /(\\?|(?<=&))(address|name|age)=([^&]*)((?=&)|$)/g;
+
+str.match(rgx) ==> ["name=alex", "age=21", "address=us"]
+
+~~~
+
+
