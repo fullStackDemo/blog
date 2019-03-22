@@ -1,6 +1,8 @@
 ## 正则表达式 ##
 
-正则还是很重要的,记录一些基本容易忘记的知识点。
+正则还是很重要的,记录一些容易忘记的知识点。
+
+在线测试平台 
 
 ## `Basic topics`  ##
 
@@ -445,4 +447,32 @@ var rgx = /[a-fA-F0-9]%/g;
 str.match(rgx)  ==>  ["a", "b", "c", "0", "9", "9", "9"] 
 
 ~~~
+
+> `[^a-zA-Z]` ---->  a string that has not a letter from a to z or from A to Z. In this case the `^` is used as negation of the expression
+
+  之前讲 `^a` 是必须匹配以此 `a` 为开头的内容, 如果加上`[]`
+  `[^a]`就是匹配除了 `a` 以外的内容
+  
+~~~js
+
+var str = 'ab%c 0999% op';
+  
+var rgx = /^[a-f]/g;
+
+str.match(rgx)  ==>  ["a"]
+
+\\比较一下
+
+var str = 'ab%c 0999% op';
+  
+var rgx = /[^a-f]/g;
+
+str.match(rgx)  ==>  ["%", " ", "0", "9", "9", "9", "%", " ", "o", "p"]
+
+~~~
+
+### Greedy and Lazy match 贪婪和懒惰匹配 ###
+
+
+
 
