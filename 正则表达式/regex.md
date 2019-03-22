@@ -668,3 +668,20 @@ var rgx = /(?<!r)d/g;
 str.match(rgx)  ==>   ["d", "d", "d", "d"]
 
 ~~~
+
+
+## 常用正则 ##
+
+1、### HTML Tag — [try it](https://regex101.com/r/cO8lqs/9067)! ###
+
+Matches any valid HTML tag and the corresponding closing tag
+
+~~~js
+
+var str = '<a>8888 <b>666</b></a> eeee <span>0000</span><b>99</b>';
+  
+var rgx = /<([a-z]+)([^>]+)*(?:>(.*)<\/\1|\s+\/>)/g;
+
+str.match(rgx)  ==> ["<a>8888 <b>666</b></a", "<span>0000</span", "<b>99</b"]
+
+~~~
