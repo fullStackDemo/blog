@@ -594,3 +594,21 @@ var rgx = /([abc])([\d])\2\1/g;
 str.match(rgx)  ==>  ["a22a", "b22b"]
 
 ~~~
+
+> `(?<foo>[abc])\k<foo>`   we put the name foo to the group and we reference it later (`\k<foo>`). The result is the same of the first regex
+
+  给 `[abc]` group 命名 foo， `\k<foo>`匹配刚才 foo 匹配的内容
+  
+~~~js
+
+//简单意思就是 重复前面的匹配 多一个和前面一样的占位符
+
+var str = 'abcd aa bb cc a2a b2b';
+  
+var rgx = /(?<foo>[abc])\k<foo>/g;
+
+str.match(rgx)  ==>  ["aa", "bb", "cc"]
+
+~~~
+
+### Look-ahead and Look-behind — `(?=)` and `(?<=)` ###
