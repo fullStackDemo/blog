@@ -512,7 +512,7 @@ str.match(rgx)  ==>  ["<div>", "</div>"]
 
 ## Advanced topics ##
 
-### Boundaries — \b and \B ###
+### Boundaries — `\b` and `\B` ###
 
 > `\babc\b` ----->   performs a "whole words only" search
 
@@ -536,7 +536,7 @@ str.match(rgx)  ==>  null
 
 ~~~
 
-> `\B` 和 `\b`相反 前后必须被字母（不能是特殊字符）包围着
+> `\B` 和 `\b`相反 前后必须被字母或者数字（不能是特殊字符）包围着
 > 
 ~~~js
 
@@ -556,3 +556,41 @@ str.match(rgx)  ==>  ["d"]
 
 ~~~
 
+### Back-references — `\1` ###
+
+> `([abc])\1` ---> using `\1` it matches the same text that was matched by the first capturing group 
+
+~~~js
+
+//简单意思就是 重复前面的匹配 多一个和前面一样的占位符
+
+var str = 'abcd aa bb cc';
+  
+var rgx = /([abc])\1/g;
+
+str.match(rgx)  ==>  ["aa", "bb", "cc"]
+
+
+~~~
+
+> `([abc])([de])\2\1`      we can use \2 (\3, \4, etc.) to identify the same text that was matched by the second (third, fourth, etc.) capturing group
+
+~~~js
+
+//简单意思就是 重复前面的匹配 多一个和前面一样的占位符
+
+var str = 'abcd aa bb cc a2a b2b';
+  
+var rgx = /([abc])([\d])\1/g;
+
+str.match(rgx)  ==>  ["a2a", "b2b"]
+
+//多个
+
+var str = 'abcd aa bb cc a2a b2b a22a b22b';
+  
+var rgx = /([abc])([\d])\2\1/g;
+
+str.match(rgx)  ==>  ["a22a", "b22b"]
+
+~~~
