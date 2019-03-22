@@ -496,9 +496,9 @@ str.match(rgx)  ==>  ["<div>", "</div>"]
 
 ~~~
 
-Notice that a better solution should avoid the usage of . in favor of a more strict regex:
+Notice that a better solution should avoid the usage of `.` in favor of a more strict regex:
 
-> `<[^<>]+> ` ---> matches any character except < or > one or more times included inside < and > 
+> `<[^<>]+> ` ---> matches any character except `< `or `>` one or more times included inside `<` and `>` 
 
 ~~~js
 
@@ -507,6 +507,52 @@ var str = 'This is a <div>simple div</div>test';
 var rgx = /<[^<>]+>/g;
 
 str.match(rgx)  ==>  ["<div>", "</div>"]
+
+~~~
+
+## Advanced topics ##
+
+### Boundaries — \b and \B ###
+
+> `\babc\b` ----->   performs a "whole words only" search
+
+~~~js
+
+//匹配单独字符串 独自的 要么最开始要么前后有空格
+
+var str = 'This is a <div>simple div</div>test';
+  
+var rgx = /\ba\b/g;
+
+str.match(rgx)  ==>  ["<div>", "</div>"]
+
+//compare
+
+var str = 'This is a <div>simple div</div>test';
+  
+var rgx = /\bd\b/g;
+
+str.match(rgx)  ==>  null
+
+~~~
+
+> `\B` 和 `\b`相反 前后必须被字母（不能是特殊字符）包围着
+> 
+~~~js
+
+var str = 'd This is a <div>simple div</div>test';
+  
+var rgx = /\Bd\B/g;
+
+str.match(rgx)  ==>  null
+
+//compare
+
+var str = 'd This is a <div>simple ddiv</div>test';
+  
+var rgx = /\Bd\B/g;
+
+str.match(rgx)  ==>  ["d"]
 
 ~~~
 
