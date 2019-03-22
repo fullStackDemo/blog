@@ -473,6 +473,40 @@ str.match(rgx)  ==>  ["%", " ", "0", "9", "9", "9", "%", " ", "o", "p"]
 
 ### Greedy and Lazy match 贪婪和懒惰匹配 ###
 
+The quantifiers `( * + {})` are greedy operators, so they expand the match as far as they can through the provided text.
+
+For example, `<.+>`matches `<div>simple div</div>` in `This is a <div>simple div</div>test`. In order to catch only the div tag we can use a ? to make it lazy:
 
 
+~~~js
+
+var str = 'This is a <div>simple div</div>test';
+  
+var rgx = /<.+>/g;
+
+str.match(rgx)  ==>  ["<div>simple div</div>"]
+
+//?
+
+var str = 'This is a <div>simple div</div>test';
+  
+var rgx = /<.+?>/g;
+
+str.match(rgx)  ==>  ["<div>", "</div>"]
+
+~~~
+
+Notice that a better solution should avoid the usage of . in favor of a more strict regex:
+
+> `<[^<>]+> ` ---> matches any character except < or > one or more times included inside < and > 
+
+~~~js
+
+var str = 'This is a <div>simple div</div>test';
+  
+var rgx = /<[^<>]+>/g;
+
+str.match(rgx)  ==>  ["<div>", "</div>"]
+
+~~~
 
