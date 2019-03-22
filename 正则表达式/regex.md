@@ -573,7 +573,7 @@ str.match(rgx)  ==>  ["aa", "bb", "cc"]
 
 ~~~
 
-> `([abc])([de])\2\1`      we can use \2 (\3, \4, etc.) to identify the same text that was matched by the second (third, fourth, etc.) capturing group
+> `([abc])([de])\2\1` --->      we can use \2 (\3, \4, etc.) to identify the same text that was matched by the second (third, fourth, etc.) capturing group
 
 ~~~js
 
@@ -595,7 +595,7 @@ str.match(rgx)  ==>  ["a22a", "b22b"]
 
 ~~~
 
-> `(?<foo>[abc])\k<foo>`   we put the name foo to the group and we reference it later (`\k<foo>`). The result is the same of the first regex
+> `(?<foo>[abc])\k<foo>` --->   we put the name foo to the group and we reference it later (`\k<foo>`). The result is the same of the first regex
 
   给 `[abc]` group 命名 foo， `\k<foo>`匹配刚才 foo 匹配的内容
   
@@ -612,3 +612,59 @@ str.match(rgx)  ==>  ["aa", "bb", "cc"]
 ~~~
 
 ### Look-ahead and Look-behind — `(?=)` and `(?<=)` ###
+
+> `d(?=r)` ---> matches a d only if is followed by r, but r will not be part of the overall regex match
+> 
+~~~js
+
+//简单意思就是 匹配后面跟个 r 的
+
+var str = 'abcd aa bb d dr dr cc a2a b2b';
+  
+var rgx = /d(?=r)/g;
+
+str.match(rgx)  ==>  ["d", "d"]
+
+~~~
+
+> `(?<=r)d` ---> matches a d only if is preceded by an r, but r will not be part of the overall regex match
+
+~~~js
+
+//简单意思就是 匹配前面跟个 r 的
+
+var str = 'abcd aa bb d dr dr rd cc a2a b2b';
+  
+var rgx = /(?<=r)d/g;
+
+str.match(rgx)  ==>  ["d"]
+
+~~~
+
+> `d(?!r)` ---> matches a d only if is not followed by r, but r will not be part of the overall regex match
+
+~~~js
+
+//简单意思就是 匹配后面不跟个 r 的
+
+var str = 'abcd aa bb d dr cc a2a b2b';
+  
+var rgx = /d(?!r)/g;
+
+str.match(rgx)  ==>  ["d", "d"]
+
+~~~
+
+> `(?<!r)d` ---> matches a d only if is not preceded by an r, but r will not be part of the overall regex match
+
+~~~js
+
+//简单意思就是 匹配前面不跟个 r 的
+
+var str = 'abcd aa bb d dr dr rd cc a2a b2b';
+  
+var rgx = /(?<!r)d/g;
+
+str.match(rgx)  ==>   ["d", "d", "d", "d"]
+
+~~~
