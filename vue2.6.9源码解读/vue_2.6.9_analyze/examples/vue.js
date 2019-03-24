@@ -4415,6 +4415,7 @@
       vm._watcher = this;
     }
     vm._watchers.push(this);
+    debugger
     // options
     if (options) {
       this.deep = !!options.deep;
