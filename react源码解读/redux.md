@@ -113,6 +113,7 @@ function combineReducers(reducers) {
   
   
   //返回一个 function(state, action){}
+  // dispatch 会调用这里的 function
   return function combination(state, action) {
     if (state === void 0) {
       state = {};
@@ -357,6 +358,7 @@ export default function createStore(reducer, preloadedState, enhancer) {
       )
     }
 
+	 // 这里说明 actions 必须包含 type 否则报错
     if (typeof action.type === 'undefined') {
       throw new Error(
         'Actions may not have an undefined "type" property. ' +
@@ -364,14 +366,18 @@ export default function createStore(reducer, preloadedState, enhancer) {
       )
     }
 
+	 // 一次只能分派一个action
     if (isDispatching) {
       throw new Error('Reducers may not dispatch actions.')
     }
 
     try {
+      // dispatch分配时候，设置标识
       isDispatching = true
+      // 使用 combination(state, action) 获取当前 state
       currentState = currentReducer(currentState, action)
     } finally {
+      // 执行完毕 设置 false
       isDispatching = false
     }
 
@@ -457,6 +463,100 @@ export default function createStore(reducer, preloadedState, enhancer) {
 }
 ~~~
 
+这里的`createStroe`,在新建`store`的时候，会默认执行 
+
+~~~js
+dispatch({ type: ActionTypes.INIT })
+~~~
+
+然后执行,
+
+~~~js
+currentState = currentReducer(currentState, action)
+~~~
+
+这里的 `currentReducer` 就是 `createStrore(reducer)` 里面的参数 `reducer`, 也就是`combineReducers` 函数的返回函数 `combination(state, action)`, 让我们再回顾一下 `combination` 里面说的什么；
+
+### combination
+
+~~~js
+
+function combination(state, action) {
+	// 设置 state = {}
+	if (state === void 0) {
+	  state = {};
+	}
+	
+	if (shapeAssertionError) {
+	  throw shapeAssertionError;
+	}
+	
+	// 错误提示
+	if (process.env.NODE_ENV !== 'production') {
+	  var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+	
+	  if (warningMessage) {
+	    warning(warningMessage);
+	  }
+	}
+	
+	var hasChanged = false;
+	var nextState = {};// 设置下一状态
+	   
+	/**
+	* 例子中有两个 reducer (items, location)
+	* const items = (state = [], action) => {
+		  switch (action.type) {
+		    case "ADD_ITEM":
+		      return [...state, { text: action.text }]
+		    default:
+		      return state
+		  }
+	  }
+	* const location = (state = window.location, action) => state;
+	* 
+	* combineReducers({items, location})
+	* 此时的 finalReducerKeys = [items, location]
+	* finalReducers={
+		 items: function items(){},
+		 location: function location()
+	  }
+	  
+	* 实现过程：
+	* 
+	* loop 1:
+	* 	_key = items;
+	* 	reducer = function items(){}
+	*  previousStateForKey = undefined
+	*  nextStateForKey = items(undefinded, {type: '@@redux/INIT.....'}) = []
+	*  nextState = {items: []}
+	*  
+	* loop 2:
+	* 	_key = location;
+	* 	reducer = function location(){}
+	*  previousStateForKey = undefined
+	*  nextStateForKey = location(undefinded, {type: '@@redux/INIT.....'}) = window.location
+	*  nextState = {items: [], location: window.location}
+	*  
+	*/
+	for (var _i = 0; _i < finalReducerKeys.length; _i++) {
+	  var _key = finalReducerKeys[_i];
+	  var reducer = finalReducers[_key];
+	  var previousStateForKey = state[_key];
+	  var nextStateForKey = reducer(previousStateForKey, action);
+	
+	  if (typeof nextStateForKey === 'undefined') {
+	    var errorMessage = getUndefinedStateErrorMessage(_key, action);
+	    throw new Error(errorMessage);
+	  }
+	
+	  nextState[_key] = nextStateForKey;
+	  hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+	}
+	
+	return hasChanged ? nextState : state;
+};
+~~~
 
 
 

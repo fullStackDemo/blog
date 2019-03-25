@@ -1,7 +1,6 @@
-import {combineReducers} from 'redux';
+import {combineReducers} from 'redux/lib/redux';
 
 const items = (state = [], action) => {
-  debugger
   switch (action.type) {
     case "ADD_ITEM":
       return [...state, { text: action.text }]
