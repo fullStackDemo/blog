@@ -528,21 +528,23 @@ function combination(state, action) {
 	* 	_key = items;
 	* 	reducer = function items(){}
 	*  previousStateForKey = undefined
-	*  nextStateForKey = items(undefinded, {type: '@@redux/INIT.....'}) = []
+	*  nextStateForKey = items(undefined, {type: '@@redux/INIT.....'}) = []
 	*  nextState = {items: []}
 	*  
 	* loop 2:
 	* 	_key = location;
-	* 	reducer = function location(){}
+	*  reducer = function location(){}
 	*  previousStateForKey = undefined
-	*  nextStateForKey = location(undefinded, {type: '@@redux/INIT.....'}) = window.location
+	*  nextStateForKey = location(undefined, {type: '@@redux/INIT.....'}) = window.location
 	*  nextState = {items: [], location: window.location}
 	*  
 	*/
 	for (var _i = 0; _i < finalReducerKeys.length; _i++) {
 	  var _key = finalReducerKeys[_i];
 	  var reducer = finalReducers[_key];
+	  // 读取 state 里面的上一个状态
 	  var previousStateForKey = state[_key];
+	  // 获取 下一个 state 状态 并且 合并数据
 	  var nextStateForKey = reducer(previousStateForKey, action);
 	
 	  if (typeof nextStateForKey === 'undefined') {
@@ -550,6 +552,7 @@ function combination(state, action) {
 	    throw new Error(errorMessage);
 	  }
 	
+	  // 赋值返回 nextState
 	  nextState[_key] = nextStateForKey;
 	  hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
 	}
