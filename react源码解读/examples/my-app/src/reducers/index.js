@@ -12,4 +12,4 @@ const items = (state = [], action) => {
 
 export default combineReducers({
   items
-})
+});
