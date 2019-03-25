@@ -48,8 +48,8 @@ class App extends Component {
   }
 
   handleClick() {
-    console.log(this);
-    this.props.addItem()
+    console.log(this.props.addItem());
+    
   }
 
 }

@@ -176,7 +176,7 @@ Store: {
 }
 ~~~
 
-### `createStore` ###
+### `createStore(reducer, preloadState, enhancer)` ###
 
 ~~~js
 
@@ -303,6 +303,8 @@ export default function createStore(reducer, preloadedState, enhancer) {
     let isSubscribed = true
 
     ensureCanMutateNextListeners()
+    
+    // 保存监听 回调函数 等 dispatch 时候 统一执行
     nextListeners.push(listener)
 
     return function unsubscribe() {
@@ -381,6 +383,10 @@ export default function createStore(reducer, preloadedState, enhancer) {
       isDispatching = false
     }
 
+	 /**
+	 * 这里的 listeners 是 subcribe 订阅的 callback
+	 * 所以每次 dispatch , 都会触发 订阅的 callback
+ 	 */ 
     const listeners = (currentListeners = nextListeners)
     for (let i = 0; i < listeners.length; i++) {
       const listener = listeners[i]
@@ -477,7 +483,7 @@ currentState = currentReducer(currentState, action)
 
 这里的 `currentReducer` 就是 `createStrore(reducer)` 里面的参数 `reducer`, 也就是`combineReducers` 函数的返回函数 `combination(state, action)`, 让我们再回顾一下 `combination` 里面说的什么；
 
-### combination
+### `combination(state, action)`
 
 ~~~js
 
@@ -560,6 +566,20 @@ function combination(state, action) {
 	return hasChanged ? nextState : state;
 };
 ~~~
+
+### `getState()`
+
+`getState` 这个方法就很简单了，只是返回 `currentState`。
+
+### `subscribe(listener)`
+
+订阅这块，就是保持每一个`listener callback` 到 `listeners` 数组里，等到 执行 `dispatch(action)`, 再一个个循环执行。最有意思的就是返回值是一个 `unsubscribe function`, 顾名思义就是解除订阅，用法稍后再说。
+
+### `replaceReducer(nextReducer)`
+
+其实就替换`reducer`, 一般热加载的时候会用到。
+
+
 
 
 
