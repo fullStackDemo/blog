@@ -18,11 +18,11 @@ class Test extends React.Component {
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props);    
     this.state = { date: (new Date()) }
     this.handleClick = this.handleClick.bind(this)
     console.log('app store', this.props);
-    this.props.addItem(999);
+    // this.props.addItem(999);
   }
   render() {
     return (
@@ -61,7 +61,6 @@ class App extends Component {
 
 // console.log(React, Component);
 // console.log(tem, Object.keys(tem));
-
 
 
 export default connect(
