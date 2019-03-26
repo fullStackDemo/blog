@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import Router from './router/index'
 
 import store from './store';
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
 
 
 // ReactDOM.render(

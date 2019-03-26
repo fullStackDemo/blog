@@ -63,20 +63,21 @@ class App extends Component {
 // console.log(React, Component);
 // console.log(tem, Object.keys(tem));
 
+export default App;
 
-export default connect(
-  ((state, ownProps) => {
-    console.log('state', ownProps);
-    return {
-      data: state.items
-    }
-  }),
-  (dispatch, ownProps) => {
-    console.log('dispatch', ownProps);
-    return {
-      addItem: () => {
-        dispatch(addItem(ownProps.name))
-      }
-    }
-  }
-)(App);
+// export default connect(
+//   ((state, ownProps) => {
+//     console.log('state', ownProps);
+//     return {
+//       data: state.items
+//     }
+//   }),
+//   (dispatch, ownProps) => {
+//     console.log('dispatch', ownProps);
+//     return {
+//       addItem: () => {
+//         dispatch(addItem(ownProps.name))
+//       }
+//     }
+//   }
+// )(App);

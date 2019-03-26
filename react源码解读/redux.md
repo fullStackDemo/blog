@@ -579,8 +579,138 @@ function combination(state, action) {
 
 其实就替换`reducer`, 一般热加载的时候会用到。
 
+Usage with React
+----------------
 
+我们大致已经了解了 `store` 了， 但是如何结合 `react` 使用呢？
 
+这里需要了解一下 `react-redux` 提供的 `<Provide />` 组件，这是一个 `container component`, 用例：
+
+~~~js
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import todoApp from './reducers'
+import App from './components/App'
+
+const store = createStore(todoApp)
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
+~~~
+
+### `Provider` ###
+
+~~~js
+
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { ReactReduxContext } from './Context'
+
+class Provider extends Component {
+  constructor(props) {
+    super(props)
+    
+    // 获取 stroe
+    const { store } = props
+    this.state = {
+      // 当前 state
+      storeState: store.getState(),
+      store
+    }
+  }
+
+  componentDidMount() {
+    this._isMounted = true
+    this.subscribe()
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribe) this.unsubscribe()
+
+    this._isMounted = false
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.store !== prevProps.store) {
+      if (this.unsubscribe) this.unsubscribe()
+
+      this.subscribe()
+    }
+  }
+
+  subscribe() {
+    const { store } = this.props
+
+    this.unsubscribe = store.subscribe(() => {
+      const newStoreState = store.getState()
+
+      if (!this._isMounted) {
+        return
+      }
+
+      this.setState(providerState => {
+        // If the value is the same, skip the unnecessary state update.
+        if (providerState.storeState === newStoreState) {
+          return null
+        }
+
+        return { storeState: newStoreState }
+      })
+    })
+
+    // Actions might have been dispatched between render and mount - handle those
+    const postMountStoreState = store.getState()
+    if (postMountStoreState !== this.state.storeState) {
+      this.setState({ storeState: postMountStoreState })
+    }
+  }
+
+  render() {
+    const Context = this.props.context || ReactReduxContext
+
+    return (
+      <Context.Provider value={this.state}>
+        {this.props.children}
+      </Context.Provider>
+    )
+  }
+}
+
+Provider.propTypes = {
+  store: PropTypes.shape({
+    subscribe: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    getState: PropTypes.func.isRequired
+  }),
+  context: PropTypes.object,
+  children: PropTypes.any
+}
+
+export default Provider
+
+~~~
+
+如图:
+
+![](./images/provider.png)
+
+`Provide` 可以传递 `Store` 给子组件, 但是此时 `<App />`
+
+~~~js
+<App />
+  props: {}
+  state: {}
+~~~
+
+如果获取`state` 到 `<App />`呢? 此时我们需要了解一下 `connect`
+
+### `connect` ###
 
 
 
