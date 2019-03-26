@@ -712,6 +712,89 @@ export default Provider
 
 ### `connect` ###
 
+~~~js
+function connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+  {
+    pure = true,
+    areStatesEqual = strictEqual,
+    areOwnPropsEqual = shallowEqual,
+    areStatePropsEqual = shallowEqual,
+    areMergedPropsEqual = shallowEqual,
+    ...extraOptions
+  } = {}
+) {
+  const initMapStateToProps = match(
+    mapStateToProps,
+    mapStateToPropsFactories,
+    'mapStateToProps'
+  )
+  const initMapDispatchToProps = match(
+    mapDispatchToProps,
+    mapDispatchToPropsFactories,
+    'mapDispatchToProps'
+  )
+  const initMergeProps = match(mergeProps, mergePropsFactories, 'mergeProps')
+  
+  /**
+  * 默认：
+  * connectHOC = connectAdvanced
+    mapStateToPropsFactories = defaultMapStateToPropsFactories
+    mapDispatchToPropsFactories = defaultMapDispatchToPropsFactories
+    mergePropsFactories = defaultMergePropsFactories
+    selectorFactory = defaultSelectorFactory
+  */
+  return connectHOC(selectorFactory, {
+    // used in error messages
+    methodName: 'connect',
+
+    // used to compute Connect's displayName from the wrapped component's displayName.
+    getDisplayName: name => `Connect(${name})`,
+
+    // if mapStateToProps is falsy, the Connect component doesn't subscribe to store state changes
+    shouldHandleStateChanges: Boolean(mapStateToProps),
+
+    // passed through to selectorFactory
+    initMapStateToProps,
+    initMapDispatchToProps,
+    initMergeProps,
+    pure,
+    areStatesEqual,
+    areOwnPropsEqual,
+    areStatePropsEqual,
+    areMergedPropsEqual,
+
+    // any extra options args can override defaults of connect or connectAdvanced
+    ...extraOptions
+  })
+}
+~~~
+
+~~~js
+// 在子组件
+export default connect(
+  ((state, ownProps) => {
+    return {
+      data: state.items
+    }
+  }),
+  (dispatch, ownProps) => {
+    return {
+      addItem: () => {
+        dispatch(addItem(ownProps.name))
+      }
+    }
+  }
+)(App);
+
+~~~
+
+`connet()(App)` ==> `connectHoc(App)` ==> `connectAdvanced(App)`
+
+### `connectAdvanced` ###
+
 
 
 

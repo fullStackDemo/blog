@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { connect } from 'react-redux';
+import connect  from 'react-redux/es/connect/connect';
 import { addItem } from './actions'
 
 class Test extends React.Component {
@@ -63,21 +63,22 @@ class App extends Component {
 // console.log(React, Component);
 // console.log(tem, Object.keys(tem));
 
-export default App;
+// export default connect()(App);
 
-// export default connect(
-//   ((state, ownProps) => {
-//     console.log('state', ownProps);
-//     return {
-//       data: state.items
-//     }
-//   }),
-//   (dispatch, ownProps) => {
-//     console.log('dispatch', ownProps);
-//     return {
-//       addItem: () => {
-//         dispatch(addItem(ownProps.name))
-//       }
-//     }
-//   }
-// )(App);
+console.log('App', App);
+
+
+export default connect(
+  ((state, ownProps) => {
+    return {
+      data: state.items
+    }
+  }),
+  (dispatch, ownProps) => {
+    return {
+      addItem: () => {
+        dispatch(addItem(ownProps.name))
+      }
+    }
+  }
+)(App);
