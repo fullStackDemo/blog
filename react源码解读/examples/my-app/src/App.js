@@ -65,7 +65,6 @@ class App extends Component {
 
 // export default connect()(App);
 
-console.log('App', App);
 
 
 export default connect(
