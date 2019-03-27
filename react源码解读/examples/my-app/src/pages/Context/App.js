@@ -25,9 +25,17 @@ function Toolbar(props) {
 }
 
 class ThemeButton extends Component {
-  static contextType = ThemeContext;
+  // static contextType = ThemeContext;
   render() {
-    return <button theme={this.context}>test</button>
+    return (
+      <ThemeContext.Consumer>
+        {this.renderComponent}
+      </ThemeContext.Consumer>
+    )
+    // return <button theme={this.context}>test</button>
+  }
+  renderComponent(value){    
+    return <button theme={value}>test</button> 
   }
 }
 

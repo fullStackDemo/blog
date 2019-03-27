@@ -145,12 +145,14 @@ contextType 可以绑定一个 context object 到组件上，这样就可以读�
 
 这里 `{value => {}}` 其实就是一个 `function component` 组件, 可以随时订阅 `value` 的变化
 
+底层原理
+----
 
 晓得了基本用法，让我们来看看源码：
 
 ~~~js
 
-
+// context
 function createContext(defaultValue, calculateChangedBits) {
   if (calculateChangedBits === undefined) {
     calculateChangedBits = null;
@@ -161,6 +163,7 @@ function createContext(defaultValue, calculateChangedBits) {
   }
 
   var context = {
+    // Symbol.for('react.context')
     $$typeof: REACT_CONTEXT_TYPE,
     _calculateChangedBits: calculateChangedBits,
     // As a workaround to support multiple concurrent renderers, we categorize
@@ -179,6 +182,7 @@ function createContext(defaultValue, calculateChangedBits) {
   };
 
   context.Provider = {
+    // Symbol.for('react.provider')
     $$typeof: REACT_PROVIDER_TYPE,
     _context: context
   };
@@ -256,5 +260,7 @@ function createContext(defaultValue, calculateChangedBits) {
 }
 
 ~~~
+
+源码还是相对简单理解的，具体关联稍后再说。
 
 
