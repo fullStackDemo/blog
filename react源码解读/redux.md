@@ -1242,6 +1242,31 @@ render() {
 }
 ~~~
 
+此时的`React Dom` 结构是：
+~~~js
+/**
+* Provider:
+*   props: {
+*     store: {getState, dispatch, replaceReducer, subscribe},
+*     chilren: ...
+*   }
+*   state: {
+*     store: {getState, dispatch, replaceReducer, subscribe},
+*     storeState: {item, location}
+*   }
+*   
+*/
+<Provider>
+  /**
+  * Context.Provider: 
+  *    props:{children, Provider.state}
+  */
+  <Context.Provider>
+    <App />
+  </Context.Provider>
+</Provider>
+~~~
+
 `Provider`组件的作用到此结束，接下就要说明 `connect` 是如何把 `state` 变成后代组件的 `props`。
 
 
