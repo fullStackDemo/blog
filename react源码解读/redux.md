@@ -1182,6 +1182,72 @@ wrapWithConnect 这里最终生成的也是一个`connect组件`。
 ![](./images/connect.png)
 
 
+### 现在我们从头梳理一下整个过程 ###
+
+首先通过 `<Provider></Provider> `包裹 `<App />`,
+~~~js
+<Provider>
+  <App />
+</Provider>
+~~~
+在 `Provder` 中首先通过`Props` 获取到 `store`,
+~~~js
+const { store } = props
+this.state = {
+  storeState: store.getState(),
+  store
+}
+~~~
+在`componentDidMount` 之后发布了一个订阅去同步更新 `state.storeState`,
+~~~js
+subscribe() {
+  const { store } = this.props
+
+  this.unsubscribe = store.subscribe(() => {
+    const newStoreState = store.getState()
+
+    if (!this._isMounted) {
+      return
+    }
+    //同步更新state 然后同步 context value 更新后代组件
+    this.setState(providerState => {
+      // If the value is the same, skip the unnecessary state update.
+      if (providerState.storeState === newStoreState) {
+        return null
+      }
+
+      return { storeState: newStoreState }
+    })
+  })
+
+  // Actions might have been dispatched between render and mount - handle those
+  const postMountStoreState = store.getState()
+  if (postMountStoreState !== this.state.storeState) {
+    this.setState({ storeState: postMountStoreState })
+  }
+}
+~~~
+最后重点部分，`state` 是如何下传给后代组件`<App />`,
+~~~js
+render() {
+  // this.props.context 显然为空，所以 Context = React.createContext(null)
+  const Context = this.props.context || ReactReduxContext
+
+  return (
+    <Context.Provider value={this.state}>
+       // 后代组件可以通过 value 去获取 state
+      {this.props.children}
+    </Context.Provider>
+  )
+}
+~~~
+
+`Provider`组件的作用到此结束，接下就要说明 `connect` 是如何把 `state` 变成后代组件的 `props`。
+
+
+
+
+
 
 
 

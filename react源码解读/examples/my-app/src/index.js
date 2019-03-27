@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
-import App from './pages/Context/App';
+import App from './App';
+// import App from './pages/Context/App';
 import * as serviceWorker from './serviceWorker';
 import Router from './router/index'
 
