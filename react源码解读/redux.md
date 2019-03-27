@@ -1101,7 +1101,8 @@ function connectAdvanced(
         // calling renderWrappedComponent on prototype from indirectRenderWrappedComponent bound to `this`
         return this.renderWrappedComponent(value)
       }
-
+      
+      // 此时value = {storeState, store} 
       renderWrappedComponent(value) {
         invariant(
           value,
@@ -1119,14 +1120,16 @@ function connectAdvanced(
           wrapperProps = this.props.wrapperProps
           forwardedRef = this.props.forwardedRef
         }
-
+        
+        // 派生混合 props = {dataa: {}, items = {}}
         let derivedProps = this.selectDerivedProps(
           storeState,
           wrapperProps,
           store,
           selectorFactoryOptions
         )
-
+        
+        // 植入到 childElement
         return this.selectChildElement(
           WrappedComponent,
           derivedProps,
@@ -1175,10 +1178,6 @@ function connectAdvanced(
 ~~~
 
 wrapWithConnect 这里最终生成的也是一个`connect组件`。
-
-不过我们这里需要向讲一下 `Context`
-
-~~~js
 
 ~~~
 
