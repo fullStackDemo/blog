@@ -1186,7 +1186,7 @@ wrapWithConnect 这里最终生成的也是一个`connect组件`。
 
 首先通过 `<Provider></Provider> `包裹 `<App />`,
 ~~~js
-<Provider>
+<Provider store={store}>
   <App />
 </Provider>
 ~~~
