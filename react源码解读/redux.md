@@ -770,6 +770,7 @@ function connect(
     ...extraOptions
   })
 }
+
 ~~~
 
 ~~~js
@@ -791,9 +792,384 @@ export default connect(
 
 ~~~
 
-`connet()(App)` ==> `connectHoc(App)` ==> `connectAdvanced(App)`
+`connet(mapStateToProps, mapDispatchToProps, mapProps)(App)` => `connectHoc(App, {...opts})` => `connectAdvanced(App)`
+
+关于 `initMapStateToProps`、`initMapDispatchToProps`、`wrapMapToPropsFunc` 初始化的方法稍微讲解一下
+
+~~~js
+
+function match(arg, factories, name) {
+  for (let i = factories.length - 1; i >= 0; i--) {
+    const result = factories[i](arg)
+    if (result) return result
+  }
+
+  return (dispatch, options) => {
+    throw new Error(
+      `Invalid value of type ${typeof arg} for ${name} argument when connecting component ${
+        options.wrappedComponentName
+      }.`
+    )
+  }
+}
+
+~~~
+
+### initMapStateToProps ###
+
+~~~js
+
+ mapStateToProps: (state, ownProp)=> {return {state}}
+ mapStateToPropsFactories: [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing]
+ 
+ //此时mapStateToProps 是个 function, 所以执行 whenMapStateToPropsIsFunction
+  
+~~~
+### `whenMapStateToPropsIsFunction` | `whenMapStateToPropsIsMissing` ###
+~~~js
+export function whenMapStateToPropsIsFunction(mapStateToProps) {
+  return typeof mapStateToProps === 'function'
+    ? wrapMapToPropsFunc(mapStateToProps, 'mapStateToProps')
+    : undefined
+}
+
+export function whenMapStateToPropsIsMissing(mapStateToProps) {
+  return !mapStateToProps ? wrapMapToPropsConstant(() => ({})) : undefined
+}
+
+// Used by whenMapStateToPropsIsFunction and whenMapDispatchToPropsIsFunction,
+// this function wraps mapToProps in a proxy function which does several things:
+//
+//  * Detects whether the mapToProps function being called depends on props, which
+//    is used by selectorFactory to decide if it should reinvoke on props changes.
+//
+//  * On first call, handles mapToProps if returns another function, and treats that
+//    new function as the true mapToProps for subsequent calls.
+//
+//  * On first call, verifies the first result is a plain object, in order to warn
+//    the developer that their mapToProps function is not returning a valid result.
+//
+export function wrapMapToPropsFunc(mapToProps, methodName) {
+  return function initProxySelector(dispatch, { displayName }) {
+    const proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
+      return proxy.dependsOnOwnProps
+        ? proxy.mapToProps(stateOrDispatch, ownProps)
+        : proxy.mapToProps(stateOrDispatch)
+    }
+
+    // allow detectFactoryAndVerify to get ownProps
+    proxy.dependsOnOwnProps = true
+
+    proxy.mapToProps = function detectFactoryAndVerify(
+      stateOrDispatch,
+      ownProps
+    ) {
+      proxy.mapToProps = mapToProps
+      //判断是否 带有 props 作为参数
+      proxy.dependsOnOwnProps = getDependsOnOwnProps(mapToProps)
+      let props = proxy(stateOrDispatch, ownProps)
+
+      if (typeof props === 'function') {
+        proxy.mapToProps = props
+        proxy.dependsOnOwnProps = getDependsOnOwnProps(props)
+        props = proxy(stateOrDispatch, ownProps)
+      }
+
+      if (process.env.NODE_ENV !== 'production')
+        verifyPlainObject(props, displayName, methodName)
+
+      return props
+    }
+
+    return proxy
+  }
+}
+~~~
+
+`wrapMapToPropsFunc` 返回一个 `initProxySelector(dispatch, {displayName}) => proxy(stateOrDispatch, ownProps)`
+
+其余两个不再赘述，有空再讲解。
 
 ### `connectAdvanced` ###
+
+~~~js
+
+function connectAdvanced(
+ 
+  selectorFactory,
+  // 默认参数
+  {
+    // the func used to compute this HOC's displayName from the wrapped component's displayName.
+    // probably overridden by wrapper functions such as connect()
+    getDisplayName = name => `ConnectAdvanced(${name})`,
+
+    // shown in error messages
+    // probably overridden by wrapper functions such as connect()
+    methodName = 'connectAdvanced',
+
+    // REMOVED: if defined, the name of the property passed to the wrapped element indicating the number of
+    // calls to render. useful for watching in react devtools for unnecessary re-renders.
+    renderCountProp = undefined,
+
+    // determines whether this HOC subscribes to store changes
+    shouldHandleStateChanges = true,
+
+    // REMOVED: the key of props/context to get the store
+    storeKey = 'store',
+
+    // REMOVED: expose the wrapped component via refs
+    withRef = false,
+
+    // use React's forwardRef to expose a ref of the wrapped component
+    forwardRef = false,
+
+    // the context consumer to use
+    context = ReactReduxContext,
+
+    // additional options are passed through to the selectorFactory
+    ...connectOptions
+  } = {}
+) {
+
+  /**
+  * connectHOC 之前代码 一一对应
+  * {
+      // used in error messages
+      methodName: 'connect',
+
+      // used to compute Connect's displayName from the wrapped component's displayName.
+      // connect(App)
+      getDisplayName: name => `Connect(${name})`,
+
+      // if mapStateToProps is falsy, the Connect component doesn't subscribe to store state changes
+      shouldHandleStateChanges: Boolean(mapStateToProps),
+
+      // passed through to selectorFactory
+      initMapStateToProps,
+      initMapDispatchToProps,
+      initMergeProps,
+      pure,
+      areStatesEqual,
+      areOwnPropsEqual,
+      areStatePropsEqual,
+      areMergedPropsEqual,
+
+      // any extra options args can override defaults of connect or connectAdvanced
+      ...extraOptions
+    }
+  */
+  
+  //React.createContext(null)
+  const Context = context
+
+  return function wrapWithConnect(WrappedComponent) {
+    ....
+    
+    // 结果是 APP
+    const wrappedComponentName =
+      WrappedComponent.displayName || WrappedComponent.name || 'Component'
+
+    // Connect(App)
+    const displayName = getDisplayName(wrappedComponentName)
+    
+    
+    /**
+    * 合并 options:
+    * 
+    * WrappedComponent: ƒ App(props)
+      areMergedPropsEqual: ƒ shallowEqual(objA, objB)
+      areOwnPropsEqual: ƒ shallowEqual(objA, objB)
+      areStatePropsEqual: ƒ shallowEqual(objA, objB)
+      areStatesEqual: ƒ strictEqual(a, b)
+      displayName: "Connect(App)"
+      getDisplayName: ƒ getDisplayName(name)
+      initMapDispatchToProps: ƒ initProxySelector(dispatch, _ref)
+      initMapStateToProps: ƒ initProxySelector(dispatch, _ref)
+      initMergeProps: ƒ ()
+      methodName: "connect"
+      pure: true
+      renderCountProp: undefined
+      shouldHandleStateChanges: true
+      storeKey: "store"
+      wrappedComponentName: "App"
+      
+    */
+    const selectorFactoryOptions = {
+      ...connectOptions,
+      getDisplayName,
+      methodName,
+      renderCountProp,
+      shouldHandleStateChanges,
+      storeKey,
+      displayName,
+      wrappedComponentName,
+      WrappedComponent
+    }
+
+    const { pure } = connectOptions
+
+    let OuterBaseComponent = Component
+
+    if (pure) {
+      OuterBaseComponent = PureComponent
+    }
+
+    function makeDerivedPropsSelector() {
+      let lastProps
+      let lastState
+      let lastDerivedProps
+      let lastStore
+      let lastSelectorFactoryOptions
+      let sourceSelector
+
+      return function selectDerivedProps(
+        state,
+        props,
+        store,
+        selectorFactoryOptions
+      ) {
+        if (pure && lastProps === props && lastState === state) {
+          return lastDerivedProps
+        }
+
+        if (
+          store !== lastStore ||
+          lastSelectorFactoryOptions !== selectorFactoryOptions
+        ) {
+          lastStore = store
+          lastSelectorFactoryOptions = selectorFactoryOptions
+          sourceSelector = selectorFactory(
+            store.dispatch,
+            selectorFactoryOptions
+          )
+        }
+
+        lastProps = props
+        lastState = state
+
+        const nextProps = sourceSelector(state, props)
+
+        lastDerivedProps = nextProps
+        return lastDerivedProps
+      }
+    }
+
+    function makeChildElementSelector() {
+      let lastChildProps, lastForwardRef, lastChildElement, lastComponent
+
+      return function selectChildElement(
+        WrappedComponent,
+        childProps,
+        forwardRef
+      ) {
+        if (
+          childProps !== lastChildProps ||
+          forwardRef !== lastForwardRef ||
+          lastComponent !== WrappedComponent
+        ) {
+          lastChildProps = childProps
+          lastForwardRef = forwardRef
+          lastComponent = WrappedComponent
+          lastChildElement = (
+            <WrappedComponent {...childProps} ref={forwardRef} />
+          )
+        }
+
+        return lastChildElement
+      }
+    }
+
+    class Connect extends OuterBaseComponent {
+      constructor(props) {
+        super(props)
+        invariant(
+          forwardRef ? !props.wrapperProps[storeKey] : !props[storeKey],
+          'Passing redux store in props has been removed and does not do anything. ' +
+            customStoreWarningMessage
+        )
+        this.selectDerivedProps = makeDerivedPropsSelector()
+        this.selectChildElement = makeChildElementSelector()
+        this.indirectRenderWrappedComponent = this.indirectRenderWrappedComponent.bind(
+          this
+        )
+      }
+
+      indirectRenderWrappedComponent(value) {
+        // calling renderWrappedComponent on prototype from indirectRenderWrappedComponent bound to `this`
+        return this.renderWrappedComponent(value)
+      }
+
+      renderWrappedComponent(value) {
+        invariant(
+          value,
+          `Could not find "store" in the context of ` +
+            `"${displayName}". Either wrap the root component in a <Provider>, ` +
+            `or pass a custom React context provider to <Provider> and the corresponding ` +
+            `React context consumer to ${displayName} in connect options.`
+        )
+        const { storeState, store } = value
+
+        let wrapperProps = this.props
+        let forwardedRef
+
+        if (forwardRef) {
+          wrapperProps = this.props.wrapperProps
+          forwardedRef = this.props.forwardedRef
+        }
+
+        let derivedProps = this.selectDerivedProps(
+          storeState,
+          wrapperProps,
+          store,
+          selectorFactoryOptions
+        )
+
+        return this.selectChildElement(
+          WrappedComponent,
+          derivedProps,
+          forwardedRef
+        )
+      }
+
+      render() {
+        const ContextToUse =
+          this.props.context &&
+          this.props.context.Consumer &&
+          isContextConsumer(<this.props.context.Consumer />)
+            ? this.props.context
+            : Context
+
+        return (
+          <ContextToUse.Consumer>
+            {this.indirectRenderWrappedComponent}
+          </ContextToUse.Consumer>
+        )
+      }
+    }
+
+    Connect.WrappedComponent = WrappedComponent
+    Connect.displayName = displayName
+
+    if (forwardRef) {
+      const forwarded = React.forwardRef(function forwardConnectRef(
+        props,
+        ref
+      ) {
+        return <Connect wrapperProps={props} forwardedRef={ref} />
+      })
+
+      forwarded.displayName = displayName
+      forwarded.WrappedComponent = WrappedComponent
+      return hoistStatics(forwarded, WrappedComponent)
+    }
+
+    return hoistStatics(Connect, WrappedComponent)
+  }
+}
+
+
+~~~
+
 
 
 

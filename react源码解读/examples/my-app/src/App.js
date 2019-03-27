@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import connect  from 'react-redux/es/connect/connect';
+import {connect}  from 'react-redux/es/index';
 import { addItem } from './actions'
 
 class Test extends React.Component {
