@@ -1300,7 +1300,7 @@ context = ReactReduxContext
 
 ### 注意： ### 
 
-此处的`context`和 `Provider` 里面引用的 `ReactReduxContext` 是同一个，所以改组件将可以和 `Provider` 关联起来，可以获取最近的 `<Context.Provider>` 里面的 `value = {store, storeState}` 值。
+此处的`context`和 `Provider` 里面引用的 `ReactReduxContext` 是同一个，所以该组件将可以和 `Provider` 关联起来，可以获取最近的 `<Context.Provider>` 里面的 `value = {store, storeState}` 值。
 
 ### wrapWithConnect ###
 
@@ -1413,8 +1413,45 @@ function selectChildElement(
 
 到现在为止，`state` 怎么变成 `props` 已经很明显了。
 
+最终 `React Dom` 结构如下：
 
+~~~js
 
+/**
+* Provider:
+*   props: {
+*     store: {getState, dispatch, replaceReducer, subscribe},
+*     chilren: ...
+*   }
+*   state: {
+*     store: {getState, dispatch, replaceReducer, subscribe},
+*     storeState: {item, location}
+*   }
+*   
+*/
+<Provider>
+  /**
+  * Context.Provider: 
+  *    props:{
+  *      children,
+  *      value: {store, storeState}
+  *    }
+  */
+  <Context.Provider>
+    // props: {}
+    <Connect>
+      // props:{children:bound indirectRenderWrappedComponent()}
+      <Context.Consumer>
+        // props: {data, items}
+        <App />
+      </Context.Consumer>
+    </Connect>
+  </Context.Provider>
+</Provider>
+
+~~~
+
+`Redux`暂时完结，以后再详细讲解其中的一些部分。
 
 
 
