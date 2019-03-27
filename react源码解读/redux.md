@@ -1179,9 +1179,7 @@ function connectAdvanced(
 
 wrapWithConnect 这里最终生成的也是一个`connect组件`。
 
-~~~
-
-
+![](./images/connect.png)
 
 
 
