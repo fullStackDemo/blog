@@ -1244,6 +1244,7 @@ render() {
 ~~~
 
 此时的`React Dom` 结构是：
+
 ~~~js
 /**
 * Provider:
@@ -1302,7 +1303,7 @@ context = ReactReduxContext
 
 此处的`context`和 `Provider` 里面引用的 `ReactReduxContext` 是同一个，所以该组件将可以和 `Provider` 关联起来，可以获取最近的 `<Context.Provider>` 里面的 `value = {store, storeState}` 值。
 
-### wrapWithConnect ###
+### `wrapWithConnect` ###
 
 所以在 `react-redux/src/components/connectAdvanced.js` 中 wrapWithConnect 里面有这样的一个 render:
 
