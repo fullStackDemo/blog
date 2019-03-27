@@ -965,7 +965,7 @@ function connectAdvanced(
   return function wrapWithConnect(WrappedComponent) {
     ....
     
-    // 结果是 APP
+    // 结果是 App
     const wrappedComponentName =
       WrappedComponent.displayName || WrappedComponent.name || 'Component'
 
@@ -991,8 +991,7 @@ function connectAdvanced(
       renderCountProp: undefined
       shouldHandleStateChanges: true
       storeKey: "store"
-      wrappedComponentName: "App"
-      
+      wrappedComponentName: "App"  
     */
     const selectorFactoryOptions = {
       ...connectOptions,
@@ -1005,7 +1004,8 @@ function connectAdvanced(
       wrappedComponentName,
       WrappedComponent
     }
-
+    
+    // true
     const { pure } = connectOptions
 
     let OuterBaseComponent = Component
@@ -1014,6 +1014,7 @@ function connectAdvanced(
       OuterBaseComponent = PureComponent
     }
 
+    // 合并 props
     function makeDerivedPropsSelector() {
       let lastProps
       let lastState
@@ -1054,6 +1055,8 @@ function connectAdvanced(
       }
     }
 
+
+    // 合并 props 到 组件 App 上
     function makeChildElementSelector() {
       let lastChildProps, lastForwardRef, lastChildElement, lastComponent
 
@@ -1132,6 +1135,7 @@ function connectAdvanced(
       }
 
       render() {
+        // 这里 ContextToUse == Context
         const ContextToUse =
           this.props.context &&
           this.props.context.Consumer &&
@@ -1169,6 +1173,15 @@ function connectAdvanced(
 
 
 ~~~
+
+wrapWithConnect 这里最终生成的也是一个`connect组件`。
+
+不过我们这里需要向讲一下 `Context`
+
+~~~js
+
+~~~
+
 
 
 
