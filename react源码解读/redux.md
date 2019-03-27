@@ -1190,7 +1190,7 @@ wrapWithConnect 这里最终生成的也是一个`connect组件`。
   <App />
 </Provider>
 ~~~
-在 `Provder` 中首先通过`Props` 获取到 `store`,
+在 `Provider` 中首先通过`Props` 获取到 `store`,
 ~~~js
 const { store } = props
 this.state = {
@@ -1229,6 +1229,7 @@ subscribe() {
 ~~~
 最后重点部分，`state` 是如何下传给后代组件`<App />`,
 ~~~js
+import { ReactReduxContext } from './Context'
 render() {
   // this.props.context 显然为空，所以 Context = React.createContext(null)
   const Context = this.props.context || ReactReduxContext
@@ -1259,7 +1260,10 @@ render() {
 <Provider>
   /**
   * Context.Provider: 
-  *    props:{children, Provider.state}
+  *    props:{
+  *      children,
+  *      value: {store, storeState}
+  *    }
   */
   <Context.Provider>
     <App />
@@ -1268,6 +1272,152 @@ render() {
 ~~~
 
 `Provider`组件的作用到此结束，接下就要说明 `connect` 是如何把 `state` 变成后代组件的 `props`。
+
+首先，需要调用 `connect` 方法把当前组件`<App />` 进行包装处理：
+
+~~~js
+export default connect(
+  ((state, ownProps) => {
+    return {
+      data: state.items
+    }
+  }),
+  (dispatch, ownProps) => {
+    return {
+      addItem: () => {
+        dispatch(addItem(ownProps.name))
+      }
+    }
+  }
+)(App);
+~~~
+
+`connet(mapStateToProps, mapDispatchToProps)(App)`, 最终经过一系列中间过程最终执行的其实就是 `wrapWithConnect`，这时候
+~~~js
+import { ReactReduxContext } from './Context'
+context = ReactReduxContext
+~~~
+
+### 注意： ### 
+
+此处的`context`和 `Provider` 里面引用的 `ReactReduxContext` 是同一个，所以改组件将可以和 `Provider` 关联起来，可以获取最近的 `<Context.Provider>` 里面的 `value = {store, storeState}` 值。
+
+### wrapWithConnect ###
+
+所以在 `react-redux/src/components/connectAdvanced.js` 中 wrapWithConnect 里面有这样的一个 render:
+
+~~~js
+
+class Connect extends OuterBaseComponent {
+  constructor(props) {
+    super(props)
+    ...
+    this.selectDerivedProps = makeDerivedPropsSelector()
+    this.selectChildElement = makeChildElementSelector()
+    this.indirectRenderWrappedComponent = this.indirectRenderWrappedComponent.bind(
+      this
+    )
+  }
+
+  indirectRenderWrappedComponent(value) {
+    // calling renderWrappedComponent on prototype from indirectRenderWrappedComponent bound to `this`
+    return this.renderWrappedComponent(value)
+  }
+
+  renderWrappedComponent(value) {
+    ....
+    const { storeState, store } = value
+
+    let wrapperProps = this.props
+    let forwardedRef
+
+    if (forwardRef) {
+      wrapperProps = this.props.wrapperProps
+      forwardedRef = this.props.forwardedRef
+    }
+
+    let derivedProps = this.selectDerivedProps(
+      storeState,
+      wrapperProps,
+      store,
+      selectorFactoryOptions
+    )
+
+    //生成新的组件
+    return this.selectChildElement(
+      WrappedComponent,
+      derivedProps,
+      forwardedRef
+    )
+  }
+
+  render() {
+    // 这里明显是 Context 还是刚才的那个 ReactReduxContext
+    const ContextToUse =
+      this.props.context &&
+        this.props.context.Consumer &&
+        isContextConsumer(<this.props.context.Consumer />)
+        ? this.props.context
+        : Context
+
+    return (
+      //Context.Consumer 可以绑定 value 到 component function 里面，也就是this.indirectRenderWrappedComponent(value)
+      <ContextToUse.Consumer>
+        {this.indirectRenderWrappedComponent}
+      </ContextToUse.Consumer>
+    )
+  }
+}
+~~~
+
+简单看下 `this.indirectRenderWrappedComponent` :
+
+~~~js
+//生成新的组件
+return this.selectChildElement(
+  WrappedComponent,// <App />
+  derivedProps,// {data, items}
+  forwardedRef
+)
+~~~
+
+~~~js
+function selectChildElement(
+  WrappedComponent,
+  childProps,
+  forwardRef
+) {
+  if (
+    childProps !== lastChildProps ||
+    forwardRef !== lastForwardRef ||
+    lastComponent !== WrappedComponent
+  ) {
+    lastChildProps = childProps
+    lastForwardRef = forwardRef
+    lastComponent = WrappedComponent
+    lastChildElement = (
+      <WrappedComponent {...childProps} ref={forwardRef} />
+    )
+  }
+
+  return lastChildElement
+}
+~~~
+前面经过一系列 mapStateToProps 和 mapDispatchToProps 的处理，最终:
+
+~~~js
+<WrappedComponent {...childProps} ref={forwardRef} />
+也就是
+<App {...childProps} ref={forwardRef} />
+~~~
+
+到现在为止，`state` 怎么变成 `props` 已经很明显了。
+
+
+
+
+
+
 
 
 
