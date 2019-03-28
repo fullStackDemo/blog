@@ -1336,9 +1336,18 @@ constructor (
 
 在`this.get()`中，我们会调用`this.getter`，所以上面的例子中，`updateComponent`方法会被调用，所以接下来沿着`updateComponent`再一路找下去。
 
+总结
+--
+总结一下 `Vue` 的 `lifecycle` 生命周期
+
+![](../images/lifecycle.png)
+
+
+
+
 ---
 
-==下一章节==，[双向数据绑定](./双向数据绑定.md)
+下一章节，[双向数据绑定](./双向数据绑定.md)
 
 
 
