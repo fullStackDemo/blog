@@ -1457,18 +1457,97 @@ function initGlobalAPI (Vue) {
   
   /**
   * Vue = ["util", "set", "delete", "nextTick", "observable", "options", "use", "mixin", "cid", "extend", "component", "directive", "filter"]
+  * Vue.options:
+      components: {KeepAlive: {…}}
+      directives: {}
+      filters: {}
+      _base: ƒ Vue(options)
   */
 }
 
 ~~~
 
+### 2、执行 `initMixin` ###
 
 ~~~js
- // beforeCreate 之前
- initEvent
- initLifecycle
- initRender
+
+function initMixin (Vue) {
+  Vue.prototype._init = function (options) {
+    var vm = this;
+    // a uid
+    vm._uid = uid$3++;
+    ....
+    // a flag to avoid this being observed
+    vm._isVue = true;
+
+    // merge options
+    if (options && options._isComponent) {
+      // optimize internal component instantiation
+      // since dynamic options merging is pretty slow, and none of the
+      // internal component options needs special treatment.
+      initInternalComponent(vm, options);
+    } else {
+      vm.$options = mergeOptions(
+        resolveConstructorOptions(vm.constructor),
+        options || {},
+        vm
+      );
+    }
+    /**
+    * vm.$options = 
+        beforeCreate: [ƒ] //此时有这个是因为调用 Vue.use(Vuex) 这个插件要优先处理掉
+        components: {}
+        directives: {}
+        filters: {}
+        _base: ƒ Vue(options)
+    */
+    
+    
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      initProxy(vm);
+    } else {
+      vm._renderProxy = vm;
+    }
+    // expose real self
+    vm._self = vm;
+    
+    /**
+    * 此时 vm: 
+        $options: {components: {…}, directives: {…}, filters: {…}, _base: ƒ, beforeCreate: Array(1)}
+        _isVue: true
+        _renderProxy: Proxy {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue}
+        _self: Vue {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue}
+        _uid: 0
+        $isServer: false
+        $ssrContext: undefined
+    */
+    
+    initLifecycle(vm);
+    initEvents(vm);
+    initRender(vm);
+    callHook(vm, 'beforeCreate');
+    initInjections(vm); // resolve injections before data/props
+    initState(vm);
+    initProvide(vm); // resolve provide after data/props
+    callHook(vm, 'created');
+
+    /* istanbul ignore if */
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+      vm._name = formatComponentName(vm, false);
+      mark(endTag);
+      measure(("vue " + (vm._name) + " init"), startTag, endTag);
+    }
+
+    if (vm.$options.el) {
+      vm.$mount(vm.$options.el);
+    }
+  };
+}
+
 ~~~
+
+
 
 > beforeCreate ---> 在数据观测和初始化事件还未开始
 
