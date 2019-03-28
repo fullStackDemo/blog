@@ -1342,8 +1342,137 @@ constructor (
 
 ![](./images/lifecycle.png)
 
+> `new Vue()`
 
-首先
+### 1、执行 `initGlobalApi` ###
+
+~~~js
+//最先执行
+function initGlobalAPI (Vue) {
+  // config
+  var configDef = {};
+  configDef.get = function () { return config; };
+  if (process.env.NODE_ENV !== 'production') {
+    configDef.set = function () {
+      warn(
+        'Do not replace the Vue.config object, set individual fields instead.'
+      );
+    };
+  }
+  /**
+  * 设置 Vue.config 并监听变化 不支持直接重置 Vue.config, 不过可以重置 config 各个属性
+  * Vue.config
+      // 是否异步 一般只是做单元测试
+      async: true
+      // 是否启用本地调试工具
+      devtools: true
+      // watcher 错误回调处理函数
+      errorHandler: null
+      // 获取命名空间
+      getTagNamespace: ƒ noop(a, b, c)
+      // 忽略某些自定义元素
+      ignoredElements: []
+      // 检查属性名字是否是保留字，否则不能作为一个组件的props
+      isReservedAttr: ƒ (a, b, c)
+      // 检查标签名字是否是保留字，否则不能作为一个组件
+      isReservedTag: ƒ (a, b, c)
+      // 检查是否是未名元素
+      isUnknownElement: ƒ (a, b, c)
+      // 用户自定义 key 别名 for v-on
+      keyCodes: Proxy {}
+      // Check if an attribute must be bound using property, e.g. value
+      mustUseProp: ƒ (a, b, c)
+      // Option merge strategies (used in core/util/options)
+      optionMergeStrategies: {propsData: ƒ, el: ƒ, data: ƒ, beforeCreate: ƒ, created: ƒ, …}
+      // Parse the real tag name for the specific platform
+      parsePlatformTagName: ƒ (_)
+      // Whether to record perf
+      performance: false
+      // 生产模式 提示tip是否禁止
+      productionTip: true
+      // 禁止警告信息
+      silent: false
+      // watcher 警告的回调处理函数
+      warnHandler: null
+      //生命周期钩子
+      _lifecycleHooks: (12) ["beforeCreate", "created", "beforeMount", "mounted", "beforeUpdate", "updated", "beforeDestroy", "destroyed", "activated", "deactivated", "errorCaptured", "serverPrefetch"]
+
+  */
+  Object.defineProperty(Vue, 'config', configDef);
+
+  // exposed util methods.
+  // NOTE: these are not considered part of the public API - avoid relying on
+  // them unless you are aware of the risk.
+  Vue.util = {
+    warn: warn,
+    extend: extend,
+    mergeOptions: mergeOptions,
+    defineReactive: defineReactive$$1
+  };
+  
+  // 设置一个Object 添加属性，并检查是否存在，是否 notify 触发 watcher 更新
+  Vue.set = set;
+  // 删除属性， 必要时候 notify
+  Vue.delete = del;
+  // 延时回调
+  Vue.nextTick = nextTick;
+
+  // 2.6 explicit observable API
+  Vue.observable = function (obj) {
+    observe(obj);
+    return obj
+  };
+
+  Vue.options = Object.create(null);
+  ASSET_TYPES.forEach(function (type) {
+    Vue.options[type + 's'] = Object.create(null);
+  });
+  
+  /**
+  * 到此为止
+  * Vue.options = {components, directives, filters}
+  */
+
+  // this is used to identify the "base" constructor to extend all plain-object
+  // components with in Weex's multi-instance scenarios.
+  Vue.options._base = Vue;
+  
+  // builtInComponents = {keepAlive}
+  extend(Vue.options.components, builtInComponents);
+  
+  /**
+  * 到此为止：
+  * Vue.options = {components:{keepAlive}, directives:{}, filters:{}, _base: Vue}
+  * Vue = ["util", "set", "delete", "nextTick", "observable", "options"]
+  */
+
+  // Vue.use 方法
+  initUse(Vue);
+  // Vue.mixin
+  initMixin$1(Vue);
+  // Vue.extend
+  initExtend(Vue);
+  // Vue.component Vue.directive Vue.filter
+  initAssetRegisters(Vue);
+  
+  /**
+  * Vue = ["util", "set", "delete", "nextTick", "observable", "options", "use", "mixin", "cid", "extend", "component", "directive", "filter"]
+  */
+}
+
+~~~
+
+
+~~~js
+ // beforeCreate 之前
+ initEvent
+ initLifecycle
+ initRender
+~~~
+
+> beforeCreate ---> 在数据观测和初始化事件还未开始
+
+
 
 ---
 
