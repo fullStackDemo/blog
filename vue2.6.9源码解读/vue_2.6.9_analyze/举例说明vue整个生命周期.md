@@ -1344,7 +1344,7 @@ constructor (
 
 > `new Vue()`
 
-### 1、执行 `initGlobalApi` ###
+### 1、执行 `initGlobalApi(Vue)` ###
 
 ~~~js
 //最先执行
@@ -1467,7 +1467,7 @@ function initGlobalAPI (Vue) {
 
 ~~~
 
-### 2、执行 `initMixin` ###
+### 2、执行 `initMixin(vm)` ###
 
 ~~~js
 
@@ -1524,8 +1524,45 @@ function initMixin (Vue) {
     */
     
     initLifecycle(vm);
+    
+    /**
+    * 该过程新增：
+    * $children
+    * $parent
+    * $root
+    * _directInactive  _inactive _isBeingDestroyed  _isDestroyed _watcher
+    * 此时 vm:
+        $children: []
+        $options: {components: {…}, directives: {…}, filters: {…}, _base: ƒ, beforeCreate: Array(1)}
+        $parent: undefined
+        $refs: {}
+        $root: Vue {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+        _directInactive: false
+        _inactive: null
+        _isBeingDestroyed: false
+        _isDestroyed: false
+        _isMounted: false
+        _isVue: true
+        _renderProxy: Proxy {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+        _self: Vue {_uid: 0, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}
+        _uid: 0
+        _watcher: null
+        $isServer: (...)
+        $ssrContext: (...)
+    */
+    
+    
     initEvents(vm);
+    /**
+    * initEvents 新增 _events、  _hasHookEvent   
+    */
+    
+    
     initRender(vm);
+    /**
+    * initRender 新增 _vnode、 _staticTrees、 $slots、 _c 、 $createElement
+    */
+    
     callHook(vm, 'beforeCreate');
     initInjections(vm); // resolve injections before data/props
     initState(vm);
@@ -1547,9 +1584,9 @@ function initMixin (Vue) {
 
 ~~~
 
-
-
 > beforeCreate ---> 在数据观测和初始化事件还未开始
+
+> created（创建后） 完成数据观测，属性和方法的运算，初始化事件，$el属性还没有显示出来
 
 
 
