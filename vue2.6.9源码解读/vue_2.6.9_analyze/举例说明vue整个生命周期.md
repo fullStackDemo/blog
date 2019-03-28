@@ -1340,10 +1340,10 @@ constructor (
 --
 总结一下 `Vue` 的 `lifecycle` 生命周期
 
-![](../images/lifecycle.png)
+![](./images/lifecycle.png)
 
 
-
+首先
 
 ---
 
