@@ -1,11 +1,13 @@
-import _ from "lodash"
+// import _ from "lodash"
+import text from './demo.txt'
 
 function component() {
   let div = document.createElement('div');
 
-  div.innerHTML = _.join(['Hello', 'webpack']);
+  div.innerHTML = text;
 
   document.body.appendChild(div);
 }
+
 
 component()
