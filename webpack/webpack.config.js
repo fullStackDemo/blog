@@ -5,14 +5,14 @@ const fs = require('fs');
 const dirname = path.resolve(__dirname, 'dist');
 
 // clear dist
-function deleteFolder(dir){
-  if(fs.existsSync(dir)){
+function deleteFolder(dir) {
+  if (fs.existsSync(dir)) {
     fs.readdirSync(dir).forEach(name => {
       const curName = `${dir}/${name}`;
-      if(fs.statSync(curName).isDirectory()){
+      if (fs.statSync(curName).isDirectory()) {
         deleteFolder(curName);
-      }else{
-        fs.unlink(curName);
+      } else {
+        fs.unlinkSync(curName);
       }
     });
     fs.rmdirSync(dir);
@@ -22,21 +22,31 @@ function deleteFolder(dir){
 deleteFolder(dirname);
 
 module.exports = {
-  entry: './pages/index.js',
+  entry: {
+    index: './pages/index.js',
+    test: './pages/test/test.js'
+  },
   output: {
     path: dirname,
-    filename: 'bundle.[name].[hash].js'
+    filename: 'bundle.[name].[contenthash].js'
   },
   mode: 'none',
-  module:{
-    rules:[
+  module: {
+    rules: [
       {
         test: /\.txt$/,
-        use:['raw-loader']
+        use: ['raw-loader']
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
       }
     ]
   },
-  plugins:[
+  plugins: [
     new HtmlWebpackPlugin({
       title: 'My app',
       filename: 'index.html',
@@ -64,7 +74,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'custom template',
       filename: 'custom.html',
-      template: './pages/custom.html'  
+      template: './pages/custom.html'
     }),
 
 

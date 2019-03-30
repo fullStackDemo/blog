@@ -81,37 +81,16 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/******/ ({
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _demo_txt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-// import _ from "lodash"
+/***/ 7:
+/***/ (function(module, exports) {
 
-
-function component() {
-  let div = document.createElement('div');
-
-  div.innerHTML = _demo_txt__WEBPACK_IMPORTED_MODULE_0__["default"];
-
-  document.body.appendChild(div);
-}
-
-
-component()
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("Hello everyone webpack\n\n\n\nalex wong");
+console.log(055670)
 
 /***/ })
-/******/ ]);
+
+/******/ });
