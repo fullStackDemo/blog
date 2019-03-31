@@ -4,4 +4,6 @@ _config.yml
 .DS_Store
 _config.yml
 .DS_Store
+node_modules
 react源码解读/examples/my-app/src/store/bash.exe.stackdump
+

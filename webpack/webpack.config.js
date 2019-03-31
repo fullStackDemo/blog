@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const fs = require('fs');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const dirname = path.resolve(__dirname, 'dist');
 
@@ -28,7 +29,7 @@ module.exports = {
   },
   output: {
     path: dirname,
-    filename: 'bundle.[name].[contenthash].js'
+    filename: 'bundle.[name].[chunkhash].js'
   },
   mode: 'none',
   module: {
@@ -39,10 +40,20 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-        ]
+        use:['style-loader','css-loader']
+        // use: ExtractTextPlugin.extract({
+        //   fallback: 'style-loader',
+        //   use: {
+        //     loader: 'css-loader',
+        //     options: {
+        //       minimize: true
+        //     }
+        //   }
+        // })
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        use: ['file-loader']
       }
     ]
   },
@@ -76,7 +87,9 @@ module.exports = {
       filename: 'custom.html',
       template: './pages/custom.html'
     }),
-
+    // new ExtractTextPlugin({
+    //   filename: 'css/[name]-[contenthash].css'
+    // })
 
 
 
