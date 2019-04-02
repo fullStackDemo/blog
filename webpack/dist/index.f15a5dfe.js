@@ -93,14 +93,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _demo_txt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var _style_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 /* harmony import */ var _style_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_index_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _assets_data_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8);
+/* harmony import */ var _assets_data_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_assets_data_png__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _assets_test_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9);
+/* harmony import */ var _assets_test_png__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_assets_test_png__WEBPACK_IMPORTED_MODULE_3__);
 // import _ from "lodash"
+
+
+// import val from './test/val.js'
+const val = __webpack_require__(7)
 
 
 
 function component() {
   let div = document.createElement('div');
 
-  div.innerHTML = _demo_txt__WEBPACK_IMPORTED_MODULE_0__["default"];
+  div.innerHTML = _demo_txt__WEBPACK_IMPORTED_MODULE_0__["default"] + val;
+
+  document.querySelector('.img').src = _assets_data_png__WEBPACK_IMPORTED_MODULE_2___default.a;
+  document.querySelector('.img_new').src = _assets_test_png__WEBPACK_IMPORTED_MODULE_3___default.a;
 
   document.body.appendChild(div);
 }
@@ -147,7 +158,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(4)(false);
 // Module
-exports.push([module.i, "body {\n    color: red;\n}", ""]);
+exports.push([module.i, "body {\n    color: red;\n}\n\nimg{\n    width: 200px;\n    height: 200px;\n}", ""]);
 
 
 
@@ -740,6 +751,24 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = 10 ;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/old/5de7af.png";
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "assets/new/5de7af.png";
 
 /***/ })
 /******/ ]);

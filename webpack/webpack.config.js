@@ -29,7 +29,7 @@ module.exports = {
   },
   output: {
     path: dirname,
-    filename: 'bundle.[name].[chunkhash].js'
+    filename: '[name].[chunkhash:8].js'
   },
   mode: 'none',
   module: {
@@ -40,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use:['style-loader','css-loader']
+        use: ['style-loader', 'css-loader']
         // use: ExtractTextPlugin.extract({
         //   fallback: 'style-loader',
         //   use: {
@@ -53,8 +53,47 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
-        use: ['file-loader']
-      }
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              fallback: 'file-loader',
+              limit: 8192,
+              // name: '[sha512:hash:base64:8].[ext]',
+              outputPath: 'assets',
+              name: function(file){
+                console.log(process.env.NODE_ENV, file);
+                if(/test/.test(file)){
+                  return 'new/[hash:6].[ext]'
+                }
+                return 'old/[hash:6].[ext]'
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /val.js$/,
+        use: [
+          {
+            loader: 'val-loader',
+            options: {
+              years: 10
+            }
+          }
+        ]
+      },
+      // {
+      //   test: /\.html$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader'
+      //     },
+      //     {
+      //       loader: 'ref-loader'
+      //     },
+      //   ]
+      // },
     ]
   },
   plugins: [
