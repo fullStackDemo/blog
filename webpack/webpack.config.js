@@ -61,9 +61,9 @@ module.exports = {
               limit: 8192,
               // name: '[sha512:hash:base64:8].[ext]',
               outputPath: 'assets',
-              name: function(file){
+              name: function (file) {
                 console.log(process.env.NODE_ENV, file);
-                if(/test/.test(file)){
+                if (/test/.test(file)) {
                   return 'new/[hash:6].[ext]'
                 }
                 return 'old/[hash:6].[ext]'
@@ -94,6 +94,20 @@ module.exports = {
       //     },
       //   ]
       // },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'less-loader'
+          }
+        ]
+      }
     ]
   },
   plugins: [
