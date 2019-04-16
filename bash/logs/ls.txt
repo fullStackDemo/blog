@@ -1,0 +1,7 @@
+cdn
+ls-l.txt
+ls.txt
+public
+start.sh
+static
+task.sh

@@ -1,0 +1,7 @@
+total 16
+drwxr-xr-x  6 wangzhao  staff  192  4 14 10:07 cdn
+-rw-r--r--  1 wangzhao  staff    0  4 14 10:53 ls-l.txt
+drwxr-xr-x  2 wangzhao  staff   64  4 14 08:41 public
+-rwxr-xr-x  1 wangzhao  staff  695  4 14 08:33 start.sh
+drwxr-xr-x  2 wangzhao  staff   64  4 14 08:51 static
+-rwxr-xr-x  1 wangzhao  staff  631  4 14 10:28 task.sh
