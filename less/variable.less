@@ -1,6 +1,7 @@
 // out: ./dist/variable.css
 @primary: green;
 @secondary: red;
+@url: './';
 
 /*
 * variable variables
@@ -63,13 +64,86 @@
 * Sometimes this can make your code a litter lighter
 **/
 
-.props{
+.props {
   color: #333;
+
   // background: $color;
-  &_ok{
+  &_ok {
     background: #000;
   }
 }
+
+/*
+* default variables
+**/
+
+@base-color: green;
+@dark-color: darken(@base-color, 10%);
+
+@import '@{url}/library.less';
+
+@base-color: red;
+
+/*
+* parent selectors
+**/
+
+@name: color;
+
+.child() {
+  &_one {
+    @{name}: #000;
+  }
+
+  &_two {
+    @{name}: #666;
+  }
+
+  &_three {
+    @{name}: #999;
+  }
+}
+
+.parent {
+  &.bg {
+    .child();
+  }
+
+  .child();
+
+  &, &Child{
+    background: #000;
+  }
+
+}
+
+@name: background-color;
+
+/*
+* changing selector order
+* It is useful to prepend a selector  to the inherit (parent) selectors.
+**/
+
+.borderRadius{
+  border: 1px solid red;
+  border-radius: 10px;
+  .noBorderRadius &{
+    border-radius: 0;
+  }
+}
+
+/*
+* combinatorial explosion
+* n * n combinations
+**/
+
+p, div, ul, ol {
+  & &{
+    box-sizing: border-box;
+  }
+}
+
+
 
 
 

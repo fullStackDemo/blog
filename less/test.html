@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
-  <link rel="stylesheet" href="dist/variable.css">
-</head>
-<body>
-  <div class="box">
-    <div>variable</div>
-  </div>
-  <div class="box new">
-    <div>custom</div>
-  </div>
-  <div class="lazy">lazy</div>
-  <div class="lazy multi">lazy: multiple variable, then read from current scope</div>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+    <link rel="stylesheet" href="dist/variable.css">
+  </head>
+  <body>
+    <div class="box">
+      <div>variable</div>
+    </div>
+
+    <div class="box new">
+      <div>custom</div>
+    </div>
+
+    <div class="lazy">lazy</div>
+    <div class="lazy multi">lazy: multiple variable, then read from current scope</div>
+
+    <div class="testDefault">testDefault</div>
+
+    <div class="parent_one bg">parent_one</div>
+    <div class="parent_two">parent_two</div>
+    <div class="parent_three">parent_three</div>
+
+    <div class="borderRadius">borderRadius</div>
+    <div class="noBorderRadius">
+      <div class="borderRadius">noBorderRadius</div>
+    </div>
+
+
+  </body>
 </html>

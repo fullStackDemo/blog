@@ -43,3 +43,67 @@
 .props_ok {
   background: #000;
 }
+/*
+* default variables
+**/
+.testDefault {
+  color: #cc0000;
+}
+/*
+* parent selectors
+**/
+.parent.bg_one {
+  background-color: #000;
+}
+.parent.bg_two {
+  background-color: #666;
+}
+.parent.bg_three {
+  background-color: #999;
+}
+.parent_one {
+  background-color: #000;
+}
+.parent_two {
+  background-color: #666;
+}
+.parent_three {
+  background-color: #999;
+}
+.parent,
+.parentChild {
+  background: #000;
+}
+/*
+* changing selector order
+* It is useful to prepend a selector  to the inherit (parent) selectors.
+**/
+.borderRadius {
+  border: 1px solid red;
+  border-radius: 10px;
+}
+.noBorderRadius .borderRadius {
+  border-radius: 0;
+}
+/*
+* combinatorial explosion
+* n * n combinations
+**/
+p p,
+p div,
+p ul,
+p ol,
+div p,
+div div,
+div ul,
+div ol,
+ul p,
+ul div,
+ul ul,
+ul ol,
+ol p,
+ol div,
+ol ul,
+ol ol {
+  box-sizing: border-box;
+}
