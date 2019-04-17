@@ -1,0 +1,45 @@
+/*
+* variable variables
+**/
+.box div {
+  color: green;
+}
+.box.new div {
+  color: red;
+}
+/*
+* custom property
+**/
+.box {
+  --color: green;
+}
+.box div {
+  color: var(--color);
+}
+.box.new {
+  --color: red;
+}
+/*
+* Lazy Evaluation
+* Variables do not need to be declared before being used.
+* Note that when defining a variable twice, the last definition of 
+* the variable is used, searching from the current scope.
+**/
+.lazy {
+  color: orange;
+}
+.lazy.multi {
+  color: #999;
+}
+/*
+* $props v3.0.0
+* Properties as Variables (NEW!!)
+* You can easily treat properties like variables using the $props syntax.
+* Sometimes this can make your code a litter lighter
+**/
+.props {
+  color: #333;
+}
+.props_ok {
+  background: #000;
+}

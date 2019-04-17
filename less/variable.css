@@ -1,9 +1,0 @@
-.box {
-  --color: green;
-}
-.box div {
-  color: var(--color);
-}
-.box.new {
-  --color: red;
-}

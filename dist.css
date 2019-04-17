@@ -1,0 +1,28 @@
+/*
+* variable variables
+**/
+.box div {
+  color: green;
+}
+.box.new div {
+  color: red;
+}
+/*
+* custom variable
+**/
+.box {
+  --color: green;
+}
+.box div {
+  color: var(--color);
+}
+.box.new {
+  --color: red;
+}
+/*
+* Lazy Evaluation
+* Variables do not need to be declared before being used
+**/
+.lazy {
+  color: red;
+}
