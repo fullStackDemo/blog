@@ -1,0 +1,29 @@
+@primary:green;
+@secondary:red;
+
+
+// .box{
+//   @color: primary;
+
+//   div{
+//     color: @@color;
+//   }
+
+//   &.new{
+//     @color:secondary;
+//     div{
+//       color: @@color;
+//     }
+//   }
+// }
+.box{
+  --color: @primary;
+
+  div{
+    color: var(--color);
+  }
+
+  &.new{
+    --color: @secondary;
+  }
+}
