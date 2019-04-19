@@ -107,3 +107,106 @@ ol ul,
 ol ol {
   box-sizing: border-box;
 }
+/*
+* Extend
+* selector:extend(class) extend the selector onto the class, where the class appear
+**/
+.nav {
+  background: blue;
+}
+.inline,
+.nav {
+  color: red;
+}
+/*
+* "all" keyword will extend all instance of ".b" e.g. '.d.b' '.b.d'
+**/
+.a {
+  background: #000;
+}
+.b,
+.a {
+  background: red;
+}
+.c {
+  background: yellow;
+}
+.d,
+.c {
+  background: orange;
+}
+.d div,
+.c div {
+  color: #000;
+}
+.demo .d,
+.demo .c {
+  background: white;
+}
+.e {
+  background: #eee;
+}
+.f,
+.e {
+  background: #fff;
+}
+.g,
+.e {
+  background: #999;
+}
+.h,
+.e {
+  background: #aaa;
+}
+.big-1,
+.big-2,
+.big-3 {
+  background: #000;
+}
+.Big2,
+.big-2 {
+  background: red;
+}
+.Big3,
+.big-3 {
+  background: green;
+}
+pre:hover {
+  background: #000;
+}
+div pre,
+pre:hover {
+  background: red;
+}
+/*
+* variable interpolation
+**/
+.banner {
+  color: red;
+}
+*.class {
+  color: blue;
+}
+* > .div {
+  background: #000;
+}
+.ab.test,
+.test.m,
+.ab.replace,
+.replace.m {
+  color: red;
+}
+.testA,
+.testB {
+  clear: both;
+}
+/**
+* selector interpolation with extend
+**/
+.someName {
+  clear: both;
+}
+.some-class,
+.someName2 {
+  color: rebeccapurple;
+}
