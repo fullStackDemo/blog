@@ -101,5 +101,38 @@ pre:hover {
 .someName2 {
   color: rebeccapurple;
 }
-
-
+/*
+* Scoping / Extend inside @media
+* Currently, an :extend inside a @media declaration will only match selector inside the @media declaration
+**/
+@media screen {
+  .screenClass,
+  .innerMatch,
+  .topMatchEverything {
+    background: #000;
+  }
+}
+.screenClass,
+.topMatchEverything {
+  background: yellow;
+}
+/*
+* reducing css size
+**/
+.thing1 {
+  display: inline;
+  color: #000;
+}
+.thing2 {
+  display: inline;
+  color: #000;
+}
+.my-inline-block,
+.thing3,
+.thing4 {
+  display: inline-block;
+  font-size: 0;
+}
+.thing3 {
+  background: red;
+}

@@ -78,8 +78,8 @@
   background: green;
 }
 
-pre:hover:extend(div pre){
-  background: #000;  
+pre:hover:extend(div pre) {
+  background: #000;
 }
 
 div pre {
@@ -92,15 +92,15 @@ div pre {
 
 @my-selector: banner;
 
-.@{my-selector}{
+.@{my-selector} {
   color: red;
 }
 
-*.class{
+*.class {
   color: blue;
 }
 
-* > .div {
+*>.div {
   background: #000;
 }
 
@@ -108,18 +108,19 @@ div pre {
 //extend all !!replace the selector
 
 .ab.test,
-.test.m{
+.test.m {
   color: red;
 }
 
-.replace{
+.replace {
   &:extend(.test all);
 }
 
-.testA{
+.testA {
   clear: both;
 }
-.testB:extend(.testA){}
+
+.testB:extend(.testA) {}
 
 
 /**
@@ -129,18 +130,79 @@ div pre {
 
 //not work
 @test2: someName;
-.@{test2}{
+
+.@{test2} {
   clear: both;
 }
 
-.some-class:ectend(.@{test2}){}
+.some-class:ectend(.@{test2}) {}
 
 //works
-.some-class{
+.some-class {
   color: rebeccapurple
 }
+
 @test3: someName2;
 
-.@{test3}:extend(.some-class){}
+.@{test3}:extend(.some-class) {}
+
+/*
+* Scoping / Extend inside @media
+* Currently, an :extend inside a @media declaration will only match selector inside the @media declaration
+**/
+
+@media screen {
+  .screenClass {
+    // match this
+    background: #000;
+  }
+
+  // only match in this scope
+  .innerMatch:extend(.screenClass) {}
+
+  @media (min-width:900px) {
+    background: blue;
+  }
+}
+
+// top level ruleset
+.screenClass {
+  // not match
+  background: yellow;
+}
+
+// top level ruleset match everything,
+.topMatchEverything:extend(.screenClass){}
+
+/*
+* reducing css size
+**/
 
 
+//mixins
+
+.inlineBlock(){
+  display: inline;
+  color: #000
+}
+
+.thing1{
+  .inlineBlock;
+}
+
+.thing2{
+  .inlineBlock;
+}
+
+//extend
+.my-inline-block {
+  display: inline-block;
+  font-size: 0;
+}
+.thing3{
+  background: red;
+  &:extend(.my-inline-block);
+}
+.thing4{
+  &:extend(.my-inline-block);
+}

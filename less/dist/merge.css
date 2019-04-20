@@ -1,0 +1,12 @@
+.mixins {
+  border: 1px solid red;
+}
+.myClass {
+  border: 1px solid red, 3px solid yellow;
+}
+.mixins2 {
+  border: red;
+}
+.myClass2 {
+  border: red 3px solid;
+}

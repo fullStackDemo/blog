@@ -1,0 +1,25 @@
+// out: dist/merge.css
+
+//Comma + ,
+
+.mixins{
+  border+:1px solid red;
+}
+
+.myClass{
+  .mixins();
+  border+: 3px solid yellow;
+}
+
+
+//space +_
+
+.mixins2{
+  border+_:red;
+}
+
+.myClass2{
+  .mixins2();
+  border+_: 3px solid;
+}
+
