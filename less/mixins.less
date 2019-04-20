@@ -1,0 +1,50 @@
+// out: dist/mixins.css
+
+/*
+* base use case
+**/
+
+.aa{
+  background: #000;
+  .cc{
+    background: red;
+  }
+}
+
+.bbaa{
+  .aa();
+  //.a; works but deprecated, don't use
+}
+
+
+/*
+* Not Outputting the Mixins
+**/
+
+.myMixins(){ // not exist in css
+  background: #000;
+}
+
+.myOutput{
+  .myMixins();
+  .aa.cc();
+}
+
+/*
+* 
+**/
+
+
+
+/*
+*
+**/
+/*
+*
+**/
+/*
+*
+**/
+/*
+*
+**/

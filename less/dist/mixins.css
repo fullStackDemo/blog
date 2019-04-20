@@ -1,0 +1,37 @@
+/*
+* base use case
+**/
+.aa {
+  background: #000;
+}
+.aa .cc {
+  background: red;
+}
+.bbaa {
+  background: #000;
+}
+.bbaa .cc {
+  background: red;
+}
+/*
+* Not Outputting the Mixins
+**/
+.myOutput {
+  background: #000;
+  background: red;
+}
+/*
+* 
+**/
+/*
+*
+**/
+/*
+*
+**/
+/*
+*
+**/
+/*
+*
+**/
