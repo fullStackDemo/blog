@@ -206,8 +206,7 @@ pre:hover {
 .someName {
   clear: both;
 }
-.some-class,
-.someName2 {
+.some-class {
   color: rebeccapurple;
 }
 /*
@@ -257,3 +256,107 @@ pre:hover {
 .myClass2 {
   border: red 3px solid;
 }
+/*
+* base use case
+**/
+.aa {
+  background: #000;
+}
+.aa .cc {
+  background: red;
+}
+.bbaa {
+  background: #000;
+}
+.bbaa .cc {
+  background: red;
+}
+/*
+* Not Outputting the Mixins
+**/
+.myOutput {
+  background: #000;
+  background: red;
+}
+/*
+*  Guarded NameSpaces
+**/
+#namespace .app {
+  background: #000;
+}
+/*
+* the !important keyword
+**/
+.unimportant {
+  background: #666;
+  color: #666;
+}
+.important {
+  background: #000 !important;
+  color: #000 !important;
+}
+/*
+* parametric mixins
+* multiple mixins with the same name, will auto match
+**/
+.testMultiMixins {
+  color-1: #898989;
+  color-2: #898989;
+  padding-2: 2;
+}
+.testMultiMixins {
+  color-2: #898989;
+  padding-2: #7777;
+  color-3: #898989;
+  padding-3: #7777;
+  margin-3: 3;
+}
+/*
+* named parameters
+**/
+.test-result {
+  test-color: 3px;
+  test-padding: 2px;
+  test-margin: 1px;
+}
+.test-result-2 {
+  test-color: #111;
+  test-padding: #222;
+  test-margin: #333;
+}
+.test-result-3 {
+  test-color: #111;
+  test-padding: 20px;
+  test-margin: 30px;
+}
+/*
+* @arguments
+**/
+.test-border {
+  border: 1px solid red;
+}
+.test-border2 {
+  border: 1px solid red blue;
+}
+.test-border3 {
+  border: solid red blue;
+}
+/*
+* pattern matching
+**/
+.test-p {
+  display: inline;
+}
+/*
+* Using Mixins as a function
+* less 3.5
+**/
+.test_average {
+  padding: 4.5px;
+}
+.demo {
+  background: red;
+}
+/*
+* 9990000889999900077711
+**/

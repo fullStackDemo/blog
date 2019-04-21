@@ -97,8 +97,7 @@ pre:hover {
 .someName {
   clear: both;
 }
-.some-class,
-.someName2 {
+.some-class {
   color: rebeccapurple;
 }
 /*

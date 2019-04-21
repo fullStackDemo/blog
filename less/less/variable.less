@@ -1,0 +1,150 @@
+// out: ./dist/variable.css
+@primary: green;
+@secondary: red;
+@url: './lib';
+
+/*
+* variable variables
+**/
+.box {
+  @color: primary;
+
+  div {
+    color: @@color;
+  }
+
+  &.new {
+    @color: secondary;
+
+    div {
+      color: @@color;
+    }
+  }
+}
+
+/*
+* custom property
+**/
+.box {
+  --color: @primary;
+
+  div {
+    color: var(--color);
+  }
+
+  &.new {
+    --color: @secondary;
+  }
+}
+
+/*
+* Lazy Evaluation
+* Variables do not need to be declared before being used.
+* Note that when defining a variable twice, the last definition of 
+* the variable is used, searching from the current scope.
+**/
+
+.lazy {
+  color: @@var;
+
+  &.multi {
+    color: @@var;
+    @lazy: #999;
+  }
+}
+
+@var: lazy;
+@lazy: orange;
+
+
+/*
+* $props v3.0.0
+* Properties as Variables (NEW!!)
+* You can easily treat properties like variables using the $props syntax.
+* Sometimes this can make your code a litter lighter
+**/
+
+.props {
+  color: #333;
+
+  // background: $color;
+  &_ok {
+    background: #000;
+  }
+}
+
+/*
+* default variables
+**/
+
+@base-color: green;
+@dark-color: darken(@base-color, 10%);
+
+@import '@{url}/library.less';
+
+@base-color: red;
+
+/*
+* parent selectors
+**/
+
+@name: color;
+
+.child() {
+  &_one {
+    @{name}: #000;
+  }
+
+  &_two {
+    @{name}: #666;
+  }
+
+  &_three {
+    @{name}: #999;
+  }
+}
+
+.parent {
+  &.bg {
+    .child();
+  }
+
+  .child();
+
+  &,
+  &Child {
+    background: #000;
+  }
+
+}
+
+@name: background-color;
+
+/*
+* changing selector order
+* It is useful to prepend a selector  to the inherit (parent) selectors.
+**/
+
+.borderRadius {
+  border: 1px solid red;
+  border-radius: 10px;
+
+  .noBorderRadius & {
+    border-radius: 0;
+  }
+}
+
+/*
+* combinatorial explosion
+* n * n combinations
+**/
+
+p,
+div,
+ul,
+ol {
+  & & {
+    box-sizing: border-box;
+  }
+}
+

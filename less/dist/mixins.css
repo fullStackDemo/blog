@@ -48,9 +48,9 @@
 }
 .testMultiMixins {
   color-2: #898989;
-  padding-2: #7777 7;
+  padding-2: #7777;
   color-3: #898989;
-  padding-3: #7777 7;
+  padding-3: #7777;
   margin-3: 3;
 }
 /*
@@ -90,8 +90,15 @@
   display: inline;
 }
 /*
-*
+* Using Mixins as a function
+* less 3.5
 **/
+.test_average {
+  padding: 4.5px;
+}
+.demo {
+  background: red;
+}
 /*
-*
+* 
 **/
