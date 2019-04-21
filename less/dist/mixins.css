@@ -21,11 +21,68 @@
   background: red;
 }
 /*
-* 
+*  Guarded NameSpaces
 **/
+#namespace .app {
+  background: #000;
+}
 /*
-*
+* the !important keyword
 **/
+.unimportant {
+  background: #666;
+  color: #666;
+}
+.important {
+  background: #000 !important;
+  color: #000 !important;
+}
+/*
+* parametric mixins
+* multiple mixins with the same name, will auto match
+**/
+.testMultiMixins {
+  color-1: #898989;
+  color-2: #898989;
+  padding-2: 2;
+}
+.testMultiMixins {
+  color-2: #898989;
+  padding-2: #7777 7;
+  color-3: #898989;
+  padding-3: #7777 7;
+  margin-3: 3;
+}
+/*
+* named parameters
+**/
+.test-result {
+  test-color: 3px;
+  test-padding: 2px;
+  test-margin: 1px;
+}
+.test-result-2 {
+  test-color: #111;
+  test-padding: #222;
+  test-margin: #333;
+}
+.test-result-3 {
+  test-color: #111;
+  test-padding: 20px;
+  test-margin: 30px;
+}
+/*
+* @arguments
+**/
+.test-border {
+  border: 1px solid red;
+}
+.test-border2 {
+  border: 1px solid red blue;
+}
+.test-border3 {
+  border: solid red blue;
+}
 /*
 *
 **/

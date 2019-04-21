@@ -4,14 +4,15 @@
 * base use case
 **/
 
-.aa{
+.aa {
   background: #000;
-  .cc{
+
+  .cc {
     background: red;
   }
 }
 
-.bbaa{
+.bbaa {
   .aa();
   //.a; works but deprecated, don't use
 }
@@ -21,30 +22,151 @@
 * Not Outputting the Mixins
 **/
 
-.myMixins(){ // not exist in css
+.myMixins() {
+  // not exist in css
   background: #000;
 }
 
-.myOutput{
+.myOutput {
   .myMixins();
   .aa.cc();
 }
 
 /*
-* 
+*  Guarded NameSpaces
+**/
+@mode: 88;
+
+#namespace when (@mode =huge) {
+  .app {
+    .myMixins();
+  }
+
+  .app when not(@mode =huge) {
+    .myOutput()
+  }
+}
+
+@mode: huge;
+
+
+/*
+* the !important keyword
+**/
+
+.foo(@bg: red, blue;
+
+@color) {
+  background: @bg;
+  color: @color;
+}
+
+.foo(@bg) {
+  border-color: @bg;
+}
+
+.unimportant {
+  @bg: #666;
+  @color: #666;
+  .foo(@bg, @color);
+}
+
+.important {
+  .foo(#000, #000) !important;
+}
+
+
+/*
+* parametric mixins
+* multiple mixins with the same name, will auto match
+**/
+
+.mixins(@color) {
+  color-1: @color;
+}
+
+.mixins(@color, @padding: 2) {
+  color-2: @color;
+  padding-2: @padding;
+}
+
+.mixins(@color, @padding, @margin: 3) {
+  color-3: @color;
+  padding-3: @padding;
+  margin-3: @margin;
+}
+
+.testMultiMixins {
+  .mixins(#898989);
+}
+
+.testMultiMixins {
+  .mixins(#898989, #7777);
+}
+
+/*
+* named parameters
+**/
+
+.testOrder(@color:black, @padding:20px, @margin:30px){
+  @test: test-;
+  @{test}color:@color;
+  @{test}padding:@padding;
+  @{test}margin:@margin; 
+}
+
+.test-result{
+  .testOrder(@margin: 1px, @padding:2px, @color: 3px)
+
+}
+
+.test-result-2{
+  .testOrder(#111, #222, #333)
+}
+
+.test-result-3{
+  .testOrder(#111)
+}
+
+/*
+* @arguments
+**/
+
+.testArgsBorder(@width, @type, @color){
+  border: @arguments;
+}
+
+.test-border{
+  .testArgsBorder(1px, solid, red);
+}
+
+.testArgsBorder2(...){
+  border: @arguments;
+}
+
+.test-border2{
+  .testArgsBorder2(1px, solid, red, blue);
+}
+
+.testArgsBorder3(@a, @rest...){
+  border: @rest;
+}
+
+.test-border3{
+  .testArgsBorder3(1px, solid, red, blue);
+}
+
+
+/*
+*
+**/
+
+/*
+*
+**/
+
+/*
+*
 **/
 
 
-
-/*
-*
-**/
-/*
-*
-**/
-/*
-*
-**/
-/*
-*
-**/
