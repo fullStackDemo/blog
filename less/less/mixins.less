@@ -187,16 +187,83 @@
 
 .average(@x, @y) {
   @result: ((@x + @y) / 2);
+  @two: (@x - @y) / 3;
 }
 
 .test_average {
-  padding: .average(2px, 7px)[@result];
+  // padding: .average(2px, 7px)[@result];
+  padding: .average(2px, 7px)[];// for last one
 }
 
 
 .demo{
   background: red;
 }
+
+.source{
+  color:8888;
+  .c{
+    background: $color;
+    color: red;
+  }
+}
+
+
+/*
+* named or unnamed parameter
+**/
+
+@dr:{
+  value: 2px;
+  bg: red;
+}
+
+.test_dr{
+  color: @dr[bg];
+  background: @dr[];
+  border:@dr[value] solid red;
+}
+
+/*
+* loop
+**/
+
+.loop(@count) when(@count > 0){
+  .loop(@count - 1);
+  .width-@{count}{
+    width: (10px * @count);
+  }
+}
+
+.loop(3);
+
+
+.generate-column(@n, @i:1) when(@i <= @n){
+  .columen-@{i}{
+    width: (@i * 100% / @n);
+  }
+  .generate-column(@n, (@i+1));
+}
+
+.generate-column(8);
+
+/*
+* 
+**/
+
+
+
+
+/*
+* 
+**/
+
+
+
+
+/*
+* 
+**/
 
 
 
