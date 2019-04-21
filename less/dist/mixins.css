@@ -84,8 +84,11 @@
   border: solid red blue;
 }
 /*
-*
+* pattern matching
 **/
+.test-p {
+  display: inline;
+}
 /*
 *
 **/

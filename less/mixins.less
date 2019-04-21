@@ -108,23 +108,22 @@
 * named parameters
 **/
 
-.testOrder(@color:black, @padding:20px, @margin:30px){
+.testOrder(@color: black, @padding: 20px, @margin: 30px) {
   @test: test-;
-  @{test}color:@color;
-  @{test}padding:@padding;
-  @{test}margin:@margin; 
+  @{test}color: @color;
+  @{test}padding: @padding;
+  @{test}margin: @margin;
 }
 
-.test-result{
-  .testOrder(@margin: 1px, @padding:2px, @color: 3px)
-
+.test-result {
+  .testOrder(@margin: 1px, @padding: 2px, @color: 3px)
 }
 
-.test-result-2{
+.test-result-2 {
   .testOrder(#111, #222, #333)
 }
 
-.test-result-3{
+.test-result-3 {
   .testOrder(#111)
 }
 
@@ -132,34 +131,54 @@
 * @arguments
 **/
 
-.testArgsBorder(@width, @type, @color){
+.testArgsBorder(@width, @type, @color) {
   border: @arguments;
 }
 
-.test-border{
+.test-border {
   .testArgsBorder(1px, solid, red);
 }
 
-.testArgsBorder2(...){
+.testArgsBorder2(...) {
   border: @arguments;
 }
 
-.test-border2{
+.test-border2 {
   .testArgsBorder2(1px, solid, red, blue);
 }
 
-.testArgsBorder3(@a, @rest...){
+.testArgsBorder3(@a, @rest...) {
   border: @rest;
 }
 
-.test-border3{
+.test-border3 {
   .testArgsBorder3(1px, solid, red, blue);
 }
 
 
 /*
-*
+* pattern matching
 **/
+
+.pMixins(dark, @color) {
+  color: darken(@color, 10%);
+}
+
+.pMixins(red, @color) {
+  color: darken(@color, 10%);
+}
+
+.pMixins(@_, @color) {
+  display: inline;
+}
+
+@switch: red;
+
+.test-p {
+  .pMixins(@switch, red)
+}
+
+@switch: 999;
 
 /*
 *
@@ -168,5 +187,3 @@
 /*
 *
 **/
-
-
