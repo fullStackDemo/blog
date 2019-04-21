@@ -248,9 +248,21 @@
 .generate-column(8);
 
 /*
-* 
+* multiple parameter
 **/
 
+@params: {
+  n1: span;
+  n2: a;
+  n3: h1;
+  n4: div;
+}
+
+.generate-rule(@n, @i:1) when(@i <= @n){
+  .n@{params}{
+    width: auto;
+  }
+}
 
 
 
