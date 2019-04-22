@@ -260,17 +260,49 @@
 
 .generate-rule(@n, @i:1) when(@i <= @n){
   .n@{params}{
-    width: auto;
+    width: lightness(#444);
   }
 }
 
 
+.light{
+  color: lightness(#666)
+}
 
 /*
-* 
+*  guard mixins
 **/
 
+.guardMixins(@a) when(lightness(@a) < 50%){
+  background: black;
+}
+.guardMixins(@a) when(lightness(@a) >= 50%){
+  background: white;
+}
+.guardMixins(@a){
+  background: @a;
+}
 
+.test_guard{
+  .guardMixins(#333);
+}
+
+.test_guard{
+  .guardMixins(#ddd);
+}
+
+//3
+.truth(@a) when(@a){
+  background: @a;
+  color: red;
+}
+.truth(@a) when(@a=true){
+  background: @a;
+  border: #000;
+}
+.test_truth{
+  .truth(true)
+}
 
 
 /*

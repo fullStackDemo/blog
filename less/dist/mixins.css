@@ -153,9 +153,25 @@
 /*
 * multiple parameter
 **/
+.light {
+  color: 40%;
+}
 /*
-* 
+*  guard mixins
 **/
+.test_guard {
+  background: black;
+  background: #333;
+}
+.test_guard {
+  background: white;
+  background: #ddd;
+}
+.test_truth {
+  color: red;
+  background: true;
+  border: #000;
+}
 /*
 * 
 **/
