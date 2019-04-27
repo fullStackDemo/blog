@@ -29,6 +29,55 @@
 软件也有状态和行为。软件把状态存储在变量中，然后通过方法展示出来。所以在软件中，方法来操作一个对象的状态，对象与对象之前的通信也是通过方法来实现的。
 
 
+### Class in Java
+
+类是一个创建单个对象的蓝图；
+
+#### Example
+
+~~~java
+public class Dog {
+    String breed = "male";
+    int age = 2;
+    String color = "yellow";
+
+    void braking() {
+        System.out.println("Dog is braking");
+    }
+
+    void sleeping() {
+        System.out.println("Dog is sleeping");
+    }
+
+    void eating() {
+        System.out.println("Dog is eating");
+    }
+
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        System.out.println("The");
+        System.out.println(dog.age);
+        System.out.println(dog.color);
+        System.out.println(dog.breed);
+        dog.braking();
+        dog.eating();
+        dog.sleeping();
+    }
+}
+~~~
+
+Output
+
+~~~java
+The
+2
+yellow
+male
+Dog is braking
+Dog is eating
+Dog is sleeping
+~~~
+
 
 
 
