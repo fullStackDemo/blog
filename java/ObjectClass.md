@@ -97,7 +97,8 @@ Example
 public class Pussy {
 
 	static int age = 99;//类变量
-	string work="programming";//实例变量
+	
+	String duty = "programming";//实例变量
 
     public Pussy() {
         System.out.println("1");
@@ -123,6 +124,15 @@ Output
 1
 2 999
 ~~~
+
+### Creating an Object
+
+从 class 到创建 Object 只需要三步：
+
+* Declaring -- 用对象类型声明变量
+* Instantiation -- 用 new 关键字创建 object
+* Initialization -- new 之后调用构造函数，初始化一个新的 object
+
 
 
 
