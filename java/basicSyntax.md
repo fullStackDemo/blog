@@ -25,7 +25,7 @@
 > 
 
 
-### 注意事项：
+### Use Case 注意事项：
 
 * 大小写 - 不同大小写代表不同含义
 * 类名要大写，如果是多个单词，每个单词首字母大写 MyFirstClass
@@ -55,8 +55,40 @@
 
 * **Non-access Modifiers** − final, abstract, strictfp
 
+### Java Variables 变量
+
+* Local Variable 局部变量
+* Class Variable （Static Variable） 类变量（静态变量）
+* Instance Variable （non-static variable）实例变量（非静态变量）
+
+### Java Array 数组
+
+数组就是存储多个同类型对象的。数组是堆对象
 
 
+### Java Enums  枚举
+
+#### Example
+
+~~~java
+class FreshJuice {
+    enum FreshJuiceSize {small, midium, large};
+    FreshJuiceSize size;
+}
+
+public class FreshJuiceTest {
+    public static void main(String[] args) {
+        FreshJuice juice = new FreshJuice();
+        juice.size = FreshJuice.FreshJuiceSize.small;
+        System.out.println(juice.size);
+    }
+}
+~~~
+
+#### Output
+~~~java
+small
+~~~
 
 
 
