@@ -78,6 +78,53 @@ Dog is eating
 Dog is sleeping
 ~~~
 
+一个类包含多种变量：
+
+*  **`Local variable 局部变量`** -- `方法内`、`构造函数`、`模块`内定义的变量都是局部变	量。局部变量在方法内被声明和初始化，当方法执行完毕时被销毁。
+*  **`Instance variable`** -- 在一个`class`中声明的但是在`method方法`之外的变量。当`类`被实例化的时候，变量被初始化。实例变量可以在内部方法，构造函数，或者模块内访问。
+* **`Class variable`** -- 类变量声明在类中，方法之外，使用static关键字。
+
+### Constructors 构造函数
+
+每一个类都有个构造函数。如果没有明确声明构造函数，则编译的时候会默认生成一个构造函数。
+
+当一个object被创建时，构造函数会被调用。构造函数的名字和类名一致。一个类可能有多个构造函数。
+
+Example
+
+~~~java
+
+public class Pussy {
+
+	static int age = 99;//类变量
+	string work="programming";//实例变量
+
+    public Pussy() {
+        System.out.println("1");
+    }
+
+    public Pussy(String name){
+        System.out.println("2 "+ name);
+    }
+
+    public static void main(String[] args) {
+        Pussy p1 = new Pussy();
+        Pussy p2 = new Pussy("999");
+
+    }
+}
+
+
+~~~
+
+Output
+
+~~~java
+1
+2 999
+~~~
+
+
 
 
 
