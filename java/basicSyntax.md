@@ -111,6 +111,36 @@ small
 |volatile			|while		
 
 
+### Comments in Java 注释
+
+#### Example
+
+~~~java
+import java.util.HashMap;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        HashMap<String, String> map = new HashMap();
+        map.put("key", "888");
+        map.put("value", "99");
+        System.out.println(map);
+        System.out.println(map.toString());
+        /**
+         *  multiple line coments
+         * */
+        // single line comment
+    }
+}
+~~~
+
+### Inheritance 继承
+
+当你想新建一个类的时候，发现一个现有的类可以使用，这时候就可以继承这个现有的类。现有类被称为超类 Superclass，派生的类成为子类 subclass。
+
+
+
 
 
 
