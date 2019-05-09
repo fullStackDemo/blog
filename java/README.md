@@ -14,3 +14,5 @@
 
 [Java - Numbers Class 数字类](./NumbersClass.md)
 
+[Java - Character  Class 字符](./Character.md)
+
