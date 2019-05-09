@@ -34,6 +34,8 @@
 | 26   | toRadians()<br />转换为弧度                                  |
 | 27   | random()<br />随机数                                         |
 
+**Example**
+
 ```java
 public class Methods {
     public static void main(String[] args) {
