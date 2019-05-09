@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e26438f-020f-45f9-bbce-4c9c851395ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/numbers/Methods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/decision/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/decision/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/numbers/Methods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/numbers/Methods.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -99,8 +94,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/numbers/Methods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
+            <state relative-caret-position="261">
+              <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -108,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/Integer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="1225" column="51" selection-start-line="1225" selection-start-column="43" selection-end-line="1225" selection-end-column="51" />
+            <state relative-caret-position="348">
+              <caret line="448" column="16" lean-forward="true" selection-start-line="448" selection-start-column="16" selection-end-line="448" selection-end-column="16" />
               <folding>
                 <element signature="e#57191#57192#0" expanded="true" />
                 <element signature="e#57255#57256#0" expanded="true" />
@@ -149,7 +144,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-110" />
     <option name="y" value="18" />
     <option name="width" value="1920" />
@@ -351,12 +346,12 @@
       <option name="presentableId" value="Default" />
       <updated>1556495905680</updated>
       <workItem from="1556495910044" duration="1860000" />
-      <workItem from="1557370938525" duration="9094000" />
+      <workItem from="1557370938525" duration="12874000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10954000" />
+    <option name="totallyTimeSpent" value="14734000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -381,7 +376,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053304" side_tool="true" weight="0.3373102" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32891566" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3286334" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -477,8 +472,8 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/Integer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="1225" column="51" selection-start-line="1225" selection-start-column="43" selection-end-line="1225" selection-end-column="51" />
+        <state relative-caret-position="348">
+          <caret line="448" column="16" lean-forward="true" selection-start-line="448" selection-start-column="16" selection-end-line="448" selection-end-column="16" />
           <folding>
             <element signature="e#57191#57192#0" expanded="true" />
             <element signature="e#57255#57256#0" expanded="true" />
@@ -490,8 +485,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/numbers/Methods.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
+        <state relative-caret-position="261">
+          <caret line="65" column="18" selection-start-line="65" selection-start-column="18" selection-end-line="65" selection-end-column="18" />
         </state>
       </provider>
     </entry>
