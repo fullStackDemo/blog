@@ -14,5 +14,6 @@ public class DataType {
         String s2 = "Java";
         System.out.println(s1);
         System.out.println(s2);
+        System.out.print(s2);
     }
 }
