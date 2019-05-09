@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e26438f-020f-45f9-bbce-4c9c851395ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/decision/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/decision/TestIf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/numbers/Methods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/loop/TestBreak.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/loop/TestBreak.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/loop/TestContinue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/loop/TestContinue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/decision/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/decision/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,15 +38,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="342">
               <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/loop/TestWhile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -81,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/loop/TestFor.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="432">
-              <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+              <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -90,16 +82,40 @@
         <entry file="file://$PROJECT_DIR$/src/com/decision/TestIf.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="243">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/decision/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/decision/Main.java">
+        <entry file="file://$PROJECT_DIR$/src/com/numbers/Methods.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="504">
+              <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/Integer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="248">
+              <caret line="1225" column="51" selection-start-line="1225" selection-start-column="43" selection-end-line="1225" selection-end-column="51" />
+              <folding>
+                <element signature="e#57191#57192#0" expanded="true" />
+                <element signature="e#57255#57256#0" expanded="true" />
+                <element signature="e#57833#57834#0" expanded="true" />
+                <element signature="e#57889#57890#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -128,10 +144,12 @@
         <option value="$PROJECT_DIR$/src/com/loop/TestContinue.java" />
         <option value="$PROJECT_DIR$/src/com/decision/TestIf.java" />
         <option value="$PROJECT_DIR$/src/com/decision/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/numbers/Main.java" />
+        <option value="$PROJECT_DIR$/src/com/numbers/Methods.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-110" />
     <option name="y" value="18" />
     <option name="width" value="1920" />
@@ -174,14 +192,37 @@
               <item name="workspace" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="type" type="462c0819:PsiDirectoryNode" />
+              <item name="numbers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="workspace" type="b2602c69:ProjectViewProjectNode" />
-              <item name="workspace" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="decision" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="workspace" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 12 &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+            <path>
+              <item name="workspace" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 12 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="java.base" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="workspace" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 12 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="java.base" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="workspace" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 12 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="java.base" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="lang" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -216,13 +257,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Methods">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.decision.Main" />
       <module name="workspace" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.decision.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Methods" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.numbers.Methods" />
+      <module name="workspace" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.numbers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -256,19 +310,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestDo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.loop.TestDo" />
-      <module name="workspace" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.loop.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestIf" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.decision.TestIf" />
       <module name="workspace" />
@@ -283,19 +324,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.TestDo" />
       <item itemvalue="Application.TestBreak" />
       <item itemvalue="Application.TestContinue" />
       <item itemvalue="Application.TestIf" />
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Methods" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Methods" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.TestIf" />
         <item itemvalue="Application.TestContinue" />
         <item itemvalue="Application.TestBreak" />
-        <item itemvalue="Application.TestDo" />
       </list>
     </recent_temporary>
   </component>
@@ -310,12 +351,12 @@
       <option name="presentableId" value="Default" />
       <updated>1556495905680</updated>
       <workItem from="1556495910044" duration="1860000" />
-      <workItem from="1557370938525" duration="6902000" />
+      <workItem from="1557370938525" duration="9094000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8762000" />
+    <option name="totallyTimeSpent" value="10954000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -330,7 +371,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3373102" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49946696" visible="true" weight="0.3373102" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -339,7 +380,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053304" side_tool="true" weight="0.3373102" />
       <window_info anchor="bottom" id="Messages" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -354,6 +395,18 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/Integer.java</url>
+          <line>1225</line>
+          <properties />
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/workspace.iml">
@@ -397,14 +450,14 @@
     <entry file="file://$PROJECT_DIR$/src/com/loop/TestFor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
-          <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/decision/TestIf.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
@@ -417,8 +470,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/decision/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="504">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/Integer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="1225" column="51" selection-start-line="1225" selection-start-column="43" selection-end-line="1225" selection-end-column="51" />
+          <folding>
+            <element signature="e#57191#57192#0" expanded="true" />
+            <element signature="e#57255#57256#0" expanded="true" />
+            <element signature="e#57833#57834#0" expanded="true" />
+            <element signature="e#57889#57890#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/numbers/Methods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="35" column="11" selection-start-line="35" selection-start-column="11" selection-end-line="35" selection-end-column="11" />
         </state>
       </provider>
     </entry>

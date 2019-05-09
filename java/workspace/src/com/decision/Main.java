@@ -40,5 +40,7 @@ public class Main {
                 System.out.println("invaild grade");
         }
         System.out.println("test4 is " + grade);
+
+
     }
 }

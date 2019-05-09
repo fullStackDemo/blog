@@ -8,7 +8,9 @@
 
 [Java - Basic DataType 基本数据类型](./basicDataType.md)
 
-[java - Loop Control 循环控制](./LoopControl.md)
+[Java - Loop Control 循环控制](./LoopControl.md)
 
-[java - Decision Making 判断语句](./DecisionMaking.md)
+[Java - Decision Making 判断语句](./DecisionMaking.md)
+
+[Java - Numbers Class 数字类](./NumbersClass.md)
 
