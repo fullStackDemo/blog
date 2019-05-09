@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e26438f-020f-45f9-bbce-4c9c851395ea" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/loop/TestDo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/loop/TestFor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/loop/TestBreak.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/loop/TestContinue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../LoopControl.md" beforeDir="false" afterPath="$PROJECT_DIR$/../LoopControl.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -49,11 +49,29 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/loop/TestDo.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="297">
               <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/loop/TestBreak.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="6" column="26" lean-forward="true" selection-start-line="2" selection-end-line="13" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/loop/TestContinue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -87,10 +105,12 @@
         <option value="$PROJECT_DIR$/src/com/loop/TestWhile.java" />
         <option value="$PROJECT_DIR$/src/com/loop/TestFor.java" />
         <option value="$PROJECT_DIR$/src/com/loop/TestDo.java" />
+        <option value="$PROJECT_DIR$/src/com/loop/TestBreak.java" />
+        <option value="$PROJECT_DIR$/src/com/loop/TestContinue.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-41" />
     <option name="y" value="226" />
     <option name="width" value="1920" />
@@ -162,13 +182,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.TestDo">
-    <configuration name="DataType" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.data.type.DataType" />
+  <component name="RunManager" selected="Application.TestContinue">
+    <configuration name="TestBreak" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.loop.TestBreak" />
       <module name="workspace" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.data.type.*" />
+          <option name="PATTERN" value="com.loop.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -176,12 +196,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+    <configuration name="TestContinue" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.loop.TestContinue" />
       <module name="workspace" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.loop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -226,19 +249,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.DataType" />
       <item itemvalue="Application.TestWhile" />
       <item itemvalue="Application.TestFor" />
       <item itemvalue="Application.TestDo" />
+      <item itemvalue="Application.TestBreak" />
+      <item itemvalue="Application.TestContinue" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TestContinue" />
+        <item itemvalue="Application.TestBreak" />
         <item itemvalue="Application.TestDo" />
         <item itemvalue="Application.TestFor" />
         <item itemvalue="Application.TestWhile" />
-        <item itemvalue="Application.DataType" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -253,12 +276,12 @@
       <option name="presentableId" value="Default" />
       <updated>1556495905680</updated>
       <workItem from="1556495910044" duration="1860000" />
-      <workItem from="1557370938525" duration="3375000" />
+      <workItem from="1557370938525" duration="4007000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5235000" />
+    <option name="totallyTimeSpent" value="5867000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -334,6 +357,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/loop/TestBreak.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="26" lean-forward="true" selection-start-line="2" selection-end-line="13" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/loop/TestContinue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
         </state>
       </provider>
     </entry>

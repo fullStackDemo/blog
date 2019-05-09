@@ -32,7 +32,7 @@ public class TestWhile {
 
 **output**:
 
-```
+```java
 10
 11
 12
@@ -73,7 +73,7 @@ public class TestFor {
 
 **output**
 
-```
+```java
 第一种用法
 1
 2
@@ -110,7 +110,7 @@ public class TestDo {
 
 **Output**
 
-```
+```java
 10
 11
 12
@@ -121,5 +121,72 @@ public class TestDo {
 17
 18
 19
+```
+
+### Break Statement in Java
+
+#### 1、break
+
+直接跳出循环
+
+![Java Break Statement](assets/java_break_statement.jpg)
+
+
+
+**Example**
+
+```java
+public class TestBreak {
+    public static void main(String[] args) {
+        int arr[] = {10, 20, 30};
+
+        for(int n : arr) {
+            if (n == 30) {
+                break;
+            }
+            System.out.println(n);
+        }
+    }
+}
+```
+
+**Output**
+
+```java
+10
+20
+```
+
+#### 2、continue 
+
+跳出当前循环，直接下一个循环
+
+![Java Continue Statement](assets/java_continue_statement.jpg)
+
+
+
+**Example**
+
+```java
+public class TestContinue {
+    public static void main(String[] args) {
+        int numbers[] = {10,20,30,40};
+
+        for(int number : numbers){
+            if(number == 20){
+                continue;
+            }
+            System.out.println(number);
+        }
+    }
+}
+```
+
+**Output**
+
+```java
+10
+30
+40
 ```
 
