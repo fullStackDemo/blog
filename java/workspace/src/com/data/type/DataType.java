@@ -24,5 +24,6 @@ public class DataType {
 
         TestAccess testAccess = new TestAccess();
         System.out.println(testAccess.name);
+        System.out.print(s2);
     }
 }
