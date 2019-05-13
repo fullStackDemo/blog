@@ -2,34 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c13197-d8fe-4300-9801-168af26c9011" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/description.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/wangzhao.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/META-INF/workspace.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/Test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/Test2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/String/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/String/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/character/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/character/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/data/type/DataType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/data/type/DataType.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/data/type/TestAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/data/type/TestAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/decision/TestIf.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/decision/TestIf.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestBreak.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestBreak.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestContinue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestContinue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestDo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestDo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestFor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestFor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestWhile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestWhile.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/numbers/Methods.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/numbers/Methods.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../String.md" beforeDir="false" afterPath="$PROJECT_DIR$/../String.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/String/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/String/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/decision/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/decision/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/String/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="511">
+              <caret line="161" column="31" selection-start-line="161" selection-start-column="31" selection-end-line="161" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -156,7 +130,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -230,12 +204,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1557718412184</updated>
-      <workItem from="1557718413825" duration="645000" />
+      <workItem from="1557718413825" duration="2447000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="645000" />
+    <option name="totallyTimeSpent" value="2447000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -246,7 +220,7 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Messages" weight="0.329718" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -256,8 +230,8 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -274,6 +248,20 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>s.subSequence(0, 2)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>s.subSequence(0, 2).length()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/com/company/Main.java">
@@ -325,8 +313,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/String/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="511">
+          <caret line="161" column="31" selection-start-line="161" selection-start-column="31" selection-end-line="161" selection-end-column="31" />
         </state>
       </provider>
     </entry>

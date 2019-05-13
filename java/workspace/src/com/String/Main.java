@@ -123,9 +123,43 @@ public class Main {
     for (String _s : splitStr) {
       System.out.println(_s);
     }
-
-//    System.out.println(s.split("e", 5));
+    
+    // limit 限制返回几个字符串
+    System.out.println(s.split("e", 5));
+    /*
+     * Strings
+     * re immut
+     * ble
+     * */
+    for (String _s1 : s.split("a", 3)) {
+      System.out.println(_s1);
+    }
+    
+    // 判断是否以什么为开头
+    System.out.println(s.startsWith("s"));
+    // true
+    System.out.println(s.startsWith("S"));
+    // toffset 开始搜索的索引值
+    // false
+    System.out.println(s.startsWith("S", 2));
+    
+    // 生成一个子字符序列
+    System.out.println(s.subSequence(0, 2));
+    // rings are immutable
+    System.out.println(s.substring(2));
+    // ri
+    System.out.println(s.substring(2, 4));
+    
+    // 生成新的字符数组
+    System.out.println(s.toCharArray());
+    for (char c : s.toCharArray()) {
+      System.out.println(c);
+    }
   
+    System.out.println(s.toUpperCase());
+    System.out.println(s.toLowerCase());
   
+    System.out.println(" 1233 7".trim());
+    
   }
 }
