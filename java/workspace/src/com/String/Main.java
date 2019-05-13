@@ -123,11 +123,9 @@ public class Main {
     for (String _s : splitStr) {
       System.out.println(_s);
     }
+
+//    System.out.println(s.split("e", 5));
   
-    System.out.println();
-    
-   
-    
-    
+  
   }
 }
