@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c13197-d8fe-4300-9801-168af26c9011" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/mongo/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/workspace.iml" beforeDir="false" afterPath="$PROJECT_DIR$/workspace.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/Test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/Test2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/String/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/String/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/character/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/character/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/data/type/DataType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/data/type/DataType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/data/type/TestAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/data/type/TestAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/decision/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/decision/TestIf.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/decision/TestIf.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestBreak.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestBreak.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestContinue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestContinue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestDo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestDo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestFor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestFor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/loop/TestWhile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/loop/TestWhile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/workspace/com/numbers/Methods.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/workspace/com/numbers/Methods.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/mongo/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/mongo/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,7 +35,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/decision/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
+            <state>
               <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
             </state>
           </provider>
@@ -30,7 +44,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/array/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
+            <state>
               <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
             </state>
           </provider>
@@ -39,7 +53,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/String/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state>
               <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
             </state>
           </provider>
@@ -48,10 +62,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mongo/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="27" column="40" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
+            <state relative-caret-position="109">
+              <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1154#1164#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,7 +80,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/decision/TestIf.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
+            <state>
               <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
             </state>
           </provider>
@@ -94,11 +109,9 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="583" />
-    <option name="y" value="271" />
-    <option name="width" value="1036" />
-    <option name="height" value="726" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -108,7 +121,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -124,6 +136,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -136,7 +149,8 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -227,17 +241,18 @@
       <updated>1557718412184</updated>
       <workItem from="1557718413825" duration="3958000" />
       <workItem from="1557828681264" duration="1752000" />
+      <workItem from="1557838382881" duration="4021000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5710000" />
+    <option name="totallyTimeSpent" value="9731000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25266525" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22317597" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -246,7 +261,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -256,7 +271,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.329718" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -303,8 +318,22 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.iml" />
     <entry file="file://$PROJECT_DIR$/src/com/decision/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
+        <state>
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/array/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/String/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
         </state>
       </provider>
     </entry>
@@ -313,31 +342,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/decision/TestIf.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
+        <state>
           <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/array/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/String/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/mongo/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="511">
-          <caret line="27" column="40" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
+        <state relative-caret-position="109">
+          <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#1154#1164#0" expanded="true" />
           </folding>
         </state>
       </provider>
