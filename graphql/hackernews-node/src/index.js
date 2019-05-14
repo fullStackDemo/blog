@@ -11,18 +11,39 @@ const resolvers = {
   Query: {
     info: () => `This is the API of a Hackernews Clone`,
     age: () => [12],
-    feed: () => links
+    feed: () => links,
+    link: (id) => links.find(n => n.id == id) 
   },
   Mutation:{
     post: (parent, args)=>{
+      console.log(parent, args);     
       const link = {
         id: `link-${idCount++}`,
         description: args.description,
         url: args.url
       };
       links.push(link);
-      return link
+      return link;
+    },
+    deleteLink: (parent, args)=>{
+      console.log(parent, args);
+      if(links.length){
+        const index = links.findIndex(n=> n.id == args.id);
+        console.log(index)
+        links.splice(index, 1)
+      }
+      return links;
+    },
+    updateLink: (parent, args)=>{
+      links.forEach(n => {
+        if(n.id == args.id){
+          n.url = args.url ? args.url : n.url;
+          n.description = args.description ? args.description : n.description;
+        }
+      });
+      return links;
     }
+    
   }
 }
 
