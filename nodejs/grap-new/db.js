@@ -16,7 +16,7 @@ exports.insertData = (data) => {
   });
 };
 // 查询数据
-exports.queryData = (resolve) => {
+exports.queryData = (resolve, type) => {
   client.connect(err => {
     console.log("mongodb is connecting");
     const collection = client.db("test").collection("news");
@@ -27,7 +27,18 @@ exports.queryData = (resolve) => {
       cursor.forEach(function (doc) {
         const str = JSON.stringify(doc, null, 4);
         // console.log(str);
-        result.push(JSON.parse(str));
+        let obj = JSON.parse(str);
+        if (type) {
+          // 只取指定数据
+          if (obj.hasOwnProperty(type)) {
+            Object.keys(obj).forEach(n => {
+              if (n != type) {
+                delete obj[n];
+              }
+            })
+          }
+        }
+        result.push(obj);
         r1(result);
       });
     }).then(r => {
