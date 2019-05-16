@@ -3,39 +3,44 @@
 
 const express = require('express');
 const request = require('request');
-const fs = require('fs');
-const cherrio = require('cheerio');
-
+const cheerio = require('cheerio');
+const { insertData, queryData } = require('./db');
 const app = express();
 const port = 8888;
 
 app.get('/scrap', (req, res) => {
   const url = "https://news.ycombinator.com/newest";
-
   //request call
   request(url, function (error, reponse, html) {
     if (!error) {
-      const $ = cherrio.load(html);
+      const $ = cheerio.load(html);
       const data = [];
       const items = $('.itemlist').find('.athing');
-      console.log(items.length);
       for (let index = 0; index < items.length; index++) {
         const element = items[index];
         const node = $(element).find('.title a');
         const title = node.text();
         const url = node.attr('href');
-        console.log(title, url);
-        
         const obj = {
           title: title,
           url: url
         };
         data.push(obj);
       }
-
+      res.send(data);
+      // 同步数据库
+      insertData(data);
     }
   })
+});
 
+app.get('/query/news', (req, res) => {
+  const p1 = new Promise((resolve, reject) => {
+    queryData(resolve);
+  });
+  p1.then(result => {
+    res.send(result);
+  });
 });
 
 app.listen(port, () => {
