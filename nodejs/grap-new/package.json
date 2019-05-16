@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  },
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "name": "grap-new",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
+}

@@ -1,1 +1,1 @@
-[抓取Hacker News新闻列表]()
+[抓取Hacker News新闻列表,并且存储MongoDB]()
