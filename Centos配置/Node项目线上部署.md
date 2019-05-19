@@ -75,7 +75,11 @@ v9.9.0
 
 #### 2、项目上传到 域名配置文件目录(比如 wwwroot)
 
+我直接用服务器命令 **wget**下载代码到服务器
 
+```bash
+[root@10 test]# wget https://github.com/***/blog/blob/master/nodejs/grap-new
+```
 
 
 
