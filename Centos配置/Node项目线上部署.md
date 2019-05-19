@@ -77,12 +77,37 @@ v9.9.0
 
 我直接用服务器命令 **wget**下载代码到服务器
 
+不过需要注意的是，如果你的代码托管在github,  tar包路径是：
+
 ```bash
-[root@10 test]# wget https://github.com/***/blog/blob/master/nodejs/grap-new
+https://github.com/***/blog/blob/master/nodejs/build/grap-new.tar.gz
 ```
 
+一定要替换 “blob” 为 “raw”, 不然 wget 到的不是一个 gzip 格式的包。
 
+```bash
+[root@10 test]# wget https://github.com/***/blog/raw/master/nodejs/build/grap-new.tar.gz
+```
 
+然后解压：
 
+```bash
+[root@10 test]# tar -zxvf grap-new.tar.gz
+// 安装依赖
+[root@10 grap-new]# yarn
+//启动服务
+[root@10 grap-new]# yarn dev
+```
 
+这样的话 就可以你的域名下访问了，如果不是放在你的域名下，外网IP是无法访问的。
 
+如果你的服务器的SSH一直运行着，你可以一直访问你的页面。如果关闭了，会导致服务也会关闭。
+
+所以，我们需要安装 [pm2]([http://pm2.keymetrics.io/](http://pm2.keymetrics.io/)) 依赖这个服务，可以让我们的任务一直运行在service里面。
+
+```bash
+[root@10 grap-new]# yarn add global pm2
+[root@10 grap-new]# pm2 start server.js
+```
+
+更多知识点，去 pm2 官网即可了解到。
