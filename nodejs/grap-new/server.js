@@ -6,7 +6,11 @@ const request = require('request');
 const cheerio = require('cheerio');
 const { insertData, queryData } = require('./db');
 const app = express();
-const port = 9001;
+const { config: { port: customPort } } = require('./package.json');
+
+const port = customPort || 80;
+
+// console.log(process.env.npm_package_config_port)
 
 app.get('/scrap', (req, res) => {
   const url = "https://news.ycombinator.com/newest";
