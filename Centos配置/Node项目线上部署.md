@@ -10,11 +10,11 @@
 
 * 找到你上传的位置目录
 
-* ```bash
+  ```bash
   [root@10 /]# ls
-  bin   dev  home  lib64  media  node-v9.9.0-linux-x64.tar.gz  opt  ...
+    bin   dev  home  lib64  media  node-v9.9.0-linux-x64.tar.gz  opt  ...
   ```
-
+  
 * 解压到当前目录
 
   ```bash
