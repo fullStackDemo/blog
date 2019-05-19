@@ -103,7 +103,7 @@ https://github.com/***/blog/blob/master/nodejs/build/grap-new.tar.gz
 
 如果你的服务器的SSH一直运行着，你可以一直访问你的页面。如果关闭了，会导致服务也会关闭。
 
-所以，我们需要安装 [pm2]([http://pm2.keymetrics.io/](http://pm2.keymetrics.io/)) 依赖这个服务，可以让我们的任务一直运行在service里面。
+所以，我们需要安装 [pm2](http://pm2.keymetrics.io/](http://pm2.keymetrics.io/)) 依赖这个服务，可以让我们的任务一直运行在service里面。
 
 ```bash
 [root@10 grap-new]# yarn add global pm2
