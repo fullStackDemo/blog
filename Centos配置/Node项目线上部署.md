@@ -4,7 +4,13 @@
 
 #### 1、安装NodeJs
 
-[官网仓库](https://nodejs.org/dist/v9.9.0/)下载好NodeJs的Linux包(我用的 node-v9.9.0-linux-x64.tar.gz)到本地然后通过FTP（[filezilla](https://filezilla-project.org/)）上传到服务器;
+[官网仓库](https://nodejs.org/dist/v9.9.0/)下载好NodeJs的Linux包(我用的 node-v9.9.0-linux-x64.tar.gz)到本地然后通过FTP（[filezilla](https://filezilla-project.org/)）上传到服务器;或者可以直接在服务器终端使用 **wget** 命令下载。
+
+```bash
+[root@10 /] wget https://nodejs.org/dist/v9.9.0/node-v9.9.0-linux-x64.tar.gz
+```
+
+
 
 ##### 1、==解压 node-v9.9.0-linux-x64.tar.gz==
 
@@ -52,9 +58,22 @@
 
 ##### 3、==检查环境==
 
+```bash
+[root@10 /]# node -v
+v9.9.0
+[root@10 /]# npm -v
+6.9.0
+
+// 另外如果我们习惯使用 yarn, 可以安装 yarn
+[root@10 /]# npm i yarn -g
+....
+[root@10 /]# yarn -v
+1.16.0
 ```
 
-```
+
+
+#### 2、项目上传到 域名配置文件目录(比如 wwwroot)
 
 
 
