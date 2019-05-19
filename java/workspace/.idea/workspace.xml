@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d4c13197-d8fe-4300-9801-168af26c9011" name="Default Changelist" comment="" />
+    <list default="true" id="d4c13197-d8fe-4300-9801-168af26c9011" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../nodejs/grap-new/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../nodejs/grap-new/run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../nodejs/grap-new/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../nodejs/grap-new/server.js" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
