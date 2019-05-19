@@ -6,11 +6,11 @@ const request = require('request');
 const cheerio = require('cheerio');
 const { insertData, queryData } = require('./db');
 const app = express();
-const { config: { port: customPort } } = require('./package.json');
 
-const port = customPort || 80;
+//动态读取数据
+const port = process.env.npm_package_config_port || 80;
 
-// console.log(process.env.npm_package_config_port)
+console.log(process.env.npm_package_config_port)
 
 app.get('/scrap', (req, res) => {
   const url = "https://news.ycombinator.com/newest";

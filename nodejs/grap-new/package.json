@@ -6,7 +6,7 @@
     "request": "^2.88.0"
   },
   "scripts": {
-    "dev": "node server.js"
+    "dev": "bash run.sh"
   },
   "name": "grap-new",
   "version": "1.0.0",
