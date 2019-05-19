@@ -25,7 +25,7 @@ if [ -n "$argument" ];then
       echo "**3**"
       echo "Directory $buildDir does not exists"
       mkdir $buildDir
-      tar -zcf ./$buildDir/$argument.tar.gz ./$argument
+      tar --exclude=$excludeFolder -zcf ./$buildDir/$argument.tar.gz ./$argument
     fi
     
     # 判断是否生成tar.gz
