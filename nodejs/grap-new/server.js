@@ -8,7 +8,7 @@ const { insertData, queryData } = require('./db');
 const app = express();
 
 //动态读取数据
-const port = process.env.npm_package_config_port || 8081;
+const port = process.env.npm_package_config_port;
 
 console.log(process.env.npm_package_config_port)
 
