@@ -36,12 +36,19 @@ app.get('/scrap', (req, res) => {
 
 app.get('/query/news', (req, res) => {
   console.log(req.query);
-  const {type} = req.query;
+  const { type } = req.query;
   const p1 = new Promise((resolve, reject) => {
     queryData(resolve, type);
   });
   p1.then(result => {
     res.send(result);
+  });
+});
+
+app.get('/test', (req, res) => {
+  res.json({
+    code: 0,
+    data: "test"
   });
 });
 
