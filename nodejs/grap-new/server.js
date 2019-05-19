@@ -6,7 +6,7 @@ const request = require('request');
 const cheerio = require('cheerio');
 const { insertData, queryData } = require('./db');
 const app = express();
-const port = 10086;
+const port = 9001;
 
 app.get('/scrap', (req, res) => {
   const url = "https://news.ycombinator.com/newest";
