@@ -1,6 +1,8 @@
 
 #!/bin/sh
 argument=$1;
+# 排除一些文件
+excludeFolder="node_modules";
 
 # 判断参数是否存在
 if [ -n "$argument" ];then
@@ -18,7 +20,7 @@ if [ -n "$argument" ];then
     if [[ -d "$buildDir" ]];then
       echo "**3**"
       echo "Directory $buildDir exists"
-      tar -zcf ./$buildDir/$argument.tar.gz ./$argument
+      tar --exclude=$excludeFolder -zcvf ./$buildDir/$argument.tar.gz ./$argument 
     else
       echo "**3**"
       echo "Directory $buildDir does not exists"
