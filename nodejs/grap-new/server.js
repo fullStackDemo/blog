@@ -31,7 +31,11 @@ app.get('/scrap', (req, res) => {
         };
         data.push(obj);
       }
-      res.send(data);
+      // res.send(data);
+      res.json({
+        code: 0,
+        data: obj
+      });
       // 同步数据库
       insertData(data);
     }
