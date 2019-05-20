@@ -1,0 +1,19 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "chat room",
+  "main": "index.js",
+  "scripts": {
+    "dev": "set PORT=3642 && node index.js"
+  },
+  "author": "alex wong",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "open": "0.0.5",
+    "path": "^0.12.7",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
+  }
+}

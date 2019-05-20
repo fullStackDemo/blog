@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <title>Socket.IO chat</title>
+    <script src="lib/lodash.js"></script>
+    <script src="lib/popup.js"></script>
+    <script src="util.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- login -->
+        <div class="loginPage">
+            <div class="loginBox">
+                <h2 class="loginTip">ChatRoom 1.0</h2>
+                <div class="profileBox" title="add photo">
+                    <input class="photoInput" type="file" title=" ">
+                    <image class="photoImage" src="" style="display:none;"></image>
+                </div>
+                <h2 class="loginTip">what's your nickname ?</h2>
+                <input class="usernameInput" type="text">
+            </div>
+        </div>
+        <!-- chat -->
+        <div class="chatPage" style="display:none;">
+            <div class="charHeader">ChatRoom 1.0</div>
+            <ul id="messages"></ul>
+            <div class="submitBox">
+                <input id="typeInput" placeholder="Type here ..." autofocus />
+                <button id="submitBtn">Send</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./index.js"></script>
+</body>
+
+</html>

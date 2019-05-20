@@ -1,0 +1,263 @@
+@import './lib/scollbar.less';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@border-color: #dadada;
+@text-color: #232323;
+
+.wrapper {
+  width: 768px;
+  height: 100vh;
+  margin: 0 auto;
+  border: 1px solid @border-color;
+  position: relative;
+}
+
+.chatPage {
+  width: 100%;
+  height: e('calc(100% - 45px)');
+  padding-top: 45px;
+  padding-bottom: 20px;
+  background: #f5f5f5;
+  overflow: auto;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.loginPage {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(-225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBox {
+  width: 300px;
+  text-align: center;
+}
+
+.loginTip {
+  text-align: center;
+}
+
+.usernameInput {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid white;
+  margin-top: 50px;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.submitBox {
+  height: 45px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  border-top: 1px solid @border-color;
+
+  input {
+    border: 0;
+    flex-grow: 1;
+    padding: 0 6px;
+    outline: none;
+  }
+
+  button {
+    flex-basis: 120px;
+    flex-grow: 0;
+    background: #119612;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+#messages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 5px 10px;
+    clear: both;
+    zoom: 1;
+
+    &.log {
+      text-align: center;
+      font-size: 14px;
+      color: grey;
+    }
+
+    &.mySelf {
+      text-align: right;
+    }
+  }
+}
+
+.chatUsername {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 12px;
+  line-height: 30px;
+  vertical-align: middle;
+  color: white;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.chatText {
+  max-width: 50%;
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+  background: #fff;
+  padding: 0 6px;
+  color: @text-color;
+  border-radius: 6px;
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-emphasis: emphasis;
+}
+
+li.mySelf .chatText {
+  background: #9fe757;
+}
+
+.chatTime {
+  color: #fff;
+  background: #dadada;
+  padding: 3px;
+  text-align: center;
+}
+
+.charHeader {
+  width: 100%;
+  height: 45px;
+  position: absolute;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid @border-color;
+  line-height: 45px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.profileBox {
+  width: 120px;
+  height: 120px;
+  display: inline-block;
+  line-height: 120px;
+  vertical-align: middle;
+  text-align: center;
+  margin: 80px 0;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: url(./img/bg.webp) no-repeat center;
+    background-size: 100% 100%;
+    border-radius: 120px;
+    opacity: .6;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.photoInput {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  z-index: 8;
+  cursor: pointer;
+}
+
+.photoImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 120px;
+  position: absolute;
+  left: -1px;
+  right: 0;
+  top: -1px;
+  bottom: 0;
+  z-index: 6;
+  cursor: pointer;
+}
+
+.chatItem {
+  width: 80%;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px 0;
+
+  .chatItemLeft {
+    flex-basis: 40px;
+    flex-grow: 0;
+  }
+
+  .chatItemRight {
+    flex-grow: 1;
+  }
+
+  .chatItemRight_top {
+    width: 100%;
+    height: 20px;
+    padding: 0 6px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .65);
+  }
+
+  .chatItemRight_bottom {
+    min-width: 60px;
+    background: #fff;
+    padding: 10px;
+    color: @text-color;
+    border-radius: 3px;
+    display: inline-block;
+  }
+}
+
+li.mySelf {
+  .chatItem {
+    float: right;
+  }
+
+  .chatItemRight_bottom {
+    background: #9fe757;
+  }
+}
