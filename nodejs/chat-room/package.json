@@ -7,7 +7,7 @@
   "description": "chat room",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js"
+    "dev": "bash run.sh"
   },
   "author": "alex wong",
   "license": "ISC",
