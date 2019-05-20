@@ -4,7 +4,9 @@ const http = require('http').createServer(app);
 const open = require('open');
 const io = require('socket.io')(http);
 const path = require('path');
-const port = process.env.port || 3000;
+const port = process.env.npm_package_config_port;
+
+console.log('chat port is ' + port);
 
 // Router
 app.use(express.static(path.join(__dirname, 'public')));

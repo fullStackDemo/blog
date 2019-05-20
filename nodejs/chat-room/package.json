@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "chat room",
   "main": "index.js",
+  "config": {
+    "port": 8009
+  },
   "scripts": {
-    "dev": "set PORT=3642 && node index.js"
+    "dev": "node index.js"
   },
   "author": "alex wong",
   "license": "ISC",
