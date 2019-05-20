@@ -1,11 +1,11 @@
 {
+  "config": {
+    "port": 8010
+  },
   "name": "socket",
   "version": "1.0.0",
   "description": "chat room",
   "main": "index.js",
-  "config": {
-    "port": 8009
-  },
   "scripts": {
     "dev": "node index.js"
   },
