@@ -4,9 +4,9 @@ const config = require('./config.json');
 const app = express();
 
 //动态读取数据
-const port = process.env.npm_package_config_port || 80;
+const port = process.env.npm_package_config_port;
 
-console.log(process.env.npm_package_config_port)
+console.log("run app.js at ", process.env.npm_package_config_port)
 
 app.get('/', (req, res) => {
   //1.获取微信服务器Get请求的参数 signature、timestamp、nonce、echostr
