@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4c13197-d8fe-4300-9801-168af26c9011" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../nodejs/grap-new/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../nodejs/grap-new/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../nodejs/grap-new/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../../nodejs/grap-new/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -235,17 +234,19 @@
       <workItem from="1557718413825" duration="3958000" />
       <workItem from="1557828681264" duration="2353000" />
       <workItem from="1558159533936" duration="293000" />
+      <workItem from="1558530685975" duration="32000" />
+      <workItem from="1558530760226" duration="14000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7212000" />
+    <option name="totallyTimeSpent" value="7258000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22603719" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23175965" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
