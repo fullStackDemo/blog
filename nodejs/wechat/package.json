@@ -15,6 +15,8 @@
     "supervisor": "^0.12.0"
   },
   "devDependencies": {
-    "crypto": "^1.0.1"
+    "axios": "^0.18.0",
+    "crypto": "^1.0.1",
+    "request": "^2.88.0"
   }
 }

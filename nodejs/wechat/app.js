@@ -1,6 +1,8 @@
 const express = require('express');
 const crypto = require('crypto');
 const config = require('./config.json');
+const axios = require('axios');
+
 const app = express();
 
 //动态读取数据
@@ -32,10 +34,26 @@ app.get('/', (req, res) => {
   }
 });
 
+// accessToken 获取token
+app.get('/getAccessToken', (req, res) => {
+  const fetchUrl = `${config.getAccessToken}/grant_type=client_credential&appid=${config.appid}&secret=${config.appsecret}`;
+  axios.get(fetchUrl).then(response => {
+    res.json({
+      code: 0,
+      data: response
+    });
+  }).catch(err => {
+    res.json({
+      code: 0,
+      data: null
+    });
+  })
+});
+
 app.get('/test', (req, res) => {
-   res.json({
-     code: 0
-   });
+  res.json({
+    code: 0
+  });
 });
 
 app.listen(port, () => {
