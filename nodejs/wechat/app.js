@@ -37,13 +37,17 @@ app.get('/getTicket', (req, res) => {
 
 //获取签名
 app.get('/sign', (req, res) => {
+  const params = {};
+  console.log(req.query)
+  params.url = req.query.url;
   /***
    * runMiddleware 请求别的 endPoint 获取 jsapi_ticket
-   *
    */
   app.runMiddleware('/getTicket', function (code, body, headers) {
     const result = JSON.parse(body);
     console.log('User ticket:', result.ticket);
+    params.ticket = result.ticket;
+    api.getSign(params, res);
   });
 
 });
