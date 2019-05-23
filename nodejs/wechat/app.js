@@ -2,6 +2,8 @@ const express = require('express');
 const api = require('./api');
 const path = require('path');
 const app = express();
+//express请求别的路由中间件
+require('run-middleware')(app);
 
 // 静态资源
 app.use(express.static(path.join(__dirname, "public")));
@@ -28,11 +30,23 @@ app.get('/getTicket', (req, res) => {
   // 获取token
   p.then(result => {
     const accessToken = JSON.parse(result).access_token;
-    // console.log('r1', accessToken);
     // 判断是否存在缓存
     api.jsapiTicket(accessToken, res);
   });
-})
+});
+
+//获取签名
+app.get('/sign', (req, res) => {
+  /***
+   * runMiddleware 请求别的 endPoint 获取 jsapi_ticket
+   *
+   */
+  app.runMiddleware('/getTicket', function (code, body, headers) {
+    const result = JSON.parse(body);
+    console.log('User ticket:', result.ticket);
+  });
+
+});
 
 // 测试
 app.get('/test', (req, res) => {

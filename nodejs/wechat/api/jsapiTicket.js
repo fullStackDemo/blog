@@ -17,12 +17,12 @@ module.exports = get_jsapi_ticket = (access_token, res) => {
         ticket: cacheValue,
         from: 'cache'
       });
-
       res.send(result);
     } else {
       // 调取微信api
       axios.get(fetchUrl).then(response => {
         let json = CircularJSON.stringify(response.data);
+        // promise
         res.send(json);
         // 设置缓存
         if (response.data.ticket) {
