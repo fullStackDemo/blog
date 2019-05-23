@@ -2,6 +2,7 @@ const express = require('express');
 const crypto = require('crypto');
 const config = require('./config.json');
 const axios = require('axios');
+const CircularJSON = require('circular-json');
 
 const app = express();
 
@@ -36,17 +37,14 @@ app.get('/', (req, res) => {
 
 // accessToken 获取token
 app.get('/getAccessToken', (req, res) => {
-  const fetchUrl = `${config.getAccessToken}/grant_type=client_credential&appid=${config.appid}&secret=${config.appsecret}`;
+  const fetchUrl = `${config.getAccessToken}?grant_type=client_credential&appid=${config.appid}&secret=${config.appsecret}`;
+  console.log(fetchUrl, config);
+
   axios.get(fetchUrl).then(response => {
-    res.json({
-      code: 0,
-      data: response
-    });
+    let json = CircularJSON.stringify(response.data);
+    res.send(json);
   }).catch(err => {
-    res.json({
-      code: 0,
-      data: null
-    });
+    console.log(err)
   })
 });
 
