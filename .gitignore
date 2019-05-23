@@ -8,3 +8,5 @@ node_modules
 react源码解读/examples/my-app/src/store/bash.exe.stackdump
 
 java/workspace/.idea/*.xml
+
+.vscode
