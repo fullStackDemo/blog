@@ -382,7 +382,7 @@ jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-Hh
 
 步骤2. 对`string1`进行`sha1`签名，得到`signature`：
 
-```javascript
+```markdown
 0f9de62fce790f9a083d5c99e95740ceb90c27ed
 ```
 
@@ -522,9 +522,154 @@ app.get('/sign', (req, res) => {
 
 ### 5、JSSDK 使用
 
+[微信JS-SDK说明文档](https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115)
 
 
 
+ **步骤一：绑定域名**
+
+先登录微信公众平台进入“公众号设置”的“功能设置”里填写“JS接口安全域名”。
+
+备注：登录后可在“开发者中心”查看对应的接口权限。
+
+
+
+ **步骤二：引入JS文件**
+
+在需要调用JS接口的页面引入如下JS文件，（支持https）：<http://res.wx.qq.com/open/js/jweixin-1.4.0.js>
+
+如需进一步提升服务稳定性，当上述资源不可访问时，可改访问：<http://res2.wx.qq.com/open/js/jweixin-1.4.0.js> （支持https）。
+
+备注：支持使用 AMD/CMD 标准模块加载方法加载
+
+
+
+ **步骤三：通过config接口注入权限验证配置**
+
+所有需要使用JS-SDK的页面必须先注入配置信息，否则将无法调用（同一个url仅需调用一次，对于变化url的SPA的web app可在每次url变化时进行调用,目前Android微信客户端不支持pushState的H5新特性，所以使用pushState来实现web app的页面会导致签名失败，此问题会在Android6.2中修复）。
+
+```javascript
+wx.config({
+    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: '', // 必填，公众号的唯一标识
+    timestamp: , // 必填，生成签名的时间戳
+    nonceStr: '', // 必填，生成签名的随机串
+    signature: '',// 必填，签名
+    jsApiList: [] // 必填，需要使用的JS接口列表
+});
+```
+
+
+
+**步骤四：通过ready接口处理成功验证**
+
+```javascript
+wx.ready(function(){
+    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+});
+```
+
+实战代码如下：
+
+```javascript
+// promise
+const getSignPromise = new Promise((resolve, reject) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', location.origin + '/sign?url=' + location.href, true);
+  xhr.send();
+  xhr.onload = () => {
+    if (xhr.readyState === xhr.DONE) {
+      if (xhr.status === 200) {
+        const result = JSON.parse(xhr.response);
+        console.log(result);
+        resolve(result);
+      }
+    }
+  }
+});
+
+// 分享
+getSignPromise.then(res => {
+  getWeShare(res);
+});
+
+/***
+ * 微信分享
+ */
+const getWeShare = (params) => {
+  wx.config({
+    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: params.appId, // 必填，公众号的唯一标识
+    timestamp: params.timestamp, // 必填，生成签名的时间戳
+    nonceStr: params.nonceStr, // 必填，生成签名的随机串
+    signature: params.signature, // 必填，签名
+    jsApiList: [
+      'checkJsApi',
+      'onMenuShareTimeline',
+      'onMenuShareAppMessage',
+      'onMenuShareQQ',
+      'onMenuShareWeibo',
+      'hideMenuItems',
+      'chooseImage',
+      'updateAppMessageShareData',
+      'scanQRCode'
+    ] // 必填，需要使用的JS接口列表
+  });
+
+  wx.ready(function () { //需在用户可能点击分享按钮前就先调用
+    const data = {
+      title: '测试JSSDK', // 分享标题
+      desc: '后端端口签名测试', // 分享描述
+      link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: 'http://www.***.cf/img/share.JPG', // 分享图标
+      success: function () {
+        // 设置成功
+      }
+    }
+    wx.onMenuShareTimeline(data);
+    wx.onMenuShareAppMessage(data);
+  });
+}
+
+// 打开相册
+document.getElementById('chooseImage').addEventListener('click', function (params) {
+  wx.chooseImage({
+    count: 1, // 默认9
+    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+    success: function (res) {
+      var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+      console.log(localIds);
+    }
+  });
+  wx.scanQRCode({
+    needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+    scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+    success: function (res) {
+      var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+    }
+  });
+})
+
+```
+
+页面写好之后, 我们可以在 微信开发者工具里面看到：
+
+![1558690241930](assets/1558690241930.png)
+
+![1558690292017](assets/1558690292017.png)
+
+我们也可以打开测试公众号，在里面调试，否则，我们没有权限调取 js 接口
+
+![1558690697756](assets/1558690697756.png)
+
+![1558690829009](assets/1558690829009.png)
+
+
+
+![1558690842689](assets/1558690842689.png)
+
+至此，已经算是成功开发了，其他接口不再做尝试。
 
 ### 6、附录
 
