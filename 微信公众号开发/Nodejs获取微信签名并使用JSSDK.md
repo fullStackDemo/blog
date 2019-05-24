@@ -14,7 +14,7 @@
 
 
 
-![1558682765944](assets/1558682765944.png)
+![1558683045783](assets/1558683045783.png)
 
 
 
@@ -74,4 +74,6 @@
 | [批量显示功能按钮接口](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html) | 无上限                                                       |                                                              |                                                              |                             |
 | [隐藏所有非基础按钮接口](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html) | 无上限                                                       |                                                              |                                                              |                             |
 | [显示所有功能按钮接口](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html) | 无上限                                                       |                                                              |                                                              |                             |
+
+### 2、获取 jsapi_ticket 临时票据
 
