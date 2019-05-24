@@ -75,5 +75,177 @@
 | [隐藏所有非基础按钮接口](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html) | 无上限                                                       |                                                              |                                                              |                             |
 | [显示所有功能按钮接口](http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html) | 无上限                                                       |                                                              |                                                              |                             |
 
-### 2、获取 jsapi_ticket 临时票据
+### 2、获取 `access_token` 访问令牌
+
+```javascript
+https请求方式: GET
+https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+```
+
+**参数说明**
+
+| 参数       | 是否必须 | 说明                                  |
+| :--------- | :------- | :------------------------------------ |
+| grant_type | 是       | 获取access_token填写client_credential |
+| appid      | 是       | 第三方用户唯一凭证                    |
+| secret     | 是       | 第三方用户唯一凭证密钥，即appsecret   |
+
+**返回说明**
+
+正常情况下，微信会返回下述JSON数据包给公众号：
+
+```
+{"access_token":"ACCESS_TOKEN","expires_in":7200}
+```
+
+实战项目代码：
+
+> 获取 access_token
+>
+> `config/index.json:`
+>
+> ![1558685237528](assets/1558685237528.png)
+
+```javascript
+// 获取 access_token
+const config = require('../config/index.json'); // 配置数据
+const axios = require('axios'); // 请求api
+const CircularJSON = require('circular-json');
+
+// (设置 | 获取)缓存方法
+const cache = require('../utils/cache');
+
+module.exports = getAccessToken = (res, resolve) => {
+
+  const fetchUrl = `${config.getAccessToken}?grant_type=client_credential&appid=${config.appid}&secret=${config.appsecret}`;
+  // console.log(fetchUrl, config);
+
+  // 获取缓存
+  cache.getCache('access_token', function (cacheValue) {
+    // 缓存存在
+    if (cacheValue) {
+      const result = CircularJSON.stringify({
+        access_token: cacheValue,
+        from: 'cache'
+      });
+      // promise
+      if (resolve) {
+        resolve(result);
+      } else {
+        res.send(result);
+      }
+    } else {
+      // 调取微信api
+      axios.get(fetchUrl).then(response => {
+        let json = CircularJSON.stringify(response.data);
+        // promise
+        if (resolve) {
+          resolve(json);
+        } else {
+          res.send(json);
+        }
+
+        // 设置缓存
+        if (response.data.access_token) {
+          cache.setCache('access_token', response.data.access_token)
+        }
+      }).catch(err => {
+        console.log('axios occurs ', err);
+      });
+    }
+  });
+
+};
+
+```
+
+这里用的 [axios](https://www.npmjs.com/package/axios)请求微信api，获取 `access_token`;
+
+由于`access_token` 只有`7200秒`有效时间，并且限制一天最多调` 2000 次`，所以中控服务器最好作缓存，这里使用的 [node-cache](https://www.npmjs.com/package/node-cache)，做了`access_token`的缓存，并且删除的缓存的时间也设置的是 `7200s`，这样在 `access_token`失效的时候，node缓存也会被删除。
+
+
+
+```javascript
+// node-cache 保存和获取缓存
+
+const NodeCache = require("node-cache");
+const myCache = new NodeCache({
+  stdTTL: 7200,
+  checkperiod: 120
+});
+
+
+// 设置缓存
+var setCache = function (key, value) {
+  // 设置缓存
+  myCache.set(key, value, function (err, success) {
+    if (!err && success) {
+      console.log(key + "保存成功", value);
+    }
+  });
+};
+
+// 获取缓存
+var getCache = function (key, callback) {
+  // 读取缓存
+  myCache.get(key, function (err, value) {
+    if (!err) {
+      if (value) {
+        console.log(`存在于缓存中${key}=${value}`);
+        callback(value);
+      } else {
+        console.log(`${key} not found in node-cache`);
+        callback();
+      }
+    } else {
+      console.log('get ' + key + ' cache occurs error =', err);
+    }
+  });
+};
+
+
+
+module.exports = {
+  setCache,
+  getCache
+}
+
+```
+
+`node-cache`只能存活于当前进程里面，如果当前node命令被重启，将会重新去请求微信服务器，所以不太适合。
+
+这里其实最好存在 `redis`数据库里，
+
+### 3、获取 `jsapi_ticket `临时票据
+
+生成签名之前必须先了解一下`jsapi_ticket`，`jsapi_ticket`是公众号用于调用`微信JS接口`的`临时票据`。正常情况下，`jsapi_ticket`的有效期为`7200`秒，通过`access_token`来获取。由于获取`jsapi_ticket`的api调用次数非常有限，频繁刷新`jsapi_ticket`会导致`api`调用受限，影响自身业务，开发者必须在自己的服务全局缓存`jsapi_ticket `。
+
+
+
+> 1.参考以下文档获取`access_token`（有效期`7200秒`，开发者必须在自己的服务全局缓存`access_token`）
+>
+> 2.用上一步拿到的`access_token `采用`http GET`方式请求获得`jsapi_ticket`（有效期7200秒，开发者必须在自己的服务全局缓存`jsapi_ticket`）：<`https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi`>
+
+
+
+成功返回如下JSON：
+
+```javascript
+{
+"errcode":0,
+"errmsg":"ok",
+"ticket":"bxLdikRXVbTPdHSM05e5u5sUoXNKd841ZO3MhKoyN5OfkWITDGgnr2fwJ0m9E8NYzWKVZvdVtaUWvsdshFKA",
+"expires_in":7200
+}
+```
+
+获得`jsapi_ticket`之后，就可以生成`JS-SDK`权限验证的签名了。
+
+回到之前说的那个`Nodejs + Express`项目中：
+
+```
+
+```
+
+
 
