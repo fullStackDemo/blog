@@ -341,7 +341,7 @@ app.get('/getTicket', (req, res) => {
 
 
 
-至此，我们获取到了 jsapi_ticker;
+至此，我们获取到了 `jsapi_ticker`;
 
 获得`jsapi_ticket`之后，就可以生成`JS-SDK`权限验证的签名了
 
@@ -365,7 +365,7 @@ app.get('/getTicket', (req, res) => {
 >
 > 最后`sha1` 加密
 
-即signature=sha1(string1)。 示例：
+即`signature=sha1(string1)`。 示例：
 
 ```javascript
 noncestr=Wm3WZYTPz0wzccnW
@@ -374,13 +374,13 @@ timestamp=1414587457
 url=http://mp.weixin.qq.com?params=value
 ```
 
-步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
+步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即`key1=value1&key2=value2…`）拼接成字符串`string1`：
 
 ```javascript
-`jsapi_ticket`=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&`noncestr`=Wm3WZYTPz0wzccnW&`timestamp`=1414587457&`url`=http://mp.weixin.qq.com?params=value
+jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&noncestr=Wm3WZYTPz0wzccnW&timestamp=1414587457&url=http://mp.weixin.qq.com?params=value
 ```
 
-步骤2. 对string1进行sha1签名，得到signature：
+步骤2. 对`string1`进行`sha1`签名，得到`signature`：
 
 ```javascript
 0f9de62fce790f9a083d5c99e95740ceb90c27ed
@@ -396,9 +396,137 @@ url=http://mp.weixin.qq.com?params=value
 >
 > 如出现`invalid signature` 等错误详见附录常见错误及解决办法
 
+代码如下：
+
+```javascript
+/**
+ * 获取签名
+ * @returns:
+ * 1. appId 必填，公众号的唯一标识
+ * 2. timestamp 必填，生成签名的时间戳
+ * 3. nonceStr 必填，生成签名的随机串
+ * 4. signature 必填，签名
+ */
+const crypto = require('crypto');
+const config = require('../config/index.json');
+
+// sha1加密
+function sha1(str) {
+  let shasum = crypto.createHash("sha1")
+  shasum.update(str)
+  str = shasum.digest("hex")
+  return str
+}
+
+/**
+ * 生成签名的时间戳
+ * @return {字符串}
+ */
+function createTimestamp() {
+  return parseInt(new Date().getTime() / 1000) + ''
+}
+
+/**
+ * 生成签名的随机串
+ * @return {字符串}
+ */
+function createNonceStr() {
+  return Math.random().toString(36).substr(2, 15)
+}
+
+/**
+ * 对参数对象进行字典排序
+ * @param  {对象} args 签名所需参数对象
+ * @return {字符串}    排序后生成字符串
+ */
+function raw(args) {
+  var keys = Object.keys(args)
+  keys = keys.sort()
+  var newArgs = {}
+  keys.forEach(function (key) {
+    newArgs[key.toLowerCase()] = args[key]
+  })
+
+  var string = ''
+  for (var k in newArgs) {
+    string += '&' + k + '=' + newArgs[k]
+  }
+  string = string.substr(1)
+  return string
+}
 
 
-### 5、附录
+module.exports = getSign = (params, res) => {
+
+  /**
+   * 签名算法
+   * 签名生成规则如下：
+   * 参与签名的字段包括noncestr（ 随机字符串）,
+   * 有效的jsapi_ticket, timestamp（ 时间戳）,
+   * url（ 当前网页的URL， 不包含# 及其后面部分）。
+   * 对所有待签名参数按照字段名的ASCII 码从小到大排序（ 字典序） 后，
+   *  使用URL键值对的格式（ 即key1 = value1 & key2 = value2…） 拼接成字符串string1。
+   * 这里需要注意的是所有参数名均为小写字符。 对string1作sha1加密， 字段名和字段值都采用原始值， 不进行URL 转义。
+   */
+  var ret = {
+    jsapi_ticket: params.ticket,
+    nonceStr: createNonceStr(),
+    timestamp: createTimestamp(),
+    url: params.url
+  };
+  console.log(params, ret);
+  var string = raw(ret)
+  ret.signature = sha1(string)
+  ret.appId = config.appid;
+  console.log('ret', ret)
+  res.send(ret);
+}
+
+```
+
+路由设置：
+
+```javascript
+const express = require('express');
+const api = require('./api');
+const path = require('path');
+const app = express();
+//express请求别的路由中间件
+require('run-middleware')(app);
+
+//获取签名
+app.get('/sign', (req, res) => {
+  const params = {};
+  console.log(req.query)
+  params.url = req.query.url;
+  /***
+   * runMiddleware 请求别的 endPoint 获取 jsapi_ticket
+   */
+  app.runMiddleware('/getTicket', function (code, body, headers) {
+    const result = JSON.parse(body);
+    console.log('User ticket:', result.ticket);
+    params.ticket = result.ticket;
+    api.getSign(params, res);
+  });
+
+});
+
+....
+```
+
+ postman 请求如下：
+
+![1558689742934](assets/1558689742934.png)
+
+这样我就获取了 签名 等一系列数据。
+
+### 5、JSSDK 使用
+
+
+
+
+
+### 6、附录
 
 调用`config `接口的时候传入参数 `debug: true` 可以开启`debug`模式，页面会`alert`出错误信息。以下为常见错误及解决方法：
 
@@ -470,7 +598,7 @@ url=http://mp.weixin.qq.com?params=value
 
 
 
-# **DEMO页面和示例代码**
+ **DEMO页面和示例代码**
 
 **DEMO页面：**
 
