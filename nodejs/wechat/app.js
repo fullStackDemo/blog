@@ -24,15 +24,12 @@ app.get('/getAccessToken', (req, res) => {
 
 // 获取 jsapi_ticket 临时票据
 app.get('/getTicket', (req, res) => {
-  const p = new Promise((resolve) => {
-    api.accessToken(res, resolve)
-  });
-  // 获取token
-  p.then(result => {
-    const accessToken = JSON.parse(result).access_token;
-    // 判断是否存在缓存
-    api.jsapiTicket(accessToken, res);
-  });
+
+  app.runMiddleware('/getAccessToken', function (code, body, headers) {
+    const result = JSON.parse(body);
+    console.log('User token:', result.access_token);
+    api.jsapiTicket(result.access_token, res);
+  })
 });
 
 //获取签名

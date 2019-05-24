@@ -6,7 +6,7 @@ const CircularJSON = require('circular-json');
 // (设置 | 获取)缓存方法
 const cache = require('../utils/cache');
 
-module.exports = getAccessToken = (res, resolve) => {
+module.exports = getAccessToken = (res) => {
 
   const fetchUrl = `${config.getAccessToken}?grant_type=client_credential&appid=${config.appid}&secret=${config.appsecret}`;
   // console.log(fetchUrl, config);
@@ -19,23 +19,12 @@ module.exports = getAccessToken = (res, resolve) => {
         access_token: cacheValue,
         from: 'cache'
       });
-      // promise
-      if (resolve) {
-        resolve(result);
-      } else {
-        res.send(result);
-      }
+      res.send(result);
     } else {
       // 调取微信api
       axios.get(fetchUrl).then(response => {
         let json = CircularJSON.stringify(response.data);
-        // promise
-        if (resolve) {
-          resolve(json);
-        } else {
-          res.send(json);
-        }
-
+        res.send(json);
         // 设置缓存
         if (response.data.access_token) {
           cache.setCache('access_token', response.data.access_token)
