@@ -4,7 +4,7 @@
 
 上一篇我们讲了基本的准备工作，接下来，进入实战，由于楼主我并没有`备案过的域名`（穷，没钱，没办法哈），还好, 一直通不过`签名验证`，微信比较人性化，提供`测试号`，可以测大部分的接口，并且设置`JS接口安全域名`,没有限制，可以写任何地址，哪怕是`localhost:9999`也是可以的。
 
-### 1、 接口测试号申请
+### 1、接口测试号申请
 
 由于用户体验和安全性方面的考虑，微信公众号的注册有一定门槛，某些高级接口的权限需要微信认证后才可以获取。
 
@@ -258,9 +258,90 @@ app.get('/getAccessToken', (req, res) => {
 
 回到之前说的那个`Nodejs + Express`项目中：
 
-```
+> api/jsapiTicket.js
+
+```javascript
+// 通过 access_token 获取 jsapi_ticket 临时票据
+const axios = require('axios'); // 请求api
+const CircularJSON = require('circular-json');
+const config = require('../config/index.json');
+const cache = require('../utils/cache');
+
+
+module.exports = get_jsapi_ticket = (access_token, res) => {
+
+  const fetchUrl = config.getJsapiTicket + access_token;
+  console.log('>>>>', fetchUrl)
+  // 判断是否存在于缓存中
+  const cacheName = "jsapi_ticket";
+  cache.getCache(cacheName, function (cacheValue) {
+    if (cacheValue) {
+      const result = CircularJSON.stringify({
+        ticket: cacheValue,
+        from: 'cache'
+      });
+      res.send(result);
+    } else {
+      // 调取微信api
+      axios.get(fetchUrl).then(response => {
+        let json = CircularJSON.stringify(response.data);
+        // promise
+        res.send(json);
+        // 设置缓存
+        if (response.data.ticket) {
+          cache.setCache(cacheName, response.data.ticket)
+        }
+      }).catch(err => {
+        // console.log('axios occurs ', err);
+      });
+    }
+  });
+
+}
 
 ```
 
+路由设置：
 
+```javascript
+const express = require('express');
+const api = require('./api');
+const path = require('path');
+const app = express();
+//express请求别的路由中间件
+require('run-middleware')(app);
+
+// 获取 jsapi_ticket 临时票据
+app.get('/getTicket', (req, res) => {
+  app.runMiddleware('/getAccessToken', function (code, body, headers) {
+    const result = JSON.parse(body);
+    console.log('User token:', result.access_token);
+    api.jsapiTicket(result.access_token, res);
+  })
+});
+
+....
+```
+
+这里比较特殊的地方，是用 [run-middleware](https://www.npmjs.com/package/run-middleware) 这个 npm package，从一个路由去直接请求另外一个路由的数据。
+
+这样避免重复很多逻辑。我们直接请求路由获取上一步的 access_token;
+
+废话不多说，运行一下：
+
+第一次，是从微信服务器获取 ticket
+
+![1558687736385](assets/1558687736385.png)
+
+第二次，从缓存中：
+
+![1558687764761](assets/1558687764761.png)
+
+
+
+至此，我们获取到了 jsapi_ticker;
+
+获得`jsapi_ticket`之后，就可以生成`JS-SDK`权限验证的签名了
+
+### 4、增加签名算法获取微信签名
 
