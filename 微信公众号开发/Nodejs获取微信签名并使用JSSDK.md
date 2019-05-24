@@ -229,11 +229,13 @@ app.get('/getAccessToken', (req, res) => {
 
 结果：
 
-![1558686579680](assets/1558686579680.png)
+![1558686644664](assets/1558686644664.png)
 
 这是第一次请求，`access_token`从微信服务器获取最初的数据。
 
 接下来是第二次请求，`access_token`将会缓存中读取。
+
+![1558686579680](assets/1558686579680.png)
 
 ### 3、获取 `jsapi_ticket `临时票据
 
