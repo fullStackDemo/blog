@@ -1,6 +1,8 @@
 ## Linux CentOS 6.5 安装MongoDB的操作
 
-**安装mongodb-3.6.4版本**
+[TOC]
+
+#### **1、安装mongodb-3.6.4版本**
 
 执行命令
 
@@ -65,7 +67,7 @@ logappend=true
 
 **启动**
 
-在mongodb目录下执行
+在mongodb目录下执行：
 
 ```bash
 ./bin/mongod --config /opt/mongodb/data/mongodb.conf
@@ -147,7 +149,7 @@ db.createUser(
 
 每次需要到安装目录执行，挺麻烦的。
 
-**可以注册为全局shell命令**
+#### **2、可以注册为全局shell命令**
 
 ```bash
 vi /etc/profile
@@ -160,4 +162,68 @@ export MONGODB_HOME=/opt/mongodb
 export PATH=$MONGODB_HOME/bin:$PATH
 ```
 
-直接输入mongo就可以进入到mongo的shell环境。
+保存使其生效：
+
+```bash
+source /etc/profiile
+```
+
+这样就不用每次进入到`/opt/mongodb`, 直接输入mongo就可以进入到mongo的shell环境。
+
+#### **3、Robo 3T 远程连接服务器**
+
+之前我们启动`./bin/mongod`的时候，这项服务一直运行在`service`里面：
+
+检查所有service命令:
+
+```
+service --status-all
+```
+
+输出：
+
+```bash
+....
+mongod (pid 25096) is running...
+....
+```
+
+这时候我们需要终止 `mongod` 服务：
+
+```bash
+service mongod stop
+```
+
+重启服务：
+
+```bash
+mongod --bind_ip_all --config /opt/mongodb/data/mongodb.conf
+```
+
+这里为什么加上`--bind_ip_all`?
+
+mongoDB 默认绑定到 `127.0.0.1`，为了安全不允许远程了解，我们设置`--bind_ip_all`，允许所有远程机器连接；
+
+如果你的机子再不能连接请查看防火墙是否增加 27017 端口：
+
+查看防火墙：
+
+```bash
+vi /etc/sysconfig/iptables
+```
+
+在后面追加：
+
+```bash
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 27017 -j ACCEPT
+-A INPUT -p udp -m state --state NEW -m udp --dport 27017 -j ACCEPT
+```
+
+防火墙重启：
+
+```bash
+/etc/rc.d/init.d/iptables save
+```
+
+这时候，应该一切OK啦；
+
