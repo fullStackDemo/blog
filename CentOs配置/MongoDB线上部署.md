@@ -222,7 +222,7 @@ vi /etc/sysconfig/iptables
 防火墙重启：
 
 ```bash
-/etc/rc.d/init.d/iptables save
+service iptables restart
 ```
 
 这时候，应该一切OK啦；

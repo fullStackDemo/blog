@@ -103,11 +103,11 @@ must be restarted after THP is disabled.
 [root@10 src]# vi ../redis.conf
 ```
 
-找到更改以下内容,
+找到更改以下内容,打开守护进程
 
 ```bash
-# false 改为 true
-daemonize true
+# no 改为 yes
+daemonize yes
 
 # 日志可以自行添加，不做要求
 logfile ./logs/redis.log 
@@ -135,4 +135,24 @@ logfile ./logs/redis.log
 ```
 
 基本配置到此结束。
+
+#### 5、定义全局命令
+
+```bash
+[root@10 src]# vi /etc/profile
+# 增加
+export REDIS_HOME=/opt/mongodb
+export PATH=$REDIS_HOME/src:$PATH
+
+# 生效
+[root@10 src]# source /etc/profile
+```
+
+设置完，就可以在任何目录下，执行：
+
+```bash
+redis-cli
+```
+
+查看和操作数据库啦。
 
