@@ -3,7 +3,12 @@
 
 <head>
     <link rel="stylesheet" href="index.css">
-    <title>Socket.IO chat</title>
+    <!-- 为移动设备添加 viewport -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <!-- `width=device-width` 会导致 iPhone 5 添加到主屏后以 WebApp 全屏模式打开页面时出现黑边 http://bigc.at/ios-webapp-viewport-meta.orz -->
+    <!-- iOS 设备 begin -->
+    <meta name="apple-mobile-web-app-title" content="标题">
+    <title>在线聊天室</title>
     <script src="lib/lodash.js"></script>
     <script src="lib/popup.js"></script>
     <script src="util.js"></script>
@@ -14,13 +19,23 @@
         <!-- login -->
         <div class="loginPage">
             <div class="loginBox">
-                <h2 class="loginTip">ChatRoom 1.0</h2>
-                <div class="profileBox" title="add photo">
+                <h2 class="loginTip">ChatRoom</h2>
+                <!-- <div class="profileBox" title="add photo">
                     <input class="photoInput" type="file" title=" ">
                     <image class="photoImage" src="" style="display:none;"></image>
                 </div>
                 <h2 class="loginTip">what's your nickname ?</h2>
-                <input class="usernameInput" type="text">
+                <input class="usernameInput" type="text"> -->
+                <div class="loginItem">
+                  账号：<input class="loginInput" />
+                </div>
+                <div class="loginItem">
+                  密码：<input class="loginInput" />
+                </div>
+                <div>
+                  <button class="loginBtn confirm">登陆</button>
+                  <button class="loginBtn">注册</button>
+                </div>
             </div>
         </div>
         <!-- chat -->

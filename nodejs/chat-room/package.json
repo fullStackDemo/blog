@@ -7,7 +7,8 @@
   "description": "chat room",
   "main": "index.js",
   "scripts": {
-    "dev": "bash run.sh"
+    "dev": "bash run.sh",
+    "test": "supervisor index.js"
   },
   "author": "alex wong",
   "license": "ISC",
@@ -18,5 +19,8 @@
     "path": "^0.12.7",
     "socket.io": "^2.2.0",
     "socket.io-client": "^2.2.0"
+  },
+  "dependencies": {
+    "supervisor": "^0.12.0"
   }
 }
