@@ -136,6 +136,35 @@ header-field = field-name  ":" OWS(可选的空格) field-value OWS
 
 request 请求中的 message body的预定义是被 Content-Length 或 Transfer-Encoding 头部字段控制。
 
-请求消息框架是和method的语义无关的。
+请求消息框架是和method的语义无关的。甚至请求方法对消息体没有任何用处。
+
+响应消息中的message body存在与否决定于请求的方法和响应返回的状态码。
+HEAD请求不会返回 message body，因为它只是关联响应头部字段。即使存在 message body ，如果方法是GET也是表明将会显示什么值.
+所有 1XX 204 304 都不会有 message body.
+
 ```
+
+#### 2、Standard request fields 标准请求头字段
+
+| 字段名 | 说明                              | 举例                                                         |
+| ------ | --------------------------------- | ------------------------------------------------------------ |
+| A-IM   | 对请求可接受的接口实例化,同accept | A-IM: feed                                                   |
+| Accept | response可接受的媒体类型          | Accept: text/html<br />其他：text/html; q=1.0, text/*; q=0.8, image/gif; q=0.6, image/jpeg; q=0.6, image/*; q=0.5, */*; q=0.1 |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
+|        |                                   |                                                              |
 
