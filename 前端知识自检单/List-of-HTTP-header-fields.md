@@ -19,7 +19,7 @@ HTTP-message = start-line
 
 ```
 
-##### 1.1、start-line
+##### 1.1、start-line 开始行
 
 ```http
 start-line = request-line / status-line
@@ -31,7 +31,7 @@ start-line = request-line / status-line
 ，服务器是被用来实现只希望接收一个请求（响应是作为一个未知名或者不合法的请求的一个解释）和客户端是实现只接受响应的。
 ```
 
-##### 1.2、request-line
+##### 1.2、request-line 请求行
 
 ```http
 request-line = method SP(空格) request-target SP HTTP-version CRLF(回车换行)
@@ -78,9 +78,64 @@ request-target 是当前请求要求获取的资源
 HTTP并不会预先设置一个request-line的长度。服务器如果接收一个比其他任何请求都长的请求的时候，会反馈一个 501 （没有实现）的状态码。一个服务器接收一个比任何URL都长的请求目标是，它希望解析必须回应一个 414 （URL Too long）的状态码。
 ```
 
-##### 1.3、status code 状态码
+##### 1.3、status line 状态行
 
 ```http
-11
+status-line = HTTP-version SP status-code SP reason-phrase CRLF
+
+响应消息的第一行就是 status-line，由 协议版本 + SP + statusCode + SP + reason-phrase + CRLF 组成。
+
+status-code = 3DIGIT （三个数字）
+
+状态码用来描述服务器尝试理解和满足客户端相应请求的结果。其他的响应信息是用来解释状态码的定义。
+状态码是可以扩展的，客户端不用去理解注册的状态码的含义，尽管这样的理解是明显令人向往的。
+但是客户端必须懂得这些状态码的分类，也就是第一个数字，不能把一个未被认可的状态码等价于 X00, 客户端不能缓存一个带有未知名状态码的响应消息。
+
+第一个数字代表状态码的分类，其他两个数字没有明显的分类规则，总共有5类状态码：
+
+1XX (Informational信息)： 请求被接收，持续处理的过程。
+2XX (Successfull成功): 请求被成功接收，解读和接受。
+3XX (Redirection重定向): 为了完成请求过程，更多的动作需要去执行。
+4XX (Client error 客户端错误): 请求包含错误的语法或者不能被实现。
+5XX (Server error 服务器错误): 服务器不能实现一个显然合法的请求。
+
+reason-phrase  = *( HTAB / SP / VCHAR / obs-text )
+
+reason-phrase设计的最底层目的是为了提供一个当前状态码的文本描述。客户端可忽略。
+
+```
+
+##### 1.4、Header Fields 头部字段
+
+每一个`头部字段`由一个`大小写不敏感的字段名字`，跟着一个`冒号`，`可选的空格`，`字段值`和`可选的尾部空格`组成。
+
+```http
+header-field = field-name  ":" OWS(可选的空格) field-value OWS
+
+ 		 field-name     = token
+     field-value    = *( field-content / obs-fold )
+     field-content  = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+     field-vchar    = VCHAR / obs-text
+
+     obs-fold       = CRLF 1*( SP / HTAB )
+                    ; obsolete line folding
+                    
+```
+
+
+
+##### 1.5、message body
+
+```http
+ message-body = *OCTET
+ 
+一个HTTP消息的消息正文是用来携带请求或者响应的负载正文。
+消息体是和有效载荷体是一致的，除非一个传输编码已经被完成。
+
+消息中允许的消息主体的规则在请求和响应中是不同的。
+
+request 请求中的 message body的预定义是被 Content-Length 或 Transfer-Encoding 头部字段控制。
+
+请求消息框架是和method的语义无关的。
 ```
 
