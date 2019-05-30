@@ -158,11 +158,11 @@ HEAD请求不会返回 message body，因为它只是关联响应头部字段。
 | Authorization                                                | HTTP认证                                                     | Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==            |
 | Cache-Control                                                | 用来指定一个在请求响应链中所有缓存机制必须遵守的一个指令     | Cache-Control: no-cache                                      |
 | Connection                                                   | 当前连接和持续请求的的控制参数。HTTP/2不得用这个方法，默认持续连接 | Connection: keep-alive<br />Connection: Upgrade              |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
-|                                                              |                                                              |                                                              |
+| Content-Length                                               | request body的长度                                           | Content-Length: 348                                          |
+| Content-Type                                                 | request body的媒体格式（POST 和 PUT适用）                    | Content-Type: application/x-www-form-urlencoded              |
+| Cookie                                                       | 一个被服务器用set-cookie发送的数据                           | Cookie: $Version=1; Skin=new;                                |
+| Date                                                         | message发出的时间                                            | Date: Tue, 15 Nov 1994 08:12:31 GMT                          |
+| Expect                                                       | 客户端表明的特殊的服务器要做的行为                           | Expect: 100-continue                                         |
 |                                                              |                                                              |                                                              |
 |                                                              |                                                              |                                                              |
 |                                                              |                                                              |                                                              |
