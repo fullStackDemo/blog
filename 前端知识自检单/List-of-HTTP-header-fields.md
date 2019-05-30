@@ -146,25 +146,25 @@ HEAD请求不会返回 message body，因为它只是关联响应头部字段。
 
 #### 2、Standard request fields 标准请求头字段
 
-| 字段名 | 说明                              | 举例                                                         |
-| ------ | --------------------------------- | ------------------------------------------------------------ |
-| A-IM   | 对请求可接受的接口实例化,同accept | A-IM: feed                                                   |
-| Accept | response可接受的媒体类型          | Accept: text/html<br />其他：text/html; q=1.0, text/*; q=0.8, image/gif; q=0.6, image/jpeg; q=0.6, image/*; q=0.5, */*; q=0.1 |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
-|        |                                   |                                                              |
+| 字段名                                                       | 说明                                                         | 举例                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| A-IM                                                         | 对请求可接受的接口实例化,同accept                            | A-IM: feed                                                   |
+| Accept                                                       | response可接受的媒体类型                                     | Accept: text/html<br />其他：text/html; q=1.0, text/\*; q=0.8, image/gif; q=0.6, image/jpeg; q=0.6, image/\*; q=0.5, \*/\*; q=0.1 |
+| Accept-Charset                                               | 可接受的字符集                                               | Accept-Charset: utf-8                                        |
+| Accept-Encoding                                              | 可接受的文件解码格式                                         | Accept-Encoding: gzip, deflate                               |
+| Accept-Language                                              | response可接受的人类语言                                     | Accept-Language: en-US                                       |
+| Accept-Datetime                                              | 可接受的时间版本                                             | Accept-Datetime: Thu, 31 May 2007 20:35:00 GMT               |
+| Access-Control-Request-Method,<br/>Access-Control-Request-Headers | 利用origin发起跨域资源请求                                   | Access-Control-Request-Method: GET<br />                     |
+| Authorization                                                | HTTP认证                                                     | Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==            |
+| Cache-Control                                                | 用来指定一个在请求响应链中所有缓存机制必须遵守的一个指令     | Cache-Control: no-cache                                      |
+| Connection                                                   | 当前连接和持续请求的的控制参数。HTTP/2不得用这个方法，默认持续连接 | Connection: keep-alive<br />Connection: Upgrade              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
+|                                                              |                                                              |                                                              |
 
