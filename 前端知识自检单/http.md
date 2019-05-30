@@ -71,7 +71,7 @@ HTTP/1.1是在原来HTTP(HTTP/1.0)的一次版本更新，在HTTP/1.0，每一�
 
 #### 3.2 HTTP 会话状态
 
-HTTP是一个`无状态协议`。一个无状态的协议不会要求 HTTP 服务器在多个请求中去保存每一个用户的信息或者状态。但是，一些网页应用程序实现状态或者服务器端会话用做`HTTP cookie` 或者隐藏在`网页表单`里的变量。
+HTTP是一个`无状态协议`。一个无状态的协议不会要求HTTP 服务器在多个请求中去保存每一个用户的信息或者状态。但是，一些网页应用程序实现状态或者服务器端会话用做`HTTP cookie` 或者隐藏在`网页表单`里的变量。
 
 ### 4、HTTP authentication 认证
 
@@ -90,11 +90,11 @@ HTTP 提供多种验证方案如：基本的 `访问验证` 和 `消化访问验
 请求的消息有以下组成部分：
 
 * 一个 请求命令行 ，比如 （GET /images/logo.png HTTP/1.1）
-* 请求头 request header fields
+* 请求头 [request header fields](./List-of-HTTP-header-fields.md)
 * 一个空行
 * 一个可选择的消息正文
 
-**请求方法**：
+
 
 
 
