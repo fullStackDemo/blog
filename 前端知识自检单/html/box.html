@@ -10,17 +10,24 @@
         margin: 0;
         padding: 0;
       }
+      body{
+        background: gray;
+        padding: 10px;
+        margin: 10px;
+        border:2px solid yellow;
+      }
       .box{
         width: 200px;
         height: 200px;
         padding: 20px;
         margin: 20px;
         border: 2px solid red;
+        overflow: auto;
         /* box-sizing: border-box; */
       }
       .boxItem{
         width: 100%;
-        height: 100%;
+        height: 1000px;
         background: green;
       }
     </style>
@@ -34,4 +41,7 @@
     <h3>clientHeight: </h3>
 
   </body>
+  <script>
+  var box = document.querySelector('.box');
+  </script>
 </html>
