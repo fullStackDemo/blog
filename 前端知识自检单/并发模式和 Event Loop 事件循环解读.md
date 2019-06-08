@@ -157,7 +157,7 @@ f();
 
 如果`同一个调用帧`，对 `setTimeout` 进行两次调用，并且 `timeout` 时间相同，则按执行顺序进行处理。
 
-
+![](assets/stack_3.png)
 
 #### 2.3、Zero delays 零延迟
 
