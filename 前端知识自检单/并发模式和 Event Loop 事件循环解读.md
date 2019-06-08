@@ -46,13 +46,9 @@ console.log(bar(7)); // 返回 42
 
 一个 `Javascript` 运行时使用一系列待处理消息的消息队列。每个消息关联一个函数去处理消息。
 
-在事件循环的一些时刻，`先从消息队列的最后一个开始执行`。这样做的话，消息从队列中被移除，并作为输入参数调用与之关联的函数。就如上面所说，调用一个函数总是为其创造一个的栈帧。
+在事件循环的一些时刻，`运行时从最先进入队列的消息开始处理队列中的消息`。这样做的话，消息从队列中被移除，并作为输入参数调用与之关联的函数。就如上面所说，调用一个函数总是为其创造一个的栈帧。
 
 函数的执行一直会持续到 `stack` 变成 空的。然后如果消息队列还有消息的话，事件循环将会执行消息队列的下一个消息。
-
-
-
-
 
 
 
@@ -117,29 +113,33 @@ setTimeout 的零延迟，在给定的时间间隔后不会执行回调函数。
 ```js
 (function() {
 
-  console.log('这是开始');
+  console.log('this is the start');
 
   setTimeout(function cb() {
-    console.log('这是来自第一个回调的消息');
+    console.log('Callback 1: this is a msg from call back');
   });
 
-  console.log('这是一条消息');
+  console.log('this is just a message');
 
   setTimeout(function cb1() {
-    console.log('这是来自第二个回调的消息');
+    console.log('Callback 2: this is a msg from call back');
   }, 0);
 
-  console.log('这是结束');
+  console.log('this is the end');
 
 })();
 
-// "这是开始"
-// "这是一条消息"
-// "这是结束"
-// 此处，函数返回了 undefined 
-// "这是来自第一个回调的消息"
-// "这是来自第二个回调的消息"
+// "this is the start"
+// "this is just a message"
+// "this is the end"
+// 当前函数 note that function return, which is undefined, happens here 
+// "Callback 1: this is a msg from call back"
+// "Callback 2: this is a msg from call back"
 ```
+
+'this is just a message' 虽然在回调之后，却会在回调之前输出到打印台上，这是因为这个零延迟只是处理请求的最小延迟，并非一个保证的精确的时间。
+
+一般地，setTimeout 需要等待所有其他消息队列的代码执行完之后，才会执行，即时你设置了特殊的时间间隔。
 
 
 
