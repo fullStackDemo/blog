@@ -1,0 +1,145 @@
+## JavaScript - 并发模式和 Event Loop 事件循环解读
+
+[TOC]
+
+### 1、Runtime concepts 执行相关的概念
+
+`Javascript` 有一个基于` Event Loop` 事件循环的并发模型；
+
+下面讲解一个理论模型，讲解现代浏览器javascript 引擎实现机制和讲解一下描述的一些语义词；
+
+可视模型代表：
+
+![](assets/stack-heap-queue.svg)
+
+#### stack 栈
+
+函数调用形成了一个栈帧
+
+```js
+function foo(b) {
+  var a = 10;
+  return a + b + 11;
+}
+
+function bar(x) {
+  var y = 3;
+  return foo(x * y);
+}
+
+console.log(bar(7)); // 返回 42
+```
+
+![stack](assets/event_stack.jpg)
+
+简单介绍下函数调用的过程：
+
+当调用`bar(7)`时，建立了第一个 `stack frame` 是 `bar` (包含参数` 7 `和本地变量)；当 `bar` 调用 `foo` 时候，建立了第二个 `stack frame` 是 `foo`(包含参数 `3* 7` 和本地变量), 并且放置在 `bar` 的`上方`，也就是`栈的顶部`了。
+
+当 `foo（21）` 执行完毕 返回 42 的时候，`foo` 这个栈帧会被移除掉，只剩下了 `bar（7）`；然后再执行 `bar`, 有返回后，整个栈都是空的。
+
+#### Heap 堆
+
+对象都被关联在`Heap`里面，即用于表示一大块非结构化的内存区域。
+
+#### Queue 队列
+
+一个 `Javascript` 运行时使用一系列待处理消息的消息队列。每个消息关联一个函数去处理消息。
+
+在事件循环的一些时刻，`先从消息队列的最后一个开始执行`。这样做的话，消息从队列中被移除，并作为输入参数调用与之关联的函数。就如上面所说，调用一个函数总是为其创造一个的栈帧。
+
+函数的执行一直会持续到 `stack` 变成 空的。然后如果消息队列还有消息的话，事件循环将会执行消息队列的下一个消息。
+
+
+
+
+
+
+
+### 2、Event Loop 事件循环
+
+之所以称为事件循环，是因为他的执行实现的方式如下：
+
+```js
+while (queue.waitForMessage()) {
+  queue.processNextMessage();
+}
+```
+
+如果当前没有消息，`queue.waitForMessage() `会同步等待消息的到达。
+
+#### Run-to-completion 运行到结束
+
+每一个消息都被完全执行结束后，才回去执行下一个消息的处理。
+
+这为程序的分析提供了一些优秀的特性，包括：无论何时执行一个函数，都不会被抢占，并且会在其他代码执行之前就已经被完全执行（并且可以修改函数操作的数量）。
+
+这个和 C语言不太一样，比如，如果一个函数运行在一个线程中，一些时候，会被执行系统因在别的线程执行其他代码中断。
+
+这个模型的缺点时，当一个消息需要太长时间去执行的时候，web用户就无法处理一些，比如`click`, `srcoll`的交互。浏览器会弹出一个 `“a script is taking too long to run”` 这样的对话框来缓解这个情况。一个好的解决办法就是，`缩短消息处理的时间，或者把一个消息分割成多个消息`。
+
+#### Adding messages 添加消息
+
+在web浏览器里面，`只要有事件发生并且有监听器绑定的时候，一定会增加一个消息`。如果没有监听器，则事件消失。所以，一个元素的点击并且带有点击事件处理，一定会增加一个消息到消息队列中去。
+
+setTimeout 函数有两个参数：`添加队列的消息` 和 `时间（默认 0 ）`，这个时间值代表着这个消息被添加到消息队列最小的延迟时间。如果消息队列中，没有别的消息，这个消息会在延迟时间达到之后，立马会被处理。如果消息队列有别的消息，`setTimeout` 这个消息一定要等到别的消息被处理完后才能执行。由于这个原因，所以第二参数表明了`最小的时间间隔`，而`非确切的时间`。
+
+举例说明，当第二个参数的时间过期后，setTimeout 不会被执行：
+
+```js
+const s = new Date().getSeconds();
+
+setTimeout(function() {
+  // prints out "2", meaning that the callback is not called immediately after 500 milliseconds.
+  console.log("Ran after " + (new Date().getSeconds() - s) + " seconds");
+}, 500);
+
+while(true) {
+  if(new Date().getSeconds() - s >= 2) {
+    console.log("Good, looped for 2 seconds");
+    break;
+  }
+}
+```
+
+
+
+#### Zero delays 零延迟
+
+零延迟不是真实代表着在0毫秒后回调函数会执行。
+
+setTimeout 的零延迟，在给定的时间间隔后不会执行回调函数。
+
+是否执行决定于消息队列中的等待任务的数量。
+
+举例说明：
+
+```js
+(function() {
+
+  console.log('这是开始');
+
+  setTimeout(function cb() {
+    console.log('这是来自第一个回调的消息');
+  });
+
+  console.log('这是一条消息');
+
+  setTimeout(function cb1() {
+    console.log('这是来自第二个回调的消息');
+  }, 0);
+
+  console.log('这是结束');
+
+})();
+
+// "这是开始"
+// "这是一条消息"
+// "这是结束"
+// 此处，函数返回了 undefined 
+// "这是来自第一个回调的消息"
+// "这是来自第二个回调的消息"
+```
+
+
+
