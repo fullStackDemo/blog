@@ -41,15 +41,6 @@ module.exports = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
-        // use: ExtractTextPlugin.extract({
-        //   fallback: 'style-loader',
-        //   use: {
-        //     loader: 'css-loader',
-        //     options: {
-        //       minimize: true
-        //     }
-        //   }
-        // })
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
@@ -83,17 +74,6 @@ module.exports = {
           }
         ]
       },
-      // {
-      //   test: /\.html$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader'
-      //     },
-      //     {
-      //       loader: 'ref-loader'
-      //     },
-      //   ]
-      // },
       {
         test: /\.less$/,
         use: [
@@ -140,9 +120,7 @@ module.exports = {
       filename: 'custom.html',
       template: './pages/custom.html'
     }),
-    // new ExtractTextPlugin({
-    //   filename: 'css/[name]-[contenthash].css'
-    // })
+
 
 
 

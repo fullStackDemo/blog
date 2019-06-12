@@ -158,7 +158,7 @@ if(false) {}
 
 exports = module.exports = __webpack_require__(4)(false);
 // Module
-exports.push([module.i, "body {\n    color: red;\n}\n\nimg{\n    width: 200px;\n    height: 200px;\n}", ""]);
+exports.push([module.i, "body {\n    color: red;\n}\n\nimg{\n    width: 200px;\n    height: 200px;\n}\n", ""]);
 
 
 
