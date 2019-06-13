@@ -1,11 +1,11 @@
-// import _ from 'lodash';
-import join from 'lodash/join';
+import _ from 'lodash';
+// import join from 'lodash/join';
 
 function component() {
 
   let element = document.createElement('div');
-  // element.innerHTML = _.join(['Hello', 'World']);
-  element.innerHTML = join(['Hello', 'World']);
+  element.innerHTML = _.join(['Hello', 'World']);
+  // element.innerHTML = join(['Hello', 'World']);
 
   return element;
 

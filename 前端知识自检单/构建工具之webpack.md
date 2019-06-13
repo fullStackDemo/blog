@@ -219,3 +219,9 @@ main.js  1.17 KiB       0  [emitted]  index
 
 `第二种方法：`
 
+使用 `lodash-webpack-plugin`
+
+```bash
+yarn add lodash-webpack-plugin babel-core babel-loader babel-plugin-lodash babel-preset-env
+```
+
