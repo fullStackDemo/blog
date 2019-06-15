@@ -6,7 +6,7 @@ class BlogSpider(scrapy.Spider):
     name = 'blog'
     allowed_domains = ['toscrape.com']
     start_urls = [
-        'http://quotes.toscrape.com/page/1/'
+        'http://quotes.toscrape.com'
     ]
 
     def parse(self, response):
