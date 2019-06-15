@@ -88,3 +88,7 @@ AUTOTHROTTLE_DEBUG = False
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# mongodb
+MONGO_URL = "mongodb+srv://test:master2011.com@cluster0-f5jim.mongodb.net/test?retryWrites=true&w=majority"
+MONGO_DATABASE = "test"
