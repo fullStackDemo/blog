@@ -66,6 +66,8 @@ EXTENSIONS = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'jianshu.pipelines.JianshuPipeline': 300,
+   # 'jianshu.pipelines.DemoPipeline': 6000,
+
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,5 +92,6 @@ AUTOTHROTTLE_DEBUG = False
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # mongodb
-MONGO_URL = "mongodb+srv://test:master2011.com@cluster0-f5jim.mongodb.net/test?retryWrites=true&w=majority"
+# &ssl=true&ssl_cert_reqs=CERT_NONE 后缀附加这个，不校验证书，否则连接不上
+MONGO_URL = "mongodb+srv://test:master2011.com@cluster0-f5jim.mongodb.net/test?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE"
 MONGO_DATABASE = "test"

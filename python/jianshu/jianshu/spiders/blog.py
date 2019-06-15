@@ -12,7 +12,8 @@ class BlogSpider(scrapy.Spider):
     def parse(self, response):
         print("-----******-------")
         list_dom=response.css('div.col-md-8 div.quote')
-        list_arr=[]
+
+        # 获取数据
         for dom in list_dom:
             yield ({
                 "title": dom.css('span.text::text').get(),
@@ -25,10 +26,8 @@ class BlogSpider(scrapy.Spider):
         #     nextPage = response.urljoin(nextPage)
         #     yield scrapy.Request(nextPage, callback=self.parse)
 
-        # for nextPage in response.xpath('//li[@class="next"]/a/@href').getall():
-        #     print(nextPage)
-        #     yield response.follow(nextPage, callback=self.parse)
+        # 判断是否存在下一页，然后继续执行 loop
+        for nextPage in response.xpath('//li[@class="next"]/a/@href').getall():
+            yield response.follow(nextPage, callback=self.parse)
+
         print("-----******-------")
-        # yield {
-        #     "list": list_arr
-        # }

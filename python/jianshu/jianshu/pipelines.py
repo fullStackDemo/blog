@@ -44,7 +44,7 @@ class JianshuPipeline(object):
         print(crawler.settings.get('MONGO_URL'))
         return cls(
             mongo_url=crawler.settings.get('MONGO_URL'),
-            mongo_db=crawler.settings.get('MONGO_DATABASE', 'items')
+            mongo_db=crawler.settings.get('MONGO_DATABASE')
         )
 
     def process_item(self, item, spider):
@@ -54,7 +54,17 @@ class JianshuPipeline(object):
         self.file.write(line)
         # 插入数据到数据库
         print("数据库开始写入")
-        self.db[self.collection_name].insert_one(dict(item))
+
+        # 定义数据库集合
+        collection = self.db[self.collection_name]
+
+        # 数据去重，判断数据库是否已经存在
+        existDocument = collection.find_one({"title": item["title"]})
+        if existDocument is not None:
+            print("数据库已存在该条数据")
+        else:
+            collection.insert_one(dict(item))
+            print("插入数据成功")
 
         # 判断语句
         # if(item.get('tags')):
@@ -62,3 +72,13 @@ class JianshuPipeline(object):
         #     return item
         # else:
         #     raise DropItem("missing tags in item")
+
+
+class DemoPipeline(object):
+
+    def open_spider(self, spider):
+        print("测试信息")
+
+
+    def process_item(self, item, spider):
+        return item
