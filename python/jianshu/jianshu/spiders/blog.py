@@ -4,7 +4,7 @@ import scrapy
 
 class BlogSpider(scrapy.Spider):
     name = 'blog'
-    allowed_domains = ['jiangshu.com']
+    allowed_domains = ['toscrape.com']
     start_urls = [
         'http://quotes.toscrape.com/page/1/'
     ]
