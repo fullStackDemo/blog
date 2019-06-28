@@ -5,5 +5,15 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "scripts": {
+	"dev": "supervisor -i ./env app.js",
+	"server": "node server.js"
+  },
+  "devDependencies": {
+    "compression": "^1.7.4",
+    "http-proxy-middleware": "^0.19.1",
+    "live-server": "^1.2.1",
+    "supervisor": "^0.12.0"
   }
 }
