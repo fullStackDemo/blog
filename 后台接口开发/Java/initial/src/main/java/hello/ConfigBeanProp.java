@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "spring.data")
-//@PropertySources(value = "config.properties")
+@PropertySources(value = "config.properties")
 public class ConfigBeanProp {
     private String name;
     
