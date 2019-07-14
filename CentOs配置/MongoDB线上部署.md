@@ -229,5 +229,46 @@ service iptables restart
 
 #### 4、**开启权限 auth**
 
+默认是没有权限的，我们需要新建权限：
 
+```bash
+[root@10 bin]# mongo
+MongoDB shell version v3.6.4
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.4
+> db
+admin
+> db.createUser(
+    {
+        user: "root",
+        pwd: "****",
+        roles:[
+            {
+                role: "root",
+                db: "admin"
+            }
+       ]
+    }
+);
+> db.auth('root', '****')
+> show users
+{
+        "_id" : "admin.root",
+        "user" : "root",
+        "db" : "admin",
+        "roles" : [
+                {
+                        "role" : "root",
+                        "db" : "admin"
+                }
+        ]
+}
+```
 
+重启服务：
+
+```bash
+mongod --bind_ip_all --auth --config /opt/mongodb/data/mongodb.conf
+```
+
+如果我们回到服务器，手动启动 mongo 命令查看数据，就需要先验证权限了。
