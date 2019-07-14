@@ -227,3 +227,7 @@ service iptables restart
 
 这时候，应该一切OK啦；
 
+#### 4、**开启权限 auth**
+
+
+
