@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel = "test", path = "people")
+@RepositoryRestResource(collectionResourceRel = "test", path = "test")
 public interface PersonRepository extends MongoRepository<Person, String> {
     
     List<Person> findAll();
