@@ -9,6 +9,8 @@ react源码解读/examples/my-app/src/store/bash.exe.stackdump
 
 java/workspace/.idea/*.xml
 
+后台接口开发/Java/.idea/*
+
 .vscode
 
 package-lock.json
