@@ -2,6 +2,9 @@ package hello;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Person {
     @Id
     private String id;
@@ -23,5 +26,12 @@ public class Person {
     
     public void setLastName(String lastName){
         this.lastName = lastName;
+    }
+    
+    public String getJSON(){
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("firstName", this.firstName);
+        map.put("lastName", this.lastName);
+        return map.toString();
     }
 }
