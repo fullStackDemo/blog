@@ -35,5 +35,20 @@ public class Utils {
         
         return toJSON(result);
     }
+    public static String toJSON(int httpCode, int dataCode, int id) {
+        Map result = new HashMap<>();
+        // http status code
+        result.put("code", httpCode);
+        //  data
+        Map data = new HashMap();
+        //  response status code
+        data.put("code", dataCode);
+        //  response data
+        data.put("id", id);
+        
+        result.put("data", data);
+        
+        return toJSON(result);
+    }
     
 }
