@@ -68,16 +68,9 @@ public class MysqlTestController {
         System.out.println(id);
         Map result = new HashMap();
         result.put("code", 0);
-//        if(id == 0){
-//            result.put("message", "缺少id");
-//            return result;
-//        }else if(name == null && email == null){
-//            result.put("message", "name, email不能同时为空");
-//            return result;
-//        }
         Optional _user = userRepository.findById(id);
         if (_user.isPresent()) {
-            User user =(User) _user.get();
+            User user = (User) _user.get();
             user.setName(name);
             user.setEmail(email);
             result.put("data", user);
@@ -92,5 +85,20 @@ public class MysqlTestController {
     @ResponseBody
     public Exception error(Exception err) {
         return err;
+    }
+    
+    
+    // find by name contains some character
+    @GetMapping("/search")
+    @ResponseBody
+    public Iterable findByName(String name) {
+//        Iterable result = userRepository.findByNameContaining(name);
+        Iterable result = userRepository.search(name);
+        if (result.iterator().hasNext()) {
+            return result;
+        } else {
+            result = userRepository.findByEmailContains(name);
+            return result;
+        }
     }
 }
