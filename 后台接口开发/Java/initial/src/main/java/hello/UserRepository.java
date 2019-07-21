@@ -15,7 +15,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     
     List<User> findByEmailContains(String name);
     
-    @Query("SELECT u FROM User WHERE name=:name")
+    @Query("SELECT id,name,email FROM User")
     List<User> search(@Param("name") String name);
  
     

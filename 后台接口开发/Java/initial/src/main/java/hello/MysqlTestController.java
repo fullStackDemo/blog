@@ -93,12 +93,13 @@ public class MysqlTestController {
     @ResponseBody
     public Iterable findByName(String name) {
 //        Iterable result = userRepository.findByNameContaining(name);
-        Iterable result = userRepository.search(name);
-        if (result.iterator().hasNext()) {
-            return result;
-        } else {
-            result = userRepository.findByEmailContains(name);
-            return result;
-        }
+        Iterable<User> result = userRepository.search(name);
+        return result;
+//        if (result.iterator().hasNext()) {
+//            return result;
+//        } else {
+//            result = userRepository.findByEmailContains(name);
+//            return result;
+//        }
     }
 }
