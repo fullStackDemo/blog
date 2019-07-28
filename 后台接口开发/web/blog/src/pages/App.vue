@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <img src="http://172.20.10.8:8080/api/v1/user/getCaptcha">
+    <img src="http://192.168.0.103:8080/api/v1/user/getCaptchaImage">
   </div>
 </template>
 
@@ -12,7 +12,19 @@ export default {
   name: 'app',
   components: {
     HelloWorld
+  },
+  created(){
+    this.getData();
+  },
+  methods:{
+    getData(){
+      this.$http.get('./api/v1/user/getCaptcha').then(res=>{
+        console.log(res);
+
+      })
+    }
   }
+
 }
 </script>
 
