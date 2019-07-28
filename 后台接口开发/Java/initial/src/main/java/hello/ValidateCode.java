@@ -75,7 +75,7 @@ public class ValidateCode {
         String rand = getRandomString(random.nextInt(randomString.length()));
         randomStr += rand;
         g.translate(random.nextInt(3), random.nextInt(6));
-        g.drawString(rand, 40 * i + 10, 25 + (i % 2) * 5);
+        g.drawString(rand, 40 * i + 10, 25);
         return randomStr;
     }
     
@@ -110,7 +110,6 @@ public class ValidateCode {
         session.setAttribute(sessionKey, random_string);
     
         try {
-            
             ImageIO.write(image, "PNG", response.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();

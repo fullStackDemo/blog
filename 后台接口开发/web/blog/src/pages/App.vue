@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img src="http://172.20.10.8:8080/api/v1/user/getCaptcha">
   </div>
 </template>
 
