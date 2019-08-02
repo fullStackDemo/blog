@@ -15,7 +15,7 @@ public class MD5Utils {
 	 * @param readyEncryptStr ready encrypt string
 	 * @return String encrypt result string
 	 */
-	public String MD5_16bit(String readyEncryptStr) throws NoSuchAlgorithmException {
+	private String MD5_16bit(String readyEncryptStr) throws NoSuchAlgorithmException {
 		if (readyEncryptStr != null) {
 			System.out.println(MD5_32bit(readyEncryptStr));
 			return MD5_32bit(readyEncryptStr).substring(8, 24);
@@ -31,7 +31,7 @@ public class MD5Utils {
 	 * @return String encrypt result string
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static String MD5_32bit(String readyEncryptStr) throws NoSuchAlgorithmException {
+	private static String MD5_32bit(String readyEncryptStr) throws NoSuchAlgorithmException {
 		if (readyEncryptStr != null) {
 			//Get MD5 digest algorithm's MessageDigest's instance.
 			MessageDigest md = MessageDigest.getInstance(ALGORITHM_MD5);
@@ -55,7 +55,7 @@ public class MD5Utils {
 		}
 	}
 	
-	public static final String MD5_32bit1(String readyEncryptStr) throws NoSuchAlgorithmException {
+	public static String MD5_32bit1(String readyEncryptStr) throws NoSuchAlgorithmException {
 		if (readyEncryptStr != null) {
 			//The cipher text converted to hexadecimal string
 			StringBuilder su = new StringBuilder();
@@ -82,7 +82,7 @@ public class MD5Utils {
 	/**
 	 * transform  char to ascii
 	 */
-	public static String transformToAscII(String readyEncryptStr) {
+	private static String transformToAscII(String readyEncryptStr) {
 		byte[] bytes = readyEncryptStr.getBytes();
 		String result = "";
 		for (int i = 0; i < bytes.length; i++) {
@@ -96,10 +96,12 @@ public class MD5Utils {
 	// test
 	public static void main(String[] args) {
 		try {
-			String testStr = "test1qaz2wsx@123test123";
+			String testStr = "testadmintest1qaz2wsx@123test123";
 			String result = transformToAscII(testStr);
 			String md532 = MD5Utils.MD5_32bit(result);
 			System.out.println("32bit-md5:\n" + md532);
+			String md532_double = MD5Utils.MD5_32bit((md532));
+			System.out.println("32bit-md5:\n" + md532_double);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
