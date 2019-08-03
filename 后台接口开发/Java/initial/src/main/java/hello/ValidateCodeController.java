@@ -93,7 +93,7 @@ public class ValidateCodeController {
 	}
 	
 	// 检验md5
-	@RequestMapping("checkMd5")
+	@RequestMapping("/checkMd5")
 	public boolean checkMd5(@RequestParam Map<String, String> requestObj) throws NoSuchAlgorithmException {
 		try {
 			String pwd = requestObj.get("pwd");

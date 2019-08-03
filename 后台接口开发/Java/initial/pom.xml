@@ -75,6 +75,18 @@
             <version>2.6</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext-asian</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -107,6 +119,7 @@
 <!--                <artifactId>maven-surefire-plugin</artifactId>-->
 <!--                <version>2.22.0</version>-->
 <!--            </plugin>-->
+
 
         </plugins>
 

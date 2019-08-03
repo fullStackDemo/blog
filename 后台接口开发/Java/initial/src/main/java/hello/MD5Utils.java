@@ -31,7 +31,7 @@ public class MD5Utils {
 	 * @return String encrypt result string
 	 * @throws NoSuchAlgorithmException
 	 */
-	private static String MD5_32bit(String readyEncryptStr) throws NoSuchAlgorithmException {
+	public static String MD5_32bit(String readyEncryptStr) throws NoSuchAlgorithmException {
 		if (readyEncryptStr != null) {
 			//Get MD5 digest algorithm's MessageDigest's instance.
 			MessageDigest md = MessageDigest.getInstance(ALGORITHM_MD5);
