@@ -1,11 +1,19 @@
 package hello;
 
+import com.terran4j.commons.api2doc.annotations.ApiComment;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Response {
+    
+    @ApiComment(value = "response code", sample = "0")
     private int code = 0;
+    
+    @ApiComment(value = "response message", sample = "successful")
     private String message = "";
+    
+    @ApiComment(value = "response message", sample = "null")
     private Map data = new HashMap();
     
     // 设置Http请求状态 0 成功 500 服务器错误 405 没有权限

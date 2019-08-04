@@ -1,5 +1,7 @@
 package hello;
 
+import com.terran4j.commons.api2doc.annotations.Api2Doc;
+import com.terran4j.commons.api2doc.annotations.ApiComment;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,14 +11,17 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Api2Doc(name = "USER类接口", order = 1)
+@ApiComment(seeClass = Response.class)
 @RestController
 @RequestMapping("/api/v1/user")
 public class ValidateCodeController {
 	
 	// 生成验证码,返回的是 base64
-	@RequestMapping("/getCaptchaBase64")
+	@ApiComment("生成验证码-返回base64")
+	@RequestMapping(name = "生成验证码-返回base64", value = "/getCaptchaBase64", method = RequestMethod.GET)
 	@ResponseBody
-	public Object getCaptchaBase64(HttpServletRequest request, HttpServletResponse response) {
+	public Response getCaptchaBase64(HttpServletRequest request, HttpServletResponse response) {
 		
 		Map result = new HashMap();
 		Response response1 = new Response();
@@ -30,9 +35,6 @@ public class ValidateCodeController {
 			
 			ValidateCode validateCode = new ValidateCode();
 			
-			// 直接返回图片
-			// validateCode.getRandomCode(request, response);
-			
 			// 返回base64
 			String base64String = validateCode.getRandomCodeBase64(request, response);
 			result.put("url", "data:image/png;base64," + base64String);
@@ -41,15 +43,16 @@ public class ValidateCodeController {
 			response1.setData(0, result);
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
-		return response1.getResult();
+		return response1;
 	}
 	
 	
 	// 生成验证码图片
-	@RequestMapping("/getCaptchaImage")
+	@ApiComment("生成验证码-返回image")
+	@RequestMapping(name = "生成验证码-返回image", value = "/getCaptchaImage", method = RequestMethod.GET)
 	@ResponseBody
 	public void getCaptcha(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -66,7 +69,7 @@ public class ValidateCodeController {
 			validateCode.getRandomCodeImage(request, response);
 			
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 	}
@@ -74,7 +77,8 @@ public class ValidateCodeController {
 	/*
 	 * 检验验证码
 	 * */
-	@PostMapping("/checkCaptcha")
+	@ApiComment(value = "检验验证码")
+	@RequestMapping(value = "/checkCaptcha", method = RequestMethod.GET, params ="code")
 	public Boolean checkCaptcha(@RequestParam Map<String, Object> requestMap, HttpSession session) {
 		try {
 			String code = requestMap.get("code").toString();
@@ -93,7 +97,8 @@ public class ValidateCodeController {
 	}
 	
 	// 检验md5
-	@RequestMapping("/checkMd5")
+	@ApiComment("检验md5")
+	@GetMapping("/checkMd5")
 	public boolean checkMd5(@RequestParam Map<String, String> requestObj) throws NoSuchAlgorithmException {
 		try {
 			String pwd = requestObj.get("pwd");
