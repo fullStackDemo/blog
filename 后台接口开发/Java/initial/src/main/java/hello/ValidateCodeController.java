@@ -26,12 +26,15 @@ public class ValidateCodeController {
 		Map result = new HashMap();
 		Response response1 = new Response();
 		
+		System.out.println(request.getRemoteAddr());
+		
 		try {
 			
 			response.setContentType("image/png");
 			response.setHeader("Cache-Control", "no-cache");
 			response.setHeader("Expire", "0");
 			response.setHeader("Pragma", "no-cache");
+			response.setHeader("ip", request.getRemoteHost());
 			
 			ValidateCode validateCode = new ValidateCode();
 			
@@ -39,6 +42,7 @@ public class ValidateCodeController {
 			String base64String = validateCode.getRandomCodeBase64(request, response);
 			result.put("url", "data:image/png;base64," + base64String);
 			result.put("message", "created successfull");
+			result.put("ip", request.getRemoteHost());
 			System.out.println("test=" + result.get("url"));
 			response1.setData(0, result);
 			
