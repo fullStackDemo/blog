@@ -42,7 +42,10 @@ public class ValidateCodeController {
 			String base64String = validateCode.getRandomCodeBase64(request, response);
 			result.put("url", "data:image/png;base64," + base64String);
 			result.put("message", "created successfull");
-			result.put("ip", request.getRemoteHost());
+			result.put("ip", Utils.getRemoteIp(request));
+//			result.put("ip2", request.getHeader("x-forwarded-for"));
+//			result.put("ip3", request.getHeader("Proxy-Client-IP"));
+//			result.put("ip4", request.getHeader("WL-Proxy-Client-IP"));
 			System.out.println("test=" + result.get("url"));
 			response1.setData(0, result);
 			
