@@ -76,8 +76,9 @@ public class ValidateCode {
         System.out.println(random.nextInt(randomString.length()));
         String rand = getRandomString(random.nextInt(randomString.length()));
         randomStr += rand;
-        g.translate(random.nextInt(3), random.nextInt(6));
-        g.drawString(rand, 40 * i + 10, 25);
+//        g.translate(random.nextInt(3), random.nextInt(6));
+        g.translate(random.nextInt(3), 0);
+        g.drawString(rand, 40 * i + 10, 30);
         return randomStr;
     }
     
