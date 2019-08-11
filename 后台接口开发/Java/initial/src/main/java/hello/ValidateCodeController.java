@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Api2Doc(name = "USER类接口", order = 1)
+@Api2Doc(name = "用户类接口", order = 1)
 @ApiComment(seeClass = Response.class)
 @RestController
 @RequestMapping("/api/v1/user")
@@ -126,14 +126,13 @@ public class ValidateCodeController {
     @ApiComment("检验md5")
     @GetMapping("/checkMd5")
 //    public boolean checkMd5(@RequestParam Map<String, String> requestObj) throws NoSuchAlgorithmException {
-    public boolean checkMd5(String md5) throws NoSuchAlgorithmException {
+    public boolean checkMd5(String md5) {
         
         try {
 //            String pwd = requestObj.get("pwd");
-            String pwd = md5;
-            if (pwd != null) {
+            if (md5 != null) {
                 String encryptPwd = MD5Utils.MD5_32bit("admin123!");
-                return encryptPwd.equalsIgnoreCase(pwd);
+                return encryptPwd.equalsIgnoreCase(md5);
             } else {
                 return false;
             }
@@ -142,4 +141,13 @@ public class ValidateCodeController {
             return false;
         }
     }
+    
+    // 检验md5
+    @ApiComment("生成md5")
+    @GetMapping("/getMd5")
+    public String getMd5(@RequestParam(defaultValue = "") String un, @RequestParam(defaultValue = "") String pwd) throws NoSuchAlgorithmException {
+        return MD5Utils.generateMd5(un, pwd);
+    }
+    
+    
 }

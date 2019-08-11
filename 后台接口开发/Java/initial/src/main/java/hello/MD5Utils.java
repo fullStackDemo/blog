@@ -31,7 +31,7 @@ public class MD5Utils {
 	 * @return String encrypt result string
 	 * @throws NoSuchAlgorithmException
 	 */
-	public static String MD5_32bit(String readyEncryptStr) throws NoSuchAlgorithmException {
+	static String MD5_32bit(String readyEncryptStr) throws NoSuchAlgorithmException {
 		if (readyEncryptStr != null) {
 			//Get MD5 digest algorithm's MessageDigest's instance.
 			MessageDigest md = MessageDigest.getInstance(ALGORITHM_MD5);
@@ -90,6 +90,14 @@ public class MD5Utils {
 			result += bytes[i];
 		}
 		return result;
+	}
+	
+	// 生成加密后的MD5
+	public static String generateMd5(String un, String pwd) throws NoSuchAlgorithmException {
+		String salt = "admintest1qaz2wsx@123";
+		String testStr = un + salt + pwd;
+		String result = transformToAscII(testStr);
+		return MD5_32bit(result);
 	}
 	
 	
