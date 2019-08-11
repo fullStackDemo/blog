@@ -2,6 +2,8 @@ package hello;
 
 import com.terran4j.commons.api2doc.annotations.Api2Doc;
 import com.terran4j.commons.api2doc.annotations.ApiComment;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,16 +13,21 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @Api2Doc(name = "用户类接口", order = 1)
 @ApiComment(seeClass = Response.class)
 @RestController
 @RequestMapping("/api/v1/user")
 public class ValidateCodeController {
     
+    @Value("${API_VERSION}")
+    String api_version;
+    
+    String getCaptchaBase64_route = api_version + "/user/getCaptchaBase64";
+    
     // 生成验证码,返回的是 base64
     @ApiComment("生成验证码-返回base64")
-    @RequestMapping(name = "生成验证码-返回base64", value = "/getCaptchaBase64", method = RequestMethod.GET)
+    @GetMapping(name = "生成验证码-返回base64", value = "/getCaptchaBase64")
+//    @RequestMapping(name = "生成验证码-返回base64", value = "/getCaptchaBase64", method = RequestMethod.GET)
     @ResponseBody
     public Response getCaptchaBase64() {
 //	public Response getCaptchaBase64(HttpServletRequest request, HttpServletResponse response) {
@@ -28,7 +35,6 @@ public class ValidateCodeController {
 //        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 //        HttpServletRequest request = servletRequestAttributes.getRequest();
 //        HttpServletResponse response = servletRequestAttributes.getResponse();
-        
         HttpServletRequest request = HttpUtils.getRequest();
         HttpServletResponse response = HttpUtils.getResponse();
         
@@ -64,18 +70,12 @@ public class ValidateCodeController {
     
     // 生成验证码图片
     @ApiComment("生成验证码-返回image")
-    @RequestMapping(name = "生成验证码-返回image", value = "/getCaptchaImage", method = RequestMethod.GET)
+    @GetMapping(name = "生成验证码-返回image", value = "/getCaptchaImage")
+//    @RequestMapping(name = "生成验证码-返回image", value = "/getCaptchaImage", method = RequestMethod.GET)
     @ResponseBody
-//    public void getCaptcha(HttpServletRequest request, HttpServletResponse response) {
     public void getCaptcha() {
-
-//        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//        HttpServletRequest request = servletRequestAttributes.getRequest();
-//        HttpServletResponse response = servletRequestAttributes.getResponse();
-        
         HttpServletRequest request = HttpUtils.getRequest();
         HttpServletResponse response = HttpUtils.getResponse();
-        
         
         try {
             
