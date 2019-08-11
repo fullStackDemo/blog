@@ -1,9 +1,9 @@
 package hello;
 
-import com.google.gson.Gson;
-import com.mongodb.WriteResult;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.terran4j.commons.api2doc.annotations.Api2Doc;
+import com.terran4j.commons.api2doc.annotations.ApiComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,14 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+@Api2Doc(name = "Mongodb操作用户")
 @Controller
 public class MongoDBTestController {
     
@@ -28,6 +27,7 @@ public class MongoDBTestController {
     MongoTemplate mongoTemplate;
     
     // 插入对象
+    @ApiComment(value = "添加人")
     @GetMapping("/addPerson")
     @ResponseBody
     public String addPerson(@RequestParam(value = "name", defaultValue = "test") String name) {

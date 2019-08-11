@@ -3,7 +3,6 @@ package hello;
 import com.terran4j.commons.api2doc.annotations.Api2Doc;
 import com.terran4j.commons.api2doc.annotations.ApiComment;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
