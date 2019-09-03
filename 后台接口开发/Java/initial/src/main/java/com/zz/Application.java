@@ -2,20 +2,17 @@ package com.zz;
 
 import com.terran4j.commons.api2doc.config.EnableApi2Doc;
 import com.zz.storage.StorageProperties;
-import com.zz.storage.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
+
+import java.io.FileNotFoundException;
+
+import com.zz.config.ConfigConstants;
 
 
 @EnableApi2Doc
@@ -25,10 +22,13 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
+    @Value("${web.uploadDir}")
+    String demo;
+
     @RequestMapping("/")
     String home() {
-        log.info("99999");
-//        return "Hello World!";
+        log.info("99999" + demo);
+        log.info(ConfigConstants.fileDir);
         return "redirect:/static/index.html";
     }
 
