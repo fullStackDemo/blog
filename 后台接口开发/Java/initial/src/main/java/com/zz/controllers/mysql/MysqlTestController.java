@@ -1,4 +1,4 @@
-package com.zz.controllers;
+package com.zz.controllers.mysql;
 
 import com.terran4j.commons.api2doc.annotations.Api2Doc;
 import org.springframework.beans.factory.annotation.Autowired;

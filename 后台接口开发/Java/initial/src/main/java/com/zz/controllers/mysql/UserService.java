@@ -1,5 +1,7 @@
-package com.zz.controllers;
+package com.zz.controllers.mysql;
 
+import com.zz.controllers.mysql.User;
+import com.zz.controllers.mysql.UserRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

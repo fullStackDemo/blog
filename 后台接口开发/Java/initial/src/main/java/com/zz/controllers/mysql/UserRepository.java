@@ -1,4 +1,4 @@
-package com.zz.controllers;
+package com.zz.controllers.mysql;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,6 +17,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     
     @Query("SELECT id,name,email FROM User")
     List<User> search(@Param("name") String name);
-    
-    
+
+
 }

@@ -1,4 +1,4 @@
-package com.zz.controllers;
+package com.zz.utils;
 
 import com.google.gson.Gson;
 

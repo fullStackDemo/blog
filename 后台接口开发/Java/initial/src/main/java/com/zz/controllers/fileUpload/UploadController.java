@@ -1,7 +1,7 @@
 package com.zz.controllers.fileUpload;
 
 import com.zz.Application;
-import com.zz.controllers.HttpUtils;
+import com.zz.utils.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;

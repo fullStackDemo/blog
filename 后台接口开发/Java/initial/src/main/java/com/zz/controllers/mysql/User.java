@@ -1,4 +1,4 @@
-package com.zz.controllers;
+package com.zz.controllers.mysql;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
