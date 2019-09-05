@@ -104,12 +104,15 @@ public class MD5Utils {
 	// test
 	public static void main(String[] args) {
 		try {
-			String testStr = "testadmintest1qaz2wsx@123test123";
+			String salt = "admintest1qaz2wsx@123";
+			String username = "subAdmin";
+			String password = "admin20190909";
+			String testStr = username + salt + password;
 			String result = transformToAscII(testStr);
 			String md532 = MD5Utils.MD5_32bit(result);
 			System.out.println("32bit-md5:\n" + md532);
-			String md532_double = MD5Utils.MD5_32bit((md532));
-			System.out.println("32bit-md5:\n" + md532_double);
+//			String md532_double = MD5Utils.MD5_32bit((md532));
+//			System.out.println("32bit-md5:\n" + md532_double);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
