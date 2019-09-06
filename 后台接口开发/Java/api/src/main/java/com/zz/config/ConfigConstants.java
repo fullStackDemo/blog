@@ -10,7 +10,7 @@ public class ConfigConstants {
 
     @Value("@{uploadDir}")
     public static String getFileDir() {
-        fileDir = System.getProperty("user.dir") + "\\initial\\src\\main\\file";
+        fileDir = System.getProperty("user.dir") + "\\src\\main\\file";
         return fileDir;
     }
 }
