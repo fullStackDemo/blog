@@ -1,0 +1,86 @@
+{
+    "name": "intranet_platform",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "vue-cli-service serve",
+        "build": "vue-cli-service build --report",
+        "lint": "vue-cli-service lint",
+        "start": "node server.js",
+        "tar": "bash ./tar.sh"
+    },
+    "dependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/preset-env": "^7.4.5",
+        "babel-loader": "^8.0.6",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "core-js": "2",
+        "crypto-js": "^3.1.9-1",
+        "element-ui": "^2.9.1",
+        "es6-promise": "^4.2.8",
+        "html2canvas": "^1.0.0-rc.3",
+        "http-proxy-middleware": "^0.19.1",
+        "node-sass": "^4.12.0",
+        "rx-js": "^0.0.0",
+        "sass-loader": "^8.0.0",
+        "vue": "^2.6.10",
+        "vue-jcrop": "^1.0.3",
+        "vue-resource": "^1.5.1",
+        "vue-router": "^3.0.6",
+        "vue-rx": "^6.2.0",
+        "vue-seamless-scroll": "^1.1.17",
+        "vuejs-clipper": "^1.1.4",
+        "vuex": "^3.1.1",
+        "vuex-local-sync": "^0.0.8",
+        "xlsx": "^0.15.1"
+    },
+    "devDependencies": {
+        "@gfx/zopfli": "^1.0.13",
+        "@vue/cli-plugin-babel": "^3.8.0",
+        "@vue/cli-plugin-eslint": "^3.8.0",
+        "@vue/cli-service": "^3.8.0",
+        "babel-eslint": "^10.0.1",
+        "babel-plugin-component": "^1.1.1",
+        "compression": "^1.7.4",
+        "compression-webpack-plugin": "^3.0.0",
+        "css-loader": "^3.0.0",
+        "eslint": "^5.16.0",
+        "eslint-plugin-vue": "^5.0.0",
+        "image-webpack-loader": "^5.0.0",
+        "less": "^3.9.0",
+        "less-loader": "^5.0.0",
+        "live-server": "^1.2.1",
+        "style-loader": "^0.23.1",
+        "vue-template-compiler": "^2.6.10",
+        "webpack-spritesmith": "^1.0.1",
+        "zlib": "^1.0.5"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "eslint:recommended"
+        ],
+        "rules": {
+            "no-console": "off",
+            "no-debugger": "off",
+            "no-unused-vars": "off"
+        },
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions"
+    ]
+}
