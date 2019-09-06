@@ -22,3 +22,10 @@ java/workspace/.idea/*.xml
 .vscode
 
 package-lock.json
+后台接口开发/Java/api/.classpath
+后台接口开发/Java/api/.settings/org.eclipse.m2e.core.prefs
+后台接口开发/Java/api/.settings/org.eclipse.jdt.core.prefs
+后台接口开发/Java/api/.settings/org.eclipse.jdt.apt.core.prefs
+后台接口开发/Java/api/.settings/org.eclipse.core.resources.prefs
+后台接口开发/Java/api/.project
+后台接口开发/Java/api/.factorypath

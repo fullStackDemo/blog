@@ -25,14 +25,11 @@ import com.zz.config.ConfigConstants;
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    @Value("${web.uploadDir}")
-    String demo;
-
-    @RequestMapping("/")
+	@RequestMapping("/")
     String home() {
-        log.info("99999" + demo);
+        log.info("99999");
         log.info(ConfigConstants.fileDir);
-        return "redirect:/static/index.html";
+        return "redirect:/list.html";
     }
 
 
