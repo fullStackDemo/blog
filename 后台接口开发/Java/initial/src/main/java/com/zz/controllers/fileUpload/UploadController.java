@@ -6,6 +6,7 @@ import com.zz.model.ReturnResponse;
 import com.zz.utils.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,15 +15,19 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
+import static com.zz.config.ConfigConstants.getFileDir;
+
 @RestController
 public class UploadController {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    private String fileDir = "F:\\project\\blog\\后台接口开发\\Java\\initial\\src\\main\\file";
+//    @Value("${uploadDir}")
+    private String fileDir = getFileDir();
 
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     public String upload(@RequestParam("file") MultipartFile file) {
+        System.out.println(getFileDir());
         HttpServletRequest request = HttpUtils.getRequest();
         // 提取文件名
         String fileName = file.getOriginalFilename();

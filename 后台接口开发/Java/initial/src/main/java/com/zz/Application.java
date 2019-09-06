@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
+import java.util.Properties;
 
 import com.zz.config.ConfigConstants;
 
@@ -19,6 +21,7 @@ import com.zz.config.ConfigConstants;
 @RestController
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
+@ComponentScan("com.zz.*")
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -34,6 +37,8 @@ public class Application {
 
 
     public static void main(String[] args) {
+        Properties properties = System.getProperties();
+        System.out.println("======== " + properties.get("user.dir"));
         SpringApplication.run(Application.class, args);
     }
 }
