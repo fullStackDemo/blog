@@ -39,7 +39,7 @@ touch webpack.config.js
 
 在`webpack.config.js`增加
 
-```json
+```js
 
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -49,11 +49,11 @@ const resolve = src => {
 };
 
 module.exports = (env, argv) => {
-	
+
     //argv 里面的 mode 分别是之前执行命令的的，development production
     // 传递给 babel.config.js
     process.env.NODE_ENV = argv.mode;
-    
+
 	return ({
 		entry: {
             "login": "./src/login",
@@ -224,7 +224,7 @@ plugins.push(new MiniCssExtractPlugin({
     ignoreOrder: false
 }));
 
-#rules 增加 
+#rules 增加
 rules:[
 {
     test: /\.less$/,
@@ -608,4 +608,3 @@ module.exports = (env, argv) => {
     };
 }
 ```
-
