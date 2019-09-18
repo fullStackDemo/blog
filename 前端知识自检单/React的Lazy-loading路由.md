@@ -1,4 +1,4 @@
-### 使用React的Lazy-loading懒加载组件，进行路由封装
+### 使用React v16.9的Lazy-loading懒加载组件，进行路由封装
 
 [TOC]
 
