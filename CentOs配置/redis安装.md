@@ -56,3 +56,18 @@ redis> get foo
 ![1568876252520](assets/1568876252520.png)
 
 ![1568876266307](assets/1568876266307.png)
+
+> windows 下redis在后台运行
+
+1. 进入 `DOS` 窗口
+
+2. 在进入 `redis` 的安装目录
+
+3. 输入：`redis-server --service-install redis.windows.conf --loglevel verbose ( 安装redis服务 )`
+
+4. 输入：`redis-server --service-start` ( 启动服务 )
+
+5. 输入：`redis-server --service-stop` （停止服务）
+
+
+
