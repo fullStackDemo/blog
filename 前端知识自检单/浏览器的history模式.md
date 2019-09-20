@@ -101,7 +101,40 @@ history.go(2);  // alerts "location: http://example.com/example.html?page=3, sta
 传统的web开发中，大多是多页应用，每个模块对应一个页面，在浏览器输入相关页面的路径，然后服务端处理相关浏览器的请求，通过HTTP
 把资源返回给客户端浏览器进行渲染。
 
+随着前端的发展，前端也承担着越来越大的责任，前端可以操控一些历史会话，而不用每次都从服务端进行数据交互。
 
+history.pushState 和 history.replaceState ，这两个history新增的api，为前端操控浏览器历史栈提供了可能性
+
+~~~javascript
+
+/**
+* @data {object} state对象 最大640KB, 如果需要存很大的数据，考虑 sessionStorage localStorage
+* @title {string} 标题
+* @url {string} 必须同一个域下，相对路径和绝对路径都可以
+*/
+history.pushState(data, title, url) //向浏览器历史栈中增加一条记录。
+history.replaceState(data, title, url) //替换历史栈中的当前记录。
+
+~~~
+
+这两个Api都会操作浏览器的历史栈，而不会引起页面的刷新。不同的是，pushState会增加一条新的历史记录，而replaceState则会替换当前的历史记录。所需的参数相同，在将新的历史记录存入栈后，会把传入的data（即state对象）同时存入，以便以后调用。同时，这俩api都会更新或者覆盖当前浏览器的title和url为对应传入的参数。
+
+~~~javascript
+
+// 假设当前的URL： http://test.com
+
+history.pushState(null, null, "/login");
+// http://test.com ---->>>  http://test.com/login
+
+history.pushState(null, null, "http://test.com/regiest");
+// http://test.com ---->>>  http://test.com/regiest
+
+
+// 错误用法
+history.pushState(null, null, "http://baidu.com/regiest");
+// error 跨域报错
+
+~~~
 
 
 
