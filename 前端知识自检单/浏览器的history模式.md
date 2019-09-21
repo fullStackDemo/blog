@@ -237,7 +237,9 @@ new HistoryRouter({
 
 #### 3、historyApiFallback
 
-> 关于 connect-history-api-fallback
+`Webpack-dev-server` 的背后的是`connect-history-api-fallback`；
+
+> 关于 connect-history-api-fallback 中间件，解决这个404问题
 
 单页应用(SPA)一般只有一个`index.html`, 导航的跳转都是基于[HTML5 History API](http://www.w3.org/html/wg/drafts/html/master/single-page.html#the-history-interface)，当用户在越过`index.html` 页面直接访问这个地址或是通过浏览器的刷新按钮重新获取时，就会出现404问题；
 
@@ -255,5 +257,137 @@ new HistoryRouter({
 >
 > 4 没有 `options.rewrites` 里的正则匹配
 
+-------
 
+> connect-history-api-fallback 源码：
 
+```javascript
+'use strict';
+
+var url = require('url');
+
+exports = module.exports = function historyApiFallback(options) {
+  options = options || {};
+  var logger = getLogger(options);
+
+  return function(req, res, next) {
+    var headers = req.headers;
+    if (req.method !== 'GET') {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the method is not GET.'
+      );
+      return next();
+    } else if (!headers || typeof headers.accept !== 'string') {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the client did not send an HTTP accept header.'
+      );
+      return next();
+    } else if (headers.accept.indexOf('application/json') === 0) {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the client prefers JSON.'
+      );
+      return next();
+    } else if (!acceptsHtml(headers.accept, options)) {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the client does not accept HTML.'
+      );
+      return next();
+    }
+
+    var parsedUrl = url.parse(req.url);
+    var rewriteTarget;
+    options.rewrites = options.rewrites || [];
+    for (var i = 0; i < options.rewrites.length; i++) {
+      var rewrite = options.rewrites[i];
+      var match = parsedUrl.pathname.match(rewrite.from);
+      if (match !== null) {
+        rewriteTarget = evaluateRewriteRule(parsedUrl, match, rewrite.to);
+        logger('Rewriting', req.method, req.url, 'to', rewriteTarget);
+        req.url = rewriteTarget;
+        return next();
+      }
+    }
+
+    if (parsedUrl.pathname.indexOf('.') !== -1 &&
+        options.disableDotRule !== true) {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the path includes a dot (.) character.'
+      );
+      return next();
+    }
+
+    rewriteTarget = options.index || '/index.html';
+    logger('Rewriting', req.method, req.url, 'to', rewriteTarget);
+    req.url = rewriteTarget;
+    next();
+  };
+};
+
+function evaluateRewriteRule(parsedUrl, match, rule) {
+  if (typeof rule === 'string') {
+    return rule;
+  } else if (typeof rule !== 'function') {
+    throw new Error('Rewrite rule can only be of type string of function.');
+  }
+
+  return rule({
+    parsedUrl: parsedUrl,
+    match: match
+  });
+}
+
+function acceptsHtml(header, options) {
+  options.htmlAcceptHeaders = options.htmlAcceptHeaders || ['text/html', '*/*'];
+  for (var i = 0; i < options.htmlAcceptHeaders.length; i++) {
+    if (header.indexOf(options.htmlAcceptHeaders[i]) !== -1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getLogger(options) {
+  if (options && options.logger) {
+    return options.logger;
+  } else if (options && options.verbose) {
+    return console.log.bind(console);
+  }
+  return function(){};
+}
+```
+
+其实代码也挺简单的，最主要先符合上面四个原则，然后先匹配自定义rewrites规则，再匹配点文件规则；
+
+> `getLogger`, 默认不输出，`options.verbose`如果为true，则输出，默认`console.log.bind(console)`
+
+> 如果`req.method != 'GET'`，结束
+> 如果`!headers || !headers.accept != 'string'` ，结束
+> 如果`headers.accept.indexOf('application/json') === 0` 结束
+
+> `acceptsHtml`函数a判断`headers.accept`字符串是否含有['text/html', '*/*']中任意一个
+> 当然不够这两个不够你可以自定义到选项`options.htmlAcceptHeaders`中
+> `!acceptsHtml(headers.accept, options)`，结束
+
+> 然后根据你定义的选项`rewrites`, 没定义就相当于跳过了
+> 按定义的数组顺序，字符串依次匹配路由rewrite.from，匹配成功则走rewrite.to，to可以是字符串也可以是函数，结束
+
+> 判断dot file，即pathname中包含`.`(点)，并且选项`disableDotRule !== true`，即没有关闭点文件限制规则, 结束
+
+> `rewriteTarget = options.index || '/index.html'`
+
+大致如此；
