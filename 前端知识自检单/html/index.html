@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>History router</title>
+</head>
+
+<body>
+	<br>
+	<div>
+		<a href="javascript:;" data-link="/">index</a>
+		<a href="javascript:;" data-link="/news">news</a>
+		<a href="javascript:;" data-link="/contact">contact</a>
+		<div id="content"></div>
+	</div>
+	<script>
+		// history 路由
+		class HistoryRouter {
+			constructor(options = {}) {
+				// store all router
+				this.routers = {};
+				// 遍历路由参数，保存到 this.routers
+				if (options.router) {
+					options.router.forEach(n => {
+						this.routers[n.path] = () => {
+							document.getElementById("content").innerHTML = n.component;
+						}
+					});
+				}
+				// 绑定到 this.routers
+				this.updateContent = this.updateContent.bind(this);
+				// 初始化事件
+				this.init();
+				this.bindClickEvent();
+			}
+			init() {
+				// 页面初始化的时候，初始化当前匹配路由
+				// 监听 load
+				window.addEventListener('load', this.updateContent, false);
+				// pushState replaceState 不能触发 popstate 事件
+				// 当浏览器返回前进或者刷新，都会触发 popstate 更新
+				window.addEventListener("popstate", this.updateContent, false);
+			}
+			// 更新内容
+			updateContent(e) {
+				alert(e ? e.type : "click");
+				const currentPath = location.pathname || "/";
+				this.routers[currentPath] && this.routers[currentPath]();
+			}
+			// 绑定点击事件
+			bindClickEvent() {
+				const links = document.querySelectorAll('a');
+				Array.prototype.forEach.call(links, link => {
+					link.addEventListener('click', e => {
+						const path = e.target.getAttribute("data-link");
+						// 添加到session history
+						this.handlePush(path);
+					})
+				});
+			}
+			// pushState 不会触发 popstate
+			handlePush(path){
+				window.history.pushState({path}, null, path);
+				this.updateContent();
+			}
+		}
+		// 实例
+		new HistoryRouter({
+			router: [{
+				name: "index",
+				path: "/",
+				component: "Index"
+			}, {
+				name: "news",
+				path: "/news",
+				component: "News"
+			}, {
+				name: "contact",
+				path: "/contact",
+				component: "Contact"
+			}]
+		});
+		
+	</script>
+</body>
+
+</html>
