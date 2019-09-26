@@ -1,32 +1,38 @@
 {
-  "name": "webpack4",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "bash ./rm.sh && cross-env NAMESPACE=prod webpack --mode production --watch",
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "lodash": "^4.17.11"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "babel-loader": "^8.0.6",
-    "clean-webpack-plugin": "^3.0.0",
-    "compression": "^1.7.4",
-    "cross-env": "^6.0.0",
-    "css-loader": "^3.2.0",
-    "file-loader": "^4.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "http-proxy-middleware": "^0.20.0",
-    "live-server": "^1.2.1",
-    "lodash-webpack-plugin": "^0.11.5",
-    "mini-css-extract-plugin": "^0.8.0",
-    "to-string-loader": "^1.1.5",
-    "url-loader": "^2.1.0",
-    "webpack": "^4.33.0",
-    "webpack-build-notifier": "^1.1.1",
-    "webpack-cli": "^3.3.4",
-    "zlib": "^1.0.5"
-  }
+    "name": "webpack4",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "webpack-dev-server --mode development",
+        "build": "bash ./rm.sh && cross-env NAMESPACE=prod webpack --mode production --watch",
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "lodash": "^4.17.11"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.6.2",
+        "babel-loader": "^8.0.6",
+        "clean-webpack-plugin": "^3.0.0",
+        "compression": "^1.7.4",
+        "cross-env": "^6.0.0",
+        "css-loader": "^3.2.0",
+        "cssnano-preset-advanced": "^4.0.7",
+        "file-loader": "^4.2.0",
+        "html-webpack-plugin": "^3.2.0",
+        "http-proxy-middleware": "^0.20.0",
+        "live-server": "^1.2.1",
+        "lodash-webpack-plugin": "^0.11.5",
+        "mini-css-extract-plugin": "^0.8.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.3",
+        "purgecss-webpack-plugin": "^1.6.0",
+        "style-loader": "^1.0.0",
+        "to-string-loader": "^1.1.5",
+        "url-loader": "^2.1.0",
+        "webpack": "^4.33.0",
+        "webpack-build-notifier": "^1.1.1",
+        "webpack-cli": "^3.3.4",
+        "webpack-dev-server": "^3.8.1",
+        "zlib": "^1.0.5"
+    }
 }

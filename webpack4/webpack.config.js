@@ -6,6 +6,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 // clean project
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// 去重，压缩css
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+// 去除css中未使用的代码
+const glob = require('glob');
+const PurifyCSSPlugin = require('purgecss-webpack-plugin');
 
 const resolve = dir => {
     return path.resolve(__dirname, dir);
@@ -34,6 +39,7 @@ module.exports = (env, argv) => {
 
     // 生成html模板
     const HtmlTemplates = [];
+    const OtherChunkname = ['runtime', 'chunk-vendors', 'chunk-commons', 'css-commons'];
     pages.forEach(n => {
         const { title, filename, chunkname } = n;
         HtmlTemplates.push(
@@ -41,37 +47,83 @@ module.exports = (env, argv) => {
                 title: title,
                 template: resolve('public/' + filename),
                 filename: filename,
-                chunks: [chunkname]
+                chunks: [chunkname, ...OtherChunkname]
             })
         );
     });
 
-    const namespace = process.env.NAMESPACE;
-    const assetPrefixForNamespace = namespace => {
-        switch (namespace) {
-            case 'prod':
-                return 'https://cache.myserver.net/web';
-            case 'uat':
-                return 'https://cache-uat.myserver.net/web';
-            case 'st':
-                return 'https://cache-st.myserver.net/web';
-            case 'dev':
-                return 'https://cache-dev.myserver.net/web';
-            default:
-                return '';
-        }
-    };
-    __webpack_public_path__ = `${assetPrefixForNamespace(namespace)}/`;
-    console.log(__webpack_public_path__);
+    // 所有插件
+    let plugins = [];
+
+    if (isProduction) {
+        const prodPlugins = [
+            // 抽离css
+            new MiniCssExtractPlugin({
+                // Options similar to the same options in webpackOptions.output
+                // all options are optional
+                filename: 'css/[name].[hash:8].css',
+                chunkFilename: 'css/[name].[hash:8].css',
+                publicPath: './',
+                ignoreOrder: false // Enable to remove warnings about conflicting order
+            }),
+            //去除 unused css, 要放在 MiniCssExtractPlugin 后面
+            new PurifyCSSPlugin({
+                // 扫描内容路径
+                paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true })
+                // whitelistPatterns: function collectWhitelistPatterns() {
+                //     // do something to collect the whitelist
+                //     return [/^pure-/];
+                // }
+            }),
+            // css 压缩去重
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.css$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorPluginOptions: {
+                    preset: [
+                        'advanced',
+                        {
+                            discardComments: {
+                                removeAll: true
+                            }
+                        }
+                    ]
+                },
+                canPrint: true
+            }),
+            // 构建提醒
+            new WebpackBuildNotifierPlugin({
+                title: 'project build',
+                suppressSuccess: true,
+                suppressWarning: true,
+                messageFormatter: function() {
+                    return 'build completely';
+                }
+            })
+        ];
+
+        plugins = [...prodPlugins];
+    }
+
     return {
         entry: {
             index: './src/index',
             hello: './src/hello'
         },
         output: {
-            filename: 'js/[name].[chunkhash:8].js',
+            filename: 'js/[name].[hash:8].js',
             path: resolve('cdn'),
             publicPath: './'
+        },
+        devtool: !isProduction ? 'inline-source-map' : '',
+        devServer: {
+            port: 9000,
+            open: true,
+            hot: true,
+            compress: true,
+            contentBase: resolve('./'),
+            publicPath: '/',
+            historyApiFallback: true
         },
         module: {
             rules: [
@@ -84,13 +136,20 @@ module.exports = (env, argv) => {
                     test: /\.css$/,
                     use: [
                         {
-                            loader: MiniCssExtractPlugin.loader,
-                            options: {}
+                            loader: isProduction ?  MiniCssExtractPlugin.loader : 'style-loader',
                         },
                         {
                             loader: 'css-loader',
                             options: {
-                                sourceMap: true
+                                sourceMap: true,
+                                // css module
+                                modules: {
+                                    mode: 'local',
+                                    // 前标识 pure 防止被当前 unused code 移除
+                                    // localIdentName: 'pure-[local]-[hash:base64:6]',
+                                    localIdentName: '[local]',
+                                    context: resolve('src')
+                                }
                             }
                         }
                     ],
@@ -100,17 +159,17 @@ module.exports = (env, argv) => {
                     test: /\.(jpg|png|gif|jpeg)$/i,
                     use: [
                         {
-                            loader: 'file-loader',
+                            loader: 'url-loader',
                             options: {
-                                // limit: 10 * 1024,
-                                // fallback: 'file-loader',
+                                limit: 10 * 1024,
+                                fallback: 'file-loader',
                                 // 指定一个目标文件的路径
                                 publicPath: '../',
                                 // 输出文件夹
                                 // outputPath: 'images',
                                 // 最简短写法，可以指定输出文件夹
                                 name: 'images/[sha512:contenthash:base64:8].[ext]',
-                                postTransformPublicPath: p => `__webpack_public_path__ + ${p}`
+                                // postTransformPublicPath: p => `__webpack_public_path__ + ${p}`
                             }
                         }
                     ]
@@ -134,24 +193,47 @@ module.exports = (env, argv) => {
             new CleanWebpackPlugin(),
             // 生成模板
             ...HtmlTemplates,
-            // 抽离css
-            new MiniCssExtractPlugin({
-                // Options similar to the same options in webpackOptions.output
-                // all options are optional
-                filename: 'css/[name].[hash:8].css',
-                chunkFilename: 'css/[name].[hash:8].css',
-                publicPath: './',
-                ignoreOrder: false // Enable to remove warnings about conflicting order
-            }),
-            // 构建提醒
-            new WebpackBuildNotifierPlugin({
-                title: 'project build',
-                suppressSuccess: true,
-                suppressWarning: true,
-                messageFormatter: function() {
-                    return 'build completely';
+            // prod
+            ...plugins
+        ],
+        optimization: {
+            splitChunks: {
+                // 静态资源缓存
+                // test, priority and reuseExistingChunk can only be configured on cache group level.
+                cacheGroups: {
+                    // 提取 node_modules 里面依赖的代码
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'chunk-vendors',
+                        chunks: 'all',
+                        minChunks: 2, //2个共享以及以上都提取
+                        priority: -10 //优先级
+                    },
+                    // 提出每个模块公共的代码
+                    commons: {
+                        name: 'chunk-commons',
+                        test: /\.js$/,
+                        chunks: 'initial',
+                        minChunks: 2, //两个共享以及以上都提取,
+                        minSize: 0,
+                        priority: -20, //优先级
+                        reuseExistingChunk: true
+                    },
+                    css: {
+                        name: 'css-commons',
+                        test: /\.css$/,
+                        minChunks: 2,
+                        minSize: 0,
+                        priority: -30,
+                        chunks: 'initial',
+                        reuseExistingChunk: true
+                    }
                 }
-            })
-        ]
+            },
+            // I pull the Webpack runtime out into its own bundle file so that the
+            // contentHash of each subsequent bundle will remain the same as long as the
+            // source code of said bundles remain the same.
+            runtimeChunk: 'single'
+        }
     };
 };

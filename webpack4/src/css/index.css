@@ -6,3 +6,19 @@ body {
     background: url("../assets/1.jpg") no-repeat left center;
 }
 
+.demo {
+    background: red;
+}
+
+.otherClassName {
+    composes: demo;
+    color: yellow;
+}
+
+.unused {
+    text-align: center;
+}
+
+.common {
+    background: red;
+}

@@ -6,6 +6,10 @@
 
 ~~~
 >>>>>>>>>>>>>>>>>>>>>>>相关loader<<<<<<<<<<<<<<<<<<<<<<
+
+vue-loader
+编译.vue文件
+
 file-loader
 解决文件中 import/require() 的资源，转化为URL，再输出到指定文件夹内
 
@@ -18,7 +22,11 @@ css-loader 解释 @import and url() 比如 import/require() 然后解析他们
 file-loader
 file-loader 解析文件中的 import/require() 成一个URL 然后输出到输出文件中
 
+style-loader
+dev环境，把css注入到DOM
+
 >>>>>>>>>>>>>>>>>>>>>>>相关plugin<<<<<<<<<<<<<<<<<<<<<<
+
 MiniCssExtractPlugin
 提取css到单独的文件
 
@@ -31,6 +39,13 @@ webpack-build-notifier
 html-webpack-plugin
 生成html入口模板
 
+optimize-css-assets-webpack-plugin
+css去重压缩
+
+purgecss-webpack-plugin
+去除css中未使用的代码
 
 ~~~
+
+
 
