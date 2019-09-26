@@ -11,9 +11,13 @@
         "lodash": "^4.17.11"
     },
     "devDependencies": {
+        "@babel/cli": "^7.6.2",
         "@babel/core": "^7.6.2",
+        "@babel/preset-env": "^7.6.2",
         "@gfx/zopfli": "^1.0.14",
         "babel-loader": "^8.0.6",
+        "babel-plugin-lodash": "^3.3.4",
+        "babel-plugin-transform-remove-console": "^6.9.4",
         "clean-webpack-plugin": "^3.0.0",
         "compression": "^1.7.4",
         "compression-webpack-plugin": "^3.0.0",

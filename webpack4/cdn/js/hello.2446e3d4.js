@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[3],{6:function(n,e,o){"use strict";o.r(e);var t=o(0),c=o.n(t);o(7);const i=function(){let n=document.createElement("div");return n.innerHTML=c.a.join(["Hello","World999"]),n}();document.body.append(i)},7:function(n,e,o){}},[[6,2,0,1]]]);
