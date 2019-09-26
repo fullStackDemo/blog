@@ -10,6 +10,9 @@
 vue-loader
 编译.vue文件
 
+babel-loader
+编译成ES5
+
 file-loader
 解决文件中 import/require() 的资源，转化为URL，再输出到指定文件夹内
 
@@ -27,7 +30,7 @@ dev环境，把css注入到DOM
 
 >>>>>>>>>>>>>>>>>>>>>>>相关plugin<<<<<<<<<<<<<<<<<<<<<<
 
-MiniCssExtractPlugin
+mini-css-extract-plugin
 提取css到单独的文件
 
 clean-webpack-plugin
@@ -47,5 +50,8 @@ purgecss-webpack-plugin
 
 ~~~
 
-
+>安装依赖
+~~~bash
+yarn add -D vue-loader babel-loader file-loader css-loader style-loader url-loader mini-css-extract-plugin  clean-webpack-plugin webpack-build-notifier html-webpack-plugin optimize-css-assets-webpack-plugin purgecss-webpack-plugin
+~~~
 
