@@ -2,7 +2,7 @@
 
 抛弃自带的vue.config.js的配置模式，手动使用webpack进行构建：
 
-> webpack4 相关 loaders 和 plugins
+> webpack4 相关loaders和plugins
 
 ~~~
 >>>>>>>>>>>>>>>>>>>>>>>相关loader<<<<<<<<<<<<<<<<<<<<<<
@@ -48,10 +48,25 @@ css去重压缩
 purgecss-webpack-plugin
 去除css中未使用的代码
 
+webpack-dev-server
+本地server
+
+webpack-spritesmith
+自动整合成雪碧图
+
+compression-webpack-plugin
+@gfx/zopfli
+压缩代码,根据算法生成gzip
+
+webpack-bundle-analyzer
+生成bundle后分析报告，方便优化
+
 ~~~
 
 >安装依赖
 ~~~bash
-yarn add -D vue-loader babel-loader file-loader css-loader style-loader url-loader mini-css-extract-plugin  clean-webpack-plugin webpack-build-notifier html-webpack-plugin optimize-css-assets-webpack-plugin purgecss-webpack-plugin
+yarn add -D webpack webpack-cli webpack-dev-server vue-loader babel-loader file-loader css-loader style-loader url-loader mini-css-extract-plugin  clean-webpack-plugin webpack-build-notifier html-webpack-plugin optimize-css-assets-webpack-plugin purgecss-webpack-plugin webpack-spritesmith compression-webpack-plugin webpack-bundle-analyzer
 ~~~
+
+
 

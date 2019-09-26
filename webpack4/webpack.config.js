@@ -11,6 +11,11 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 // 去除css中未使用的代码
 const glob = require('glob');
 const PurifyCSSPlugin = require('purgecss-webpack-plugin');
+// bundle分析
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// 压缩代码
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const zopfli = require('@gfx/zopfli');
 
 const resolve = dir => {
     return path.resolve(__dirname, dir);
@@ -19,13 +24,13 @@ const resolve = dir => {
 // 所有页面模板
 const pages = [
     {
-        title: 'index',
-        filename: 'index.html',
+        title: 'page one',
+        filename: 'index',
         chunkname: 'index'
     },
     {
-        title: 'hello',
-        filename: 'hello.html',
+        title: 'page two',
+        filename: 'hello',
         chunkname: 'hello'
     }
 ];
@@ -40,13 +45,22 @@ module.exports = (env, argv) => {
     // 生成html模板
     const HtmlTemplates = [];
     const OtherChunkname = ['runtime', 'chunk-vendors', 'chunk-commons', 'css-commons'];
+    const minify = {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true
+    };
     pages.forEach(n => {
         const { title, filename, chunkname } = n;
         HtmlTemplates.push(
             new HtmlWebpackPlugin({
                 title: title,
-                template: resolve('public/' + filename),
-                filename: filename,
+                template: resolve(`public/${filename}.html`),
+                filename: `${filename}.html`,
+                minify,
                 chunks: [chunkname, ...OtherChunkname]
             })
         );
@@ -57,6 +71,8 @@ module.exports = (env, argv) => {
 
     if (isProduction) {
         const prodPlugins = [
+            // 清理项目
+            new CleanWebpackPlugin(),
             // 抽离css
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -69,7 +85,8 @@ module.exports = (env, argv) => {
             //去除 unused css, 要放在 MiniCssExtractPlugin 后面
             new PurifyCSSPlugin({
                 // 扫描内容路径
-                paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true })
+                paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true }),
+                // 设置白名单
                 // whitelistPatterns: function collectWhitelistPatterns() {
                 //     // do something to collect the whitelist
                 //     return [/^pure-/];
@@ -91,6 +108,19 @@ module.exports = (env, argv) => {
                 },
                 canPrint: true
             }),
+            // 根据算法压缩代码
+            new CompressionWebpackPlugin({
+                deleteOriginalAssets: false,
+                test: /\.(js|css|html|woff|ttf|png|jpe?g)$/,
+                compressionOptions: {
+                    numiterations: 15
+                },
+                threshold: 10240,
+                minRatio: 0.8,
+                algorithm(input, compressionOptions, callback) {
+                    return zopfli.gzip(input, compressionOptions, callback);
+                }
+            }),
             // 构建提醒
             new WebpackBuildNotifierPlugin({
                 title: 'project build',
@@ -99,9 +129,12 @@ module.exports = (env, argv) => {
                 messageFormatter: function() {
                     return 'build completely';
                 }
+            }),
+            // 生成静态报告
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static'
             })
         ];
-
         plugins = [...prodPlugins];
     }
 
@@ -136,7 +169,7 @@ module.exports = (env, argv) => {
                     test: /\.css$/,
                     use: [
                         {
-                            loader: isProduction ?  MiniCssExtractPlugin.loader : 'style-loader',
+                            loader: isProduction ? MiniCssExtractPlugin.loader : 'style-loader'
                         },
                         {
                             loader: 'css-loader',
@@ -168,7 +201,7 @@ module.exports = (env, argv) => {
                                 // 输出文件夹
                                 // outputPath: 'images',
                                 // 最简短写法，可以指定输出文件夹
-                                name: 'images/[sha512:contenthash:base64:8].[ext]',
+                                name: 'images/[sha512:contenthash:base64:8].[ext]'
                                 // postTransformPublicPath: p => `__webpack_public_path__ + ${p}`
                             }
                         }
@@ -189,8 +222,6 @@ module.exports = (env, argv) => {
             extensions: ['.css', '.js', '.less']
         },
         plugins: [
-            // 清理项目
-            new CleanWebpackPlugin(),
             // 生成模板
             ...HtmlTemplates,
             // prod
