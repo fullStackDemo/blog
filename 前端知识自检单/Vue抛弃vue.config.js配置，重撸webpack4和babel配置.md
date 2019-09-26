@@ -29,6 +29,7 @@ css-loader 解释 @import and url() 比如 import/require() 然后解析他们
 file-loader
 file-loader 解析文件中的 import/require() 成一个URL 然后输出到输出文件中
 
+vue-style-loader
 style-loader
 dev环境，把css注入到DOM
 
@@ -78,6 +79,7 @@ yarn add -D webpack webpack-cli webpack-dev-server vue-loader babel-loader file-
 @babel/core
 @babel/preset-env
 @babel/cli
+@babel/polyfill
 // runtime
 @babel/runtime
 @babel/plugin-transform-runtime
@@ -272,7 +274,7 @@ module.exports = (env, argv) => {
         // 构建完成提醒
         plugins.push(
             new WebpackBuildNotifierPlugin({
-                title: 'intranet_platform build',
+                title: 'project build',
                 suppressSuccess: true,
                 suppressWarning: true,
                 messageFormatter: function() {
@@ -515,4 +517,13 @@ module.exports = (env, argv) => {
         }
     };
 };
+~~~
+
+> package.json
+
+~~~js
+scripts:{
+    "dev": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+}
 ~~~
