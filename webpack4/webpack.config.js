@@ -16,6 +16,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // 压缩代码
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const zopfli = require('@gfx/zopfli');
+const webpack = require('webpack');
 
 const resolve = dir => {
     return path.resolve(__dirname, dir);
@@ -73,6 +74,16 @@ module.exports = (env, argv) => {
         const prodPlugins = [
             // 清理项目
             new CleanWebpackPlugin(),
+            // 加载静态构建包
+            // new webpack.DllReferencePlugin({
+            //     // 与DllPlugin中的那个context保持一致
+            //     context: __dirname,
+            //     /**
+            //     下面这个地址对应webpack.dll.config.js中生成的那个json文件的路径
+            //     这样webpack打包时，会检测此文件中的映射，不会把存在映射的包打包进bundle.js
+            //     **/
+            //     manifest: resolve('dist/vendor-manifest.json'),
+            // }),
             // 抽离css
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -85,7 +96,7 @@ module.exports = (env, argv) => {
             //去除 unused css, 要放在 MiniCssExtractPlugin 后面
             new PurifyCSSPlugin({
                 // 扫描内容路径
-                paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true }),
+                paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true })
                 // 设置白名单
                 // whitelistPatterns: function collectWhitelistPatterns() {
                 //     // do something to collect the whitelist
@@ -246,7 +257,6 @@ module.exports = (env, argv) => {
                         test: /\.js$/,
                         chunks: 'initial',
                         minChunks: 2, //两个共享以及以上都提取,
-                        minSize: 0,
                         priority: -20, //优先级
                         reuseExistingChunk: true
                     },
@@ -254,7 +264,6 @@ module.exports = (env, argv) => {
                         name: 'css-commons',
                         test: /\.css$/,
                         minChunks: 2,
-                        minSize: 0,
                         priority: -30,
                         chunks: 'initial',
                         reuseExistingChunk: true

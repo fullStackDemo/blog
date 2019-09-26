@@ -5,7 +5,8 @@
     "scripts": {
         "dev": "webpack-dev-server --mode development",
         "build": "bash ./rm.sh && cross-env NAMESPACE=prod webpack --mode production",
-        "start": "node server.js"
+        "start": "node server.js",
+        "static": "webpack --config webpack.dll.config.js"
     },
     "dependencies": {
         "lodash": "^4.17.11"

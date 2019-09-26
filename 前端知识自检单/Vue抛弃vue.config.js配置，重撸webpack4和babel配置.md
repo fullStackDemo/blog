@@ -467,7 +467,8 @@ module.exports = (env, argv) => {
                                 limit: 10 * 1024, // 表示小于10kb的图片转为base64,大于10kb的是路径
                                 outputPath: 'images', //定义输出的图片文件夹名字
                                 publicPath: '../images', //css中的路径
-                                name: '[name].[contenthash:8].[ext]'
+                                // name: '[name].[contenthash:8].[ext]'
+                                name: '[sha512:contenthash:base64:8].[ext]'
                             }
                         }
                     ]
@@ -504,7 +505,7 @@ module.exports = (env, argv) => {
                         test: /\.less$/,
                         minChunks: 2,
                         minSize: 0,
-                        priority: -20,
+                        priority: -30,
                         chunks: 'initial',
                         reuseExistingChunk: true
                     }
@@ -527,3 +528,6 @@ scripts:{
     "build": "webpack --mode production",
 }
 ~~~
+
+![1569495769879](assets/1569495769879.png)
+
