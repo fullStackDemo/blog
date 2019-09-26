@@ -1,5 +1,7 @@
 
+@import "./common.css";
 body{
   margin: 0;
   padding: 0;
+  background: url("../assets/1.jpg") no-repeat left center;
 }

@@ -1,9 +1,13 @@
 import _ from 'lodash';
+import '@css/index';
+import image1 from './assets/1.jpg';
 
 function component() {
   let element = document.createElement('div');
-  element.innerHTML = _.join(['Hello', 'World']);
-
+  let image = document.createElement('img');
+  element.innerHTML = _.join(['Hello', 'World888']);
+  image.src = image1;
+  element.append(image);
   return element;
 }
 
