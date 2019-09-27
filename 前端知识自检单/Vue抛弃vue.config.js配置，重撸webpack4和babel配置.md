@@ -66,6 +66,9 @@ compression-webpack-plugin
 webpack-bundle-analyzer
 生成bundle后分析报告，方便优化
 
+progress-bar-webpack-plugin
+显示构建进度条
+
 ~~~
 
 >安装依赖
