@@ -21,8 +21,8 @@ import java.util.List;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-@Api2Doc(name = "Mongodb操作用户")
-@Controller
+//@Api2Doc(name = "Mongodb操作用户")
+//@Controller
 public class MongoDBTestController {
     
     @Autowired

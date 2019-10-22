@@ -6,7 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +20,16 @@ import java.util.Properties;
 import com.zz.config.ConfigConstants;
 
 
-@EnableApi2Doc
+//@EnableApi2Doc
 @RestController
-@SpringBootApplication
+//@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @EnableConfigurationProperties(StorageProperties.class)
 @ComponentScan("com.zz.*")
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-	@RequestMapping("/")
+    @RequestMapping("/")
     String home() {
         log.info("99999");
         log.info(ConfigConstants.fileDir);
