@@ -70,48 +70,11 @@ module.exports = {
         },
         proxy: {
             '/api/v1': {
-                // target: 'http://192.168.2.111:18080',
-                // target: 'http://62.234.133.41',
-                target: 'http://111.200.244.194:18080',
+                target: 'http://127.0.0.1:8000',
                 changeOrigin: true,
                 router: {
-                    // '/shareIndex': 'http://111.200.244.194:18080',
-                    // '/shareIndex': 'http://192.168.2.111:18080',
-                    // '/heartVoice': 'http://192.168.66.209:8080',
-                    // '/heartVoice': 'http://192.168.2.111:18080',
-                    // '/banner': 'http://192.168.2.111:18080',
-                    // '/market': 'http://192.168.2.111:18080',
-                    // '/tzgg': 'http://192.168.2.111:18080',
+                    // '/tzgg': 'http://127.0.0.1:8000',
                 }
-            },
-            // 线上服务
-            '/uc/': {
-                target: 'http://222.73.83.123:7080',
-                changeOrigin: true
-            },
-            // 通讯录相关
-            '/contact': {
-                target: 'http://111.200.244.194:18080',
-                // target: 'http://192.168.2.111:18080',
-                changeOrigin: true
-            },
-            // 解决 TLS 问题
-            '/media': {
-                target: 'https://static-legacy.dingtalk.com',
-                changeOrigin: true
-            },
-            // pdf 预览
-            '/pdf': {
-                // pathRewrite: {
-                //     '/doc': '/'
-                // },
-                target: 'http://62.234.133.41:6002',
-                changeOrigin: true
-            },
-            // 文件服务
-            '/group1': {
-                target: 'http://111.200.244.194:18888',
-                changeOrigin: true
             },
 
         }

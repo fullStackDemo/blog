@@ -269,7 +269,7 @@ module.exports = (env, argv) => {
             },
             proxy: {
                 '/api': {
-                    target: 'http://111.200.244.194:18080',
+                    target: 'http://127.0.0.1:18080',
                     changeOrigin: true
                 }
             }

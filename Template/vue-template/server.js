@@ -16,7 +16,6 @@ var params = {
     middleware: [
         proxy('/api', {
             // target: 'http://localhost:3000',
-            target: 'http://62.234.133.41',
             changeOrigin: true
         }),
         compression({
