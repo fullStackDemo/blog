@@ -1,1 +1,16 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="shortcut icon" href="./favicon.ico"><title>Index</title><link rel="shortcut icon" href="/favicon.ico?12abc4dfa3c87932a6ff"><link href="/css/index.12abc4df.css?12abc4dfa3c87932a6ff" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script src="/js/runtime.12abc4df.js?12abc4dfa3c87932a6ff"></script><script src="/js/chunk-vendors.12abc4df.js?12abc4dfa3c87932a6ff"></script><script src="/js/chunk-commons.12abc4df.js?12abc4dfa3c87932a6ff"></script><script src="/js/index.12abc4df.js?12abc4dfa3c87932a6ff"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no"><title>Index</title><script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script><script src="https://hammerjs.github.io/dist/hammer.js"></script><script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script><link rel="shortcut icon" href="./favicon.ico?089ed6356fea4ee4d51e"><link href="./css/index.089ed635.css?089ed6356fea4ee4d51e" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script>window.onload = function () {
+            window.viewportUnitsBuggyfill.init({
+                hacks: window.viewportUnitsBuggyfillHacks
+            });
+            // 代码错误监控
+            Raven.config('https://f5fe3d6e599849bfa1d1f0c26d1c3213@sentry.io/1729437').install();
+        };
+        //在手机端进行查看控制台相关资源
+        (function () {
+            //推荐 CDN 加载
+            const src = 'https://cdn.jsdelivr.net/npm/eruda@1.5.8/eruda.min.js';
+            // var src = 'node_modules/eruda/eruda.min.js';
+            if (!/debug=true/.test(window.location) && localStorage.getItem('debug') != 'true') return;
+            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+        })();</script><script src="./js/runtime.089ed635.js?089ed6356fea4ee4d51e"></script><script src="./js/chunk-vendors.089ed635.js?089ed6356fea4ee4d51e"></script><script src="./js/chunk-commons.089ed635.js?089ed6356fea4ee4d51e"></script><script src="./js/index.089ed635.js?089ed6356fea4ee4d51e"></script></body></html>

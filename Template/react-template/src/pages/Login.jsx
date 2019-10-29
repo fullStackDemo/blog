@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import dataService from '../dataService';
 import '@less/login';
-import getData from '@util/getData';
+import FetchData from '@c/FetchData';
 
 class Login extends Component {
     constructor(props) {
@@ -15,7 +15,6 @@ class Login extends Component {
                     <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
                         Go66888899999login
                     </a>
-                    <Svg name="88"></Svg>
                 </header>
             </div>
         );
@@ -49,4 +48,25 @@ class Svg extends Component {
     }
 }
 
-export default Login
+export default FetchData({
+    id: 'Login',
+    // 是否拦截请求
+    stop: false,
+    component: Login,
+    // 在 dataService定义好的名字
+    requestApi: 'getCaptcha',
+    // 请求数据
+    requestOption: {
+        code: 11
+    },
+    // 成功的回调处理
+    success: (res, state, props) => {
+        state = merge(state, res);
+        return state;
+    },
+    // 失败的回调处理
+    fail: (res, state, props) => {
+        state = merge(state, res);
+        return state;
+    }
+});

@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{203:function(e,n,a){"use strict";a.r(n);var t=a(1),o=a.n(t);n.default=function(e){return o.a.createElement("div",{className:props2},"page: about")}}}]);

@@ -45,8 +45,7 @@ const post = (url, params) => {
             body: formData
         }
     ).then(res => res.json());
-}
-
+};
 
 
 // 获取验证码
@@ -58,7 +57,6 @@ service.getCaptcha = params => {
 service.addBookmark = params => {
     return post('v1/bookmark/add', params);
 };
-
 
 export default service;
 

@@ -3,14 +3,36 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="shortcut icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" /> -->
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="https://cdn.ravenjs.com/3.26.4/raven.min.js" crossorigin="anonymous"></script>
+    <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+    <script src="//g.alicdn.com/fdilab/lib3rd/viewport-units-buggyfill/0.6.2/??viewport-units-buggyfill.hacks.min.js,viewport-units-buggyfill.min.js"></script>
 </head>
 
 <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <!-- 加入viewport-units-buggyfill配置兼容低配机型 -->
+    <script>
+        window.onload = function () {
+            window.viewportUnitsBuggyfill.init({
+                hacks: window.viewportUnitsBuggyfillHacks
+            });
+            // 代码错误监控
+            Raven.config('https://f5fe3d6e599849bfa1d1f0c26d1c3213@sentry.io/1729437').install();
+        };
+        //在手机端进行查看控制台相关资源
+        (function () {
+            //推荐 CDN 加载
+            const src = 'https://cdn.jsdelivr.net/npm/eruda@1.5.8/eruda.min.js';
+            // var src = 'node_modules/eruda/eruda.min.js';
+            if (!/debug=true/.test(window.location) && localStorage.getItem('debug') != 'true') return;
+            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+        })();
+    </script>
 </body>
 
 </html>
