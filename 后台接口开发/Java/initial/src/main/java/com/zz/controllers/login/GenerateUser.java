@@ -19,8 +19,12 @@ public class GenerateUser {
 
     @GetMapping("/md5")
     @ResponseBody
-    public String generate(@RequestParam String username, @RequestParam String password) throws NoSuchAlgorithmException, JsonProcessingException {
+    public Response generate(@RequestParam String username, @RequestParam String password) throws NoSuchAlgorithmException {
         String md5 = generateMd5(username, password);
-        return new ObjectMapper().writeValueAsString(new Response<String>(0, "success", md5));
+        Response response = new Response();
+        response.setData(md5);
+        response.setCode(0);
+        response.setMsg("success");
+        return response;
     }
 }

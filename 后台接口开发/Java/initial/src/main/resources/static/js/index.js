@@ -2,18 +2,28 @@
 var uploadBtn = document.querySelector('.el-upload');
 
 uploadBtn.onchange = function (e) {
-    var file = this.files[0];
+    let files = this.files;
     console.log(this.files);
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("post", "/upload", true);
     // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            console.log(this.responseText)
+            console.log(JSON.parse(this.responseText))
         }
     };
-    var formData = new FormData();
-    formData.append("file", file);
+
+    const formData = new FormData();
+
+    // 多个file 同时上传
+    if(files && files.length){
+        for (let i=0;i<files.length;i++) {
+            formData.append("file", files[i])
+        }
+    }
+
+    console.log(formData);
+
     xhr.send(formData);
 };

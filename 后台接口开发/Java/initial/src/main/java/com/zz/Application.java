@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
@@ -24,15 +26,11 @@ import com.zz.config.ConfigConstants;
 @ComponentScan("com.zz.*")
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
+    
 
-    @Value("${web.uploadDir}")
-    String demo;
-
-    @RequestMapping("/")
+    @GetMapping("/")
     String home() {
-        log.info("99999" + demo);
-        log.info(ConfigConstants.fileDir);
-        return "redirect:/static/index.html";
+        return "index";
     }
 
 

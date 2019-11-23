@@ -11,8 +11,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Api2Doc(name = "Mysql操作")
-@Controller
-@RequestMapping(path = "/mysql")
+//@Controller
+//@RequestMapping(path = "/mysql")
 public class MysqlTestController {
     
     @Autowired

@@ -1,59 +1,45 @@
 package com.zz.controllers.fileUpload;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zz.Application;
-import com.zz.model.ReturnResponse;
-import com.zz.utils.HttpUtils;
+import com.zz.model.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.UUID;
 
 import static com.zz.config.ConfigConstants.getFileDir;
 
 @RestController
 public class UploadController {
-
+    
     private static final Logger log = LoggerFactory.getLogger(Application.class);
-
-//    @Value("${uploadDir}")
-    private String fileDir = getFileDir();
-
+    
+    
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
-    public String upload(@RequestParam("file") MultipartFile file) {
-        System.out.println(getFileDir());
-        HttpServletRequest request = HttpUtils.getRequest();
-        // 提取文件名
-        String fileName = file.getOriginalFilename();
-        // 生成文件夹
-        File outFile = new File(fileDir);
-        if (!outFile.exists()) {
-            outFile.mkdir();
-            log.info(fileDir + " is not exists");
-        } else {
-            log.info(fileDir + " is exists");
-        }
-
-        try (InputStream inputStream = file.getInputStream()) {
-            OutputStream outputStream = new FileOutputStream(fileDir + File.separator + fileName);
-            byte[] buffer = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, len);
+    public Response upload(@RequestParam("file") MultipartFile[] files, Response response) {
+        log.info("上传多个文件");
+        StringBuilder builder = new StringBuilder();
+        try {
+            for (int i = 0; i < files.length; i++) {
+                // old file name
+                String fileName = files[i].getOriginalFilename();
+                // new filename
+                String generateFileName = UUID.randomUUID().toString().replaceAll("-", "") + fileName.substring(fileName.lastIndexOf("."));
+                // store filename
+                builder.append(generateFileName + (i < files.length - 1 ? "||" : ""));
+                // generate file to disk
+                files[i].transferTo(new File(getFileDir() + generateFileName));
             }
-            return new ObjectMapper().writeValueAsString(new ReturnResponse<String>(0, "SUCCESS", fileDir + File.separator + fileName));
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println(file);
-        return "success";
+        response.setMsg("success");
+        response.setData(builder.toString());
+        return response;
     }
 }

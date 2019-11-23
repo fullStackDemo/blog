@@ -1,16 +1,12 @@
 package com.zz.config;
 
-
-import org.springframework.beans.factory.annotation.Value;
-
 public class ConfigConstants {
 
     public static String fileDir;
-
-
-    @Value("@{uploadDir}")
+    
     public static String getFileDir() {
-        fileDir = System.getProperty("user.dir") + "\\initial\\src\\main\\file";
+//        fileDir = System.getProperty("user.dir") + "/initial/src/main/resources/file/";
+        fileDir = "/Users/wangzhao/projects/blog/uploadFile/";
         return fileDir;
     }
 }
