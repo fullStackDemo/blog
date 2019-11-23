@@ -1,0 +1,29 @@
+# mysql
+spring:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  profiles:
+    active: dev
+
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:/Users/wangzhao/projects/blog/uploadFile/,classpath:/static/
+
+
+server:
+  use-forward-headers: true
+  tomcat:
+    remote-ip-header: X-Real-IP
+    protocol-header: X-Forwarded-Proto
+
+

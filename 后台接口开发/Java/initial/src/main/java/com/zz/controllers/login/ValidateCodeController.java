@@ -21,7 +21,6 @@ import java.util.Map;
 @RequestMapping("/api/v1/user")
 public class ValidateCodeController {
     
-    @Value("${API_VERSION}")
     String api_version;
     
     String getCaptchaBase64_route = api_version + "/user/getCaptchaBase64";
