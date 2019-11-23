@@ -26,4 +26,8 @@ server:
     remote-ip-header: X-Real-IP
     protocol-header: X-Forwarded-Proto
 
+#自定义
+my:
+  tokenURL: "55555"
+  authURL: "88888"
 
