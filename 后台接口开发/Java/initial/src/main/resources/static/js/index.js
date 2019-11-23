@@ -14,7 +14,7 @@ uploadBtn.onchange = function (e) {
             const {data} = JSON.parse(this.responseText);
             if(!data) return;
             const imageList = data.slice(0);
-            let imageStr;
+            let imageStr = '';
             imageList.forEach(img=>{
                 imageStr += `<img src="${img}" />`;
             });
