@@ -1,6 +1,5 @@
 # mysql
 spring:
-
   jpa:
     show-sql: true
     hibernate:
@@ -14,11 +13,11 @@ spring:
   profiles:
     active: dev
 
+  # 静态资源配置
   mvc:
     static-path-pattern: /**
   resources:
-    static-locations: file:/Users/wangzhao/projects/blog/uploadFile/,classpath:/static/
-
+    static-locations: file:/Users/wangzhao/projects/blog/uploadFile/,classpath:/static/,classpath:/resources/,classpath:/file/,classpath:/templates/
 
 server:
   use-forward-headers: true
@@ -30,4 +29,5 @@ server:
 my:
   tokenURL: "55555"
   authURL: "88888"
+
 

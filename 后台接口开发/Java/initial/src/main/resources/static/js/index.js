@@ -10,7 +10,15 @@ uploadBtn.onchange = function (e) {
     // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            console.log(JSON.parse(this.responseText))
+            console.log(JSON.parse(this.responseText));
+            const {data} = JSON.parse(this.responseText);
+            if(!data) return;
+            const imageList = data.slice(0);
+            let imageStr;
+            imageList.forEach(img=>{
+                imageStr += `<img src="${img}" />`;
+            });
+            document.getElementById("result").innerHTML = imageStr;
         }
     };
 
