@@ -31,7 +31,7 @@ public class UploadController {
                 // new filename
                 String generateFileName = UUID.randomUUID().toString().replaceAll("-", "") + fileName.substring(fileName.lastIndexOf("."));
                 // store filename
-                builder.append(generateFileName + (i < files.length - 1 ? "||" : ""));
+                builder.append(generateFileName + (i ==  files.length - 1 ? "" : "||"));
                 // generate file to disk
                 files[i].transferTo(new File(getFileDir() + generateFileName));
             }
