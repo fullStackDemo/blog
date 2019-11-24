@@ -20,7 +20,6 @@ import java.util.Properties;
 @RestController
 @SpringBootApplication
 @ComponentScan("com.zz.*")
-@Configuration
 public class Application {
     
     private static final Logger log = LoggerFactory.getLogger(Application.class);
@@ -36,8 +35,6 @@ public class Application {
     }
     
     public static void main(String[] args) {
-        Properties properties = System.getProperties();
-        System.out.println("======== " + properties.get("user.dir"));
         SpringApplication.run(Application.class, args);
     }
 }
