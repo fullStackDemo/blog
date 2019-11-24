@@ -27,8 +27,8 @@ public class UploadController {
     
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     
-    @Value("${server.port}")
-    private String port;
+//    @Value("${server.port}")
+    private String port = "8080";
     
     public String getIp() {
         InetAddress localhost = null;
