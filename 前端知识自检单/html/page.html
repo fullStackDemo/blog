@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+
+
+	<script>
+		const currentPage = 1; //当前页码
+		const totalPage = 8; //总页码
+		const displayPage = 5; //固定中间显示页码
+		const arr = []; //存放结果
+
+
+		if (totalPage <= displayPage + 2) {
+			// 两边固定一个
+			for (let i = 0; i < totalPage; i++) {
+				arr.push(i + 1)
+			}
+		} else {
+			// 计算如果当前页在中间位置的时候，连续的数字排列
+			// displayPage = 5的时候，currentPage在中间，往后两个数字就是中间数字系列的右边界，但是要保证这个不能查过总页数
+			const boundary_distance = Math.floor(displayPage / 2);
+			// 完全安全范围
+			if (totalPage - currentPage >= boundary_distance && currentPage - boundary_distance >= 0) {
+				if (currentPage - boundary_distance > 0) {
+					arr.push(1)
+					arr.push('...');
+				}
+				[-2, -1, 0, 1, 2].map(m => {
+					if (m + currentPage > 0) arr.push(m + currentPage)
+				});
+				if (totalPage - currentPage > boundary_distance) {
+					arr.push('...');
+					arr.push(totalPage);
+				}
+			}else if(currentPage - boundary_distance < 0){
+				
+			}
+		}
+		console.log(arr)
+	</script>
+</body>
+
+</html>
