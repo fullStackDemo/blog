@@ -1,14 +1,14 @@
 # mysql
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test
+    url: jdbc:mysql://104.224.178.5:3306/admin
     username: admin
     password: master2011
+
   data:
     mongodb:
       uri: mongodb://test:master2011@104.224.178.5:27017/test
+
+
 server:
-  port: 8080
-
-
+  port: 80

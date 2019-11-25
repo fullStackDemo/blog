@@ -1,7 +1,5 @@
 package com.zz.controllers.login;
 
-import org.apache.commons.io.FileUtils;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

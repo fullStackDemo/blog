@@ -1,10 +1,8 @@
 package com.zz.service.impl;
 
-import com.zz.service.StudentService;
 import com.zz.entity.Student;
 import com.zz.query.StudentQuery;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.zz.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
