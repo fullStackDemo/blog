@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zz.service.StudentService">
+
+    <sql id="base">
+        a.id AS "id",
+        a.name AS "name",
+        a.age AS "age"
+    </sql>
+
+    <!-- 查询所有user -->
+    <select id="findByName" resultType="com.zz.entity.Student">
+        select
+        <include refid="base"/>
+        from user a
+        WHERE a.name = #{name}
+    </select>
+
+    <!-- 查询所有user -->
+    <select id="findAll" resultType="com.zz.entity.Student">
+        select
+        <include refid="base"/>
+        from user a
+    </select>
+
+    <insert id="insert">
+        INSERT INTO student(
+        name,
+        age
+        ) VALUES (
+        #{name},
+        #{age}
+        )
+    </insert>
+
+
+</mapper>
