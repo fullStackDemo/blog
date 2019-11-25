@@ -2,6 +2,7 @@ package com.zz;
 
 import com.terran4j.commons.api2doc.config.EnableApi2Doc;
 import com.zz.config.MyConfiguration;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 @ComponentScan("com.zz.*")
 @Configuration
+@MapperScan("com.zz.mapper")
 public class Application {
     
     private static final Logger log = LoggerFactory.getLogger(Application.class);

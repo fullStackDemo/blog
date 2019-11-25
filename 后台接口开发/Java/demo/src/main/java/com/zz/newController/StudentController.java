@@ -1,5 +1,6 @@
 package com.zz.newController;
 
+import com.zz.mapper.StudentMapper;
 import com.zz.model.Response;
 import com.zz.query.StudentQuery;
 import com.zz.service.StudentService;
@@ -21,7 +22,7 @@ public class StudentController {
         StudentQuery query = new StudentQuery();
         query.setName(name);
         query.setAge(age);
-        studentService.insert(query);
+        this.studentService.insert(query);
         response.setData(0);
         response.setMsg("insert success");
         return response;

@@ -15,12 +15,10 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: file:/Users/wangzhao/projects/blog/uploadFile/,classpath:/static/,classpath:/resources/,classpath:/file/,classpath:/templates/
-
-#mybatis:
-#  mapperLocations: classpath*:/mapper/*.xml
 #自定义
 my:
   tokenURL: "55555"
   authURL: "88888"
-
-
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.zz.entity
