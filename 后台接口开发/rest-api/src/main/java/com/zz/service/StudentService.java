@@ -10,7 +10,7 @@ public interface StudentService {
     int insert(StudentQuery query);
     
     // findAll
-    List<Student> findAll(String name);
+    List<Student> findAll();
     
     // findByName
     Student findByName(String name);

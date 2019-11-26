@@ -23,8 +23,8 @@ public class StudentServiceImpl implements StudentService {
     }
     
     @Override
-    public List<Student> findAll(String name) {
-        return null;
+    public List<Student> findAll() {
+        return studentMapper.findAll();
     }
     
     @Override
