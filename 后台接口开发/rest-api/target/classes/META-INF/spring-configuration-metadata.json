@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "my",
+      "type": "com.zz.config.MyConfiguration",
+      "sourceType": "com.zz.config.MyConfiguration"
+    },
+    {
+      "name": "spring.data",
+      "type": "com.zz.controllers.ConfigBeanProp",
+      "sourceType": "com.zz.controllers.ConfigBeanProp"
+    }
+  ],
+  "properties": [
+    {
+      "name": "my.auth-u-r-l",
+      "type": "java.lang.String",
+      "sourceType": "com.zz.config.MyConfiguration"
+    },
+    {
+      "name": "my.token-u-r-l",
+      "type": "java.lang.String",
+      "sourceType": "com.zz.config.MyConfiguration"
+    },
+    {
+      "name": "spring.data.name",
+      "type": "java.lang.String",
+      "sourceType": "com.zz.controllers.ConfigBeanProp"
+    }
+  ],
+  "hints": []
+}

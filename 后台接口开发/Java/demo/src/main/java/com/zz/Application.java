@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @EnableApi2Doc
 @RestController
-@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @ComponentScan("com.zz.*")
 @Configuration
 @MapperScan("com.zz.mapper")

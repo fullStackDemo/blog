@@ -1,0 +1,14 @@
+# mysql
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: admin
+    password: master2011
+#  data:
+#    mongodb:
+#      uri: mongodb://test:master2011@104.224.178.5:27017/test
+server:
+  port: 8080
+
+

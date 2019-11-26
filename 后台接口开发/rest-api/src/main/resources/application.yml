@@ -1,0 +1,24 @@
+# mysql
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  profiles:
+    active: dev
+  # 静态资源配置
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:/Users/wangzhao/projects/blog/uploadFile/,classpath:/static/,classpath:/resources/,classpath:/file/,classpath:/templates/
+#自定义
+my:
+  tokenURL: "55555"
+  authURL: "88888"
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.zz.entity

@@ -7,17 +7,19 @@ import com.zz.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
+@Service("StudentService")
 public class StudentServiceImpl implements StudentService {
     
     @Autowired
     private StudentMapper studentMapper;
     
     @Override
-    public void insert(StudentQuery query) {
-        studentMapper.insert(query);
+    @Transactional
+    public int insert(StudentQuery query) {
+        return studentMapper.insert(query);
     }
     
     @Override
