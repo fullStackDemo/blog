@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @SpringBootApplication
 @ComponentScan("com.zz.*")
-//@Configuration
 @MapperScan("com.zz.mapper")
 public class Application {
-    
-
     
     @Autowired
     private MyConfiguration myConfiguration;
