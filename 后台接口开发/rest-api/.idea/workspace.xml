@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="107a5b09-dd84-4096-907f-48f85aeab134" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/query/UserQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/dataService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/utils/JWTUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/mapper/StudentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/mapper/StudentMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/newController/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/newController/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/regist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/regist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/regist.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/regist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,9 +21,9 @@
         <option value="HTML File" />
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="mybatisMapper" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -73,11 +64,11 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="fileTemplates" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -112,7 +103,7 @@
       <updated>1574896937372</updated>
       <workItem from="1574896938745" duration="544000" />
       <workItem from="1574897528489" duration="10170000" />
-      <workItem from="1575119542027" duration="2332000" />
+      <workItem from="1575119542027" duration="3841000" />
     </task>
     <servers />
   </component>
