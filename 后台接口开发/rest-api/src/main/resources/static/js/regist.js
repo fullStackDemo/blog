@@ -11,15 +11,22 @@ submitBtn.onclick = () => {
 	const confirmPassword = passwordConfirmInput.value;
 
 	//verify
-	if (!userName){
+	if (!userName) {
 		weui.topTips('用户姓名不能为空');
 		return;
-	}else if (!password){
+	} else if (!password) {
 		weui.topTips('用户密码不能为空');
 		return;
-	}else if (confirmPassword != password){
+	} else if (confirmPassword != password) {
 		weui.topTips('前后密码不一致，请重试');
 		return;
 	}
 
+	//注册
+	dataService.addUser({
+		userName,
+		password,
+	}).then(res => {
+
+	})
 };

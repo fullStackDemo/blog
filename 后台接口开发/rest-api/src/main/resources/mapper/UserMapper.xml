@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zz.mapper.UserMapper">
+
+    <sql id="base">
+        a.user_id AS userId,
+        a.user_name AS userName
+    </sql>
+
+    <!-- 查询所有user -->
+    <select id="findAllUser" resultType="com.zz.entity.User">
+        select
+        <include refid="base" />
+        from user a
+    </select>
+
+    <!-- 查询user -->
+    <select id="findUserById" resultType="com.zz.entity.User">
+        select
+        <include refid="base"/>
+        from user a
+        where user_id = #{userId}
+    </select>
+
+    <select id="findUserByName" resultType="com.zz.entity.User">
+        select
+        <include refid="base"/>
+        from user a
+        where user_name = #{userName}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO user(
+        user_name,
+        password
+        ) VALUES (
+        #{userName},
+        #{password}
+        )
+    </insert>
+
+
+</mapper>
