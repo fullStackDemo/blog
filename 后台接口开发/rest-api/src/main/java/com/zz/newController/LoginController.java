@@ -40,7 +40,9 @@ public class LoginController {
         String message = "";
         
         // 判断用户是否已经存在
-        User existUser = this.userService.findUserByName(query);
+        UserQuery findUserQuery = new UserQuery();
+        findUserQuery.setUserName(userName);
+        User existUser = this.userService.findUserByName(findUserQuery);
         if (existUser == null) {
             
             // 插入用户
@@ -55,7 +57,7 @@ public class LoginController {
             
             // 插入用户成功后返回用户信息
             if (result == 1) {
-                userData = this.userService.findUserByName(query);
+                userData = this.userService.findUserByName(findUserQuery);
                 
                 // 生成token
                 String token = null;
@@ -83,6 +85,56 @@ public class LoginController {
         
         response.setData(userData);
         response.setMsg(message);
+        return response;
+    }
+    
+    /**
+     * 登录
+     *
+     * @param userName 用户名
+     * @param password 密码
+     * @return {}
+     */
+    @PostMapping("/login")
+    public Response login(@RequestParam String userName, @RequestParam String password, Response response) {
+        
+        UserQuery query = new UserQuery();
+        query.setUserName(userName);
+        query.setPassword(password);
+        
+        User userData = new User();
+        
+        // 验证用户和密码
+        try {
+            // 判断用户是否已经存在
+            User existUser = this.userService.findUserByName(query);
+            
+            // 生成token
+            String token = null;
+            
+            // 当前用户
+            User currentUser = new User();
+            if (existUser != null) {
+                currentUser.setUserId(existUser.getUserId());
+                currentUser.setUserName(existUser.getUserName());
+                currentUser.setPassword(password);
+                token = JWTUtils.createToken(currentUser);
+                if (token != null) {
+                    existUser.setToken(token);
+                }
+                response.setMsg("success");
+                response.setData(existUser);
+            } else {
+                // 登录失败
+                response.setMsg("登录失败，请检查用户名和密码");
+                response.setData(null);
+            }
+            
+        } catch (Exception e) {
+            response.setMsg("login failed");
+            response.setData(null);
+            e.printStackTrace();
+        }
         return response;
     }
 }

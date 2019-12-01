@@ -39,4 +39,9 @@ window.dataService = {
 		return this.post('user/add', params);
 	},
 
+	// 登录
+	login(params) {
+		return this.post('user/login', params);
+	},
+
 };

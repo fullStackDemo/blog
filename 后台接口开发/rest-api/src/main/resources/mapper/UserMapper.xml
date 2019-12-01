@@ -12,26 +12,39 @@
         user_name
     </sql>
 
+    <sql id="base_condition">
+        <where>
+            <if test="userName!=null and userName!=''">
+                user_name=#{userName}
+            </if>
+            <if test="password!=null and password!=''">
+                and password=#{password}
+            </if>
+        </where>
+
+    </sql>
+
     <!-- 查询所有user -->
-    <select id="findAllUser" parameterType="com.zz.query.UserQuery" resultMap="BaseResult">
+    <select id="findAllUser" resultMap="BaseResult">
         select
         <include refid="base" />
         from user
     </select>
 
     <!-- 查询user -->
-    <select id="findUserById" parameterType="com.zz.query.UserQuery" resultMap="BaseResult">
+    <select id="findUserById" resultMap="BaseResult">
         select
         <include refid="base"/>
         from user
-        where user_id = #{userId}
+        where
+        user_id = #{userId}
     </select>
 
-    <select id="findUserByName" parameterType="com.zz.query.UserQuery" resultMap="BaseResult">
+    <select id="findUserByName" resultMap="BaseResult">
         select
         <include refid="base"/>
         from user
-        where user_name = #{userName}
+        <include refid="base_condition" />
     </select>
 
     <insert id="insert">
