@@ -1,15 +1,17 @@
 package com.zz.newController;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zz.common.BaseApplicationController;
 import com.zz.entity.User;
 import com.zz.model.Response;
 import com.zz.query.UserQuery;
 import com.zz.service.UserService;
 import com.zz.utils.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 
 /**
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
-public class LoginController {
+public class UserController {
     
     @Autowired
     private UserService userService;
@@ -102,8 +104,6 @@ public class LoginController {
         query.setUserName(userName);
         query.setPassword(password);
         
-        User userData = new User();
-        
         // 验证用户和密码
         try {
             // 判断用户是否已经存在
@@ -137,4 +137,29 @@ public class LoginController {
         }
         return response;
     }
+    
+    /**
+     * 获取个人信息
+     *
+     * @return {}
+     */
+    @GetMapping("/info")
+    public Response getUserInfo(Response response) {
+        // 获取token
+        String token = BaseApplicationController.getToken();
+        User userData2 = BaseApplicationController.getCurrentUser();
+        Map<String, Object> headerData = BaseApplicationController.getHeader();
+        if (token != null && !token.equals("null")) {
+            User userData = new User();
+            DecodedJWT claims = JWT.decode(token);
+            userData.setUserName(claims.getClaim("userName").asString());
+            userData.setUserId(claims.getClaim("userId").asLong());
+            response.setData(userData);
+            response.setMsg("success");
+        } else {
+            response.setMsg("token不存在");
+        }
+        return response;
+    }
+    
 }

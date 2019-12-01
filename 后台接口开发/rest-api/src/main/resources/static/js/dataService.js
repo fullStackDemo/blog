@@ -1,6 +1,6 @@
 const APIURL = '/';
-window.dataService = {
 
+window.dataService = {
 
 	//GET
 	get: (url, params = {}) => {
@@ -10,11 +10,15 @@ window.dataService = {
 		Object.keys(params).forEach(n => {
 			searchArr.push(`${n}=${params[n]}`);
 		});
+
 		const searchStr = searchArr.length ? '?' + searchArr.join('&') : '';
+		const token = utils.getCookie('token');
 
 		return fetch(APIURL + url + searchStr, {
 			method: 'GET',
-			headers: {}
+			headers: {
+				token
+			}
 		}).then(res => res.json());
 	},
 
@@ -27,9 +31,13 @@ window.dataService = {
 			formData.append(n, params[n]);
 		});
 
+		const token = utils.getCookie('token');
+
 		return fetch(APIURL + url, {
 			method: 'POST',
-			headers: {},
+			headers: {
+				token
+			},
 			body: formData
 		}).then(res => res.json());
 	},
@@ -42,6 +50,11 @@ window.dataService = {
 	// 登录
 	login(params) {
 		return this.post('user/login', params);
+	},
+
+	// 用户信息
+	getUserInfo(params) {
+		return this.get('user/info', params);
 	},
 
 };

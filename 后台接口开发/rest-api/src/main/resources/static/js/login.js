@@ -32,6 +32,7 @@ submitBtn.onclick = () => {
 		} else {
 			weui.topTips(`登录成功，欢迎 ${data.userName}`);
 			utils.setCookie('token', data.token);
+			location.href = location.origin + '/home.html';
 		}
 	})
 };

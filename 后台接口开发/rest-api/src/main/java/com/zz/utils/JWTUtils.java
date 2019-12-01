@@ -47,7 +47,7 @@ public class JWTUtils {
         
         // 创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", user.getUserId());
+        claims.put("userId", user.getUserId());
         claims.put("userName", user.getUserName());
         claims.put("password", user.getPassword());
         
