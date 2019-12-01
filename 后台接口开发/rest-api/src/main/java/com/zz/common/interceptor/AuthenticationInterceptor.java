@@ -102,6 +102,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return false;
             // throw new RuntimeException("非法访问！");
         }
+        
         return true;
     }
 }
