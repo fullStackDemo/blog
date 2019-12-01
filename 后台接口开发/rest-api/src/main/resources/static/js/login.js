@@ -19,16 +19,7 @@ submitBtn.onclick = () => {
 	}
 
 	// 加密密码
-	const salt = "1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol0p@!.";
-	const asciStr = userName + salt + password;
-	const asciArr = asciStr.split('');
-	const asciResult = [];
-	asciArr.forEach(n => {
-		asciResult.push(n.charCodeAt());
-	});
-	const ascireusltStr = asciResult.join(salt);
-	const newPassword = hex_md5(ascireusltStr);
-
+	const newPassword = utils.generateMd5(userName, password);
 
 	// 注册
 	dataService.login({
@@ -40,6 +31,7 @@ submitBtn.onclick = () => {
 			weui.topTips(msg);
 		} else {
 			weui.topTips(`登录成功，欢迎 ${data.userName}`);
+			utils.setCookie('token', data.token);
 		}
 	})
 };
