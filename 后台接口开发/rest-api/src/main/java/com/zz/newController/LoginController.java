@@ -4,6 +4,8 @@ import com.zz.entity.User;
 import com.zz.model.Response;
 import com.zz.query.UserQuery;
 import com.zz.service.UserService;
+import com.zz.utils.JWTUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +59,26 @@ public class LoginController {
             // 插入用户成功后返回用户信息
             if (result == 1) {
                 userData = this.userService.findUserByName(query);
+                
+                // 生成token
+                String token = null;
+                
+                User currentUser = new User();
+                if (userData != null) {
+                    currentUser.setUserId(userData.getUserId());
+                    currentUser.setUserName(userData.getUserName());
+                    currentUser.setPassword(password);
+                    token = JWTUtils.createToken(currentUser);
+                }
+                
+                if (token != null) {
+                    userData.setToken(token);
+                    
+                    // 获取token用户信息
+                    // Claims userDataFromToken = JWTUtils.parseToken(token, currentUser);
+                }
             }
+            
         } else {
             message = "用户已经存在";
         }

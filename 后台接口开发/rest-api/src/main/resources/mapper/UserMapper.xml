@@ -2,30 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zz.mapper.UserMapper">
 
+    <resultMap id="BaseResult" type="com.zz.entity.User">
+        <id column="user_id" property="userId"></id>
+        <id column="user_name" property="userName"></id>
+    </resultMap>
+
     <sql id="base">
-        a.user_id AS userId,
-        a.user_name AS userName
+        user_id,
+        user_name
     </sql>
 
     <!-- 查询所有user -->
-    <select id="findAllUser" resultType="com.zz.entity.User">
+    <select id="findAllUser" parameterType="com.zz.query.UserQuery" resultMap="BaseResult">
         select
         <include refid="base" />
-        from user a
+        from user
     </select>
 
     <!-- 查询user -->
-    <select id="findUserById" resultType="com.zz.entity.User">
+    <select id="findUserById" parameterType="com.zz.query.UserQuery" resultMap="BaseResult">
         select
         <include refid="base"/>
-        from user a
+        from user
         where user_id = #{userId}
     </select>
 
-    <select id="findUserByName" resultType="com.zz.entity.User">
+    <select id="findUserByName" parameterType="com.zz.query.UserQuery" resultMap="BaseResult">
         select
         <include refid="base"/>
-        from user a
+        from user
         where user_name = #{userName}
     </select>
 

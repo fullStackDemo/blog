@@ -4,6 +4,7 @@ import com.zz.entity.User;
 import com.zz.query.UserQuery;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     

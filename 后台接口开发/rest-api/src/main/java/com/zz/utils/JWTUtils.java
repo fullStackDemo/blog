@@ -90,7 +90,7 @@ public class JWTUtils {
      * @param token 加密后的token
      * @return claims
      */
-    private static Claims parseToken(String token, User user) {
+    public static Claims parseToken(String token, User user) {
         // 签名秘钥，和生成的签名的秘钥要保持一模一样
         SecretKey key = generalKey(SECRETKEY + user.getPassword());
         
