@@ -1,4 +1,4 @@
-package com.zz.common;
+package com.zz.common.base;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -47,5 +47,11 @@ public class BaseApplicationController {
             userData.setUserId(claims.getClaim("userId").asLong());
         }
         return userData;
+    }
+    
+    // 获取当前用户的id
+    public static long getCurrentUserId(){
+        User userData = BaseApplicationController.getCurrentUser();
+        return userData.getUserId();
     }
 }

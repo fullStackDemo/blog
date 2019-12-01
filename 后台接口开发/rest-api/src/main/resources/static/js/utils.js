@@ -10,8 +10,7 @@ window.utils = {
 			asciResult.push(n.charCodeAt());
 		});
 		const ascireusltStr = asciResult.join(salt);
-		const newPassword = hex_md5(ascireusltStr);
-		return newPassword;
+		return hex_md5(ascireusltStr);
 	},
 
 	// setCookie

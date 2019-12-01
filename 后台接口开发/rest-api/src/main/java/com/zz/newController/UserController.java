@@ -2,7 +2,8 @@ package com.zz.newController;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.zz.common.BaseApplicationController;
+import com.zz.common.annotation.PassToken;
+import com.zz.common.base.BaseApplicationController;
 import com.zz.entity.User;
 import com.zz.model.Response;
 import com.zz.query.UserQuery;
@@ -31,6 +32,7 @@ public class UserController {
      * @return response
      */
     @PostMapping("/add")
+    @PassToken
     public Response addUser(@RequestParam String userName, @RequestParam String password, Response response) {
         UserQuery query = new UserQuery();
         User userData = null;
@@ -98,6 +100,7 @@ public class UserController {
      * @return {}
      */
     @PostMapping("/login")
+    @PassToken
     public Response login(@RequestParam String userName, @RequestParam String password, Response response) {
         
         UserQuery query = new UserQuery();

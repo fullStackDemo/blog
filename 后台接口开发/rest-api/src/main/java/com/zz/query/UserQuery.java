@@ -8,6 +8,16 @@ public class UserQuery {
     
     private long userId;
     
+    private boolean showPassword;
+    
+    public boolean isShowPassword() {
+        return showPassword;
+    }
+    
+    public void setShowPassword(boolean showPassword) {
+        this.showPassword = showPassword;
+    }
+    
     public long getUserId() {
         return userId;
     }

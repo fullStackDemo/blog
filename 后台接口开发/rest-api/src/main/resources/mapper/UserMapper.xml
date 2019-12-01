@@ -10,6 +10,9 @@
     <sql id="base">
         user_id,
         user_name
+        <if test="showPassword">
+            , password
+        </if>
     </sql>
 
     <sql id="base_condition">
@@ -27,7 +30,7 @@
     <!-- 查询所有user -->
     <select id="findAllUser" resultMap="BaseResult">
         select
-        <include refid="base" />
+        <include refid="base"/>
         from user
     </select>
 
@@ -44,7 +47,7 @@
         select
         <include refid="base"/>
         from user
-        <include refid="base_condition" />
+        <include refid="base_condition"/>
     </select>
 
     <insert id="insert">

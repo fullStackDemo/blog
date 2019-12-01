@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="107a5b09-dd84-4096-907f-48f85aeab134" name="Default Changelist" comment="8888">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/common/BaseApplicationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/home.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/common/annotation/PassToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zz/common/interceptor/AuthenticationInterceptor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/newController/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/newController/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/utils/JWTUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/utils/JWTUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/dataService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/dataService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/common/BaseApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/common/base/BaseApplicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/newController/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/newController/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/query/UserQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/query/UserQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/zz/config/WebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zz/config/WebConfig.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +31,7 @@
         <option value="mybatisMapper" />
         <option value="JavaScript File" />
         <option value="Class" />
+        <option value="AnnotationType" />
       </list>
     </option>
   </component>
@@ -117,7 +119,7 @@
       <workItem from="1574896938745" duration="544000" />
       <workItem from="1574897528489" duration="10170000" />
       <workItem from="1575119542027" duration="13782000" />
-      <workItem from="1575189485275" duration="6153000" />
+      <workItem from="1575189485275" duration="11533000" />
     </task>
     <servers />
   </component>
