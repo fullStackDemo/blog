@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="107a5b09-dd84-4096-907f-48f85aeab134" name="Default Changelist" comment="">
+    <list default="true" id="107a5b09-dd84-4096-907f-48f85aeab134" name="Default Changelist" comment="8888">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/newController/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/newController/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/utils/JWTUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/utils/JWTUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/regist.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/regist.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -106,7 +103,7 @@
       <updated>1574896937372</updated>
       <workItem from="1574896938745" duration="544000" />
       <workItem from="1574897528489" duration="10170000" />
-      <workItem from="1575119542027" duration="9698000" />
+      <workItem from="1575119542027" duration="10094000" />
     </task>
     <servers />
   </component>
@@ -125,5 +122,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="8888" />
+    <option name="LAST_COMMIT_MESSAGE" value="8888" />
   </component>
 </project>

@@ -5,15 +5,12 @@ import com.zz.model.Response;
 import com.zz.query.UserQuery;
 import com.zz.service.UserService;
 import com.zz.utils.JWTUtils;
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 登录
@@ -63,6 +60,7 @@ public class LoginController {
                 // 生成token
                 String token = null;
                 
+                // 当前用户
                 User currentUser = new User();
                 if (userData != null) {
                     currentUser.setUserId(userData.getUserId());
