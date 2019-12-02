@@ -1,0 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    height: 100vh;
+    color: #333;
+}
+

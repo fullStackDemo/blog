@@ -10,4 +10,5 @@ public interface StudentMapper {
     List<Student> findAll();
 
     public int insert(StudentQuery query);
+    
 }
