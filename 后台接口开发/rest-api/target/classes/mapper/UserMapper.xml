@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zz.mapper.UserMapper">
+
+    <resultMap id="BaseResult" type="com.zz.entity.User">
+        <id column="user_id" property="userId"></id>
+        <id column="user_name" property="userName"></id>
+    </resultMap>
+
+    <sql id="base">
+        user_id,
+        user_name
+        <if test="showPassword">
+            , password
+        </if>
+    </sql>
+
+    <sql id="base_condition">
+        <where>
+            <if test="userName!=null and userName!=''">
+                user_name=#{userName}
+            </if>
+            <if test="password!=null and password!=''">
+                and password=#{password}
+            </if>
+        </where>
+
+    </sql>
+
+    <!-- 查询所有user -->
+    <select id="findAllUser" resultMap="BaseResult">
+        select
+        <include refid="base"/>
+        from user
+    </select>
+
+    <!-- 查询user -->
+    <select id="findUserById" resultMap="BaseResult">
+        select
+        <include refid="base"/>
+        from user
+        where
+        user_id = #{userId}
+    </select>
+
+    <select id="findUserByName" resultMap="BaseResult">
+        select
+        <include refid="base"/>
+        from user
+        <include refid="base_condition"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO user(
+        user_name,
+        password
+        ) VALUES (
+        #{userName},
+        #{password}
+        )
+    </insert>
+
+
+</mapper>
