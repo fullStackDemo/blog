@@ -21,7 +21,6 @@ public class Application {
     @GetMapping("/")
     String home() {
         String tokenUrl = myConfiguration.getTokenURL();
-
         return tokenUrl;
     }
     

@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="107a5b09-dd84-4096-907f-48f85aeab134" name="Default Changelist" comment="8888">
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../spring boot从零搭建登录注册功能并进行所有接口验证.md" beforeDir="false" afterPath="$PROJECT_DIR$/../spring boot从零搭建登录注册功能并进行所有接口验证.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/Application.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
