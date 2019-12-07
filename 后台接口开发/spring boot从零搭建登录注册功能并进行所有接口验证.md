@@ -1487,3 +1487,365 @@ submitBtn.onclick = () => {
 
 登录接口返回用户凭证token，后续用来校验用户接口，增加安全性。
 
+#### 13、增加自定义注解和拦截器
+
+在常规的业务开发中，切记不可把接口服务暴露给任何人都可以访问，不然别人可以任意查看或者修改你的数据，这是很严重的事情。除了常规从网段IP方面限制固定客户端IP的范围，接口本身也要增加安全验证，这个时候我们就需要用到之前生成的用户凭证token;
+
+
+
+问题是我们如果自定义控制，哪些接口是需要经过验证，哪些接口是不需要通过验证的呢？有人可能会说，直接全部验证不久可以来，何苦纠结。但是在真实的业务中，有些接口是不能强制校验的，比如一些用户分享到微信的那种接口，是不能增加验证，否则分享的页面无法正常显示。
+
+
+
+所以我们可以自定义注解@PassToken, 添加这个注解的接口，就可以不用进行token验证了。
+
+> com.zz.common.annotation.PassToken
+>
+> PassToken 注解
+
+```java
+package com.zz.common.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+// 是否跳过token验证
+@Target({ElementType.METHOD, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PassToken {
+    boolean required() default true;
+}
+
+```
+
+
+
+> 添加拦截器
+>
+> com.zz.common.interceptor.AuthenticationInterceptor
+>
+> 在发送请求的时候，在请求头里面加token, 然后验证的时候token从头部获取
+>
+> 如果没有token, 进行无token提示；
+>
+> 如果存在，就用 JWT 校验 token 是否存在，并且校验用户密码是否正确。
+
+
+
+```java
+package com.zz.common.interceptor;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.mongodb.util.JSON;
+import com.zz.common.annotation.PassToken;
+import com.zz.common.base.BaseApplicationController;
+import com.zz.entity.User;
+import com.zz.model.Response;
+import com.zz.query.UserQuery;
+import com.zz.service.UserService;
+import com.zz.utils.JWTUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
+
+// 拦截器
+public class AuthenticationInterceptor implements HandlerInterceptor {
+    
+    @Autowired
+    private UserService userService;
+    
+    /**
+     * response返回信息
+     *
+     * @param code
+     * @param message
+     * @return
+     * @throws JSONException
+     */
+    public JSONObject getJsonObject(int code, String message) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("msg", message);
+        jsonObject.put("code", code);
+        return jsonObject;
+    }
+    
+    @Override
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
+        
+        // 从 http 请求头中取出 token
+        String token = BaseApplicationController.getToken();
+        // 如果不是映射到方法直接通过
+        if (!(object instanceof HandlerMethod)) {
+            return true;
+        }
+        
+        HandlerMethod handlerMethod = (HandlerMethod) object;
+        Method method = handlerMethod.getMethod();
+        //检查是否有PassToken注释，有则跳过认证
+        if (method.isAnnotationPresent(PassToken.class)) {
+            PassToken passToken = method.getAnnotation(PassToken.class);
+            if (passToken.required()) {
+                return true;
+            }
+        }
+        
+        // 默认执行认证
+        httpServletResponse.setContentType("application/json;charset=UTF-8");
+        if (token == null || token.equals("null")) {
+            JSONObject jsonObject = getJsonObject(403, "无token，请重新登录");
+            httpServletResponse.getWriter().write(jsonObject.toString());
+            return false;
+            // throw new RuntimeException("无token，请重新登录");
+        }
+        
+        // 获取 token 中的 user id
+        long userId;
+        try {
+            userId = BaseApplicationController.getCurrentUserId();
+        } catch (JWTDecodeException j) {
+            JSONObject jsonObject = getJsonObject(500, "访问异常, token不正确，请重新登录");
+            httpServletResponse.getWriter().write(jsonObject.toString());
+            return false;
+            // throw new RuntimeException("访问异常！");
+        }
+        
+        // 验证用户是否存在
+        UserQuery query = new UserQuery();
+        query.setUserId(userId);
+        query.setShowPassword(Boolean.TRUE);
+        User user = userService.findUserById(query);
+        
+        if (user == null) {
+            JSONObject jsonObject = getJsonObject(500, "用户不存在，请重新登录");
+            httpServletResponse.getWriter().write(jsonObject.toString());
+            return false;
+            // throw new RuntimeException("用户不存在，请重新登录");
+        }
+        
+        // 验证token是否有效
+        Boolean verify = JWTUtils.verify(token, user);
+        if (!verify) {
+            JSONObject jsonObject = getJsonObject(500, "非法访问，请重新登录");
+            httpServletResponse.getWriter().write(jsonObject.toString());
+            return false;
+            // throw new RuntimeException("非法访问！");
+        }
+        
+        return true;
+    }
+}
+
+```
+
+下面让我们实例看下效果：
+
+> com.zz.newController.UserController
+
+```java
+package com.zz.newController;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zz.common.annotation.PassToken;
+import com.zz.common.base.BaseApplicationController;
+import com.zz.entity.User;
+import com.zz.model.Response;
+import com.zz.query.UserQuery;
+import com.zz.service.UserService;
+import com.zz.utils.JWTUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+
+/**
+ * 登录
+ * autho: wangzhao
+ */
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    
+    @Autowired
+    private UserService userService;
+    
+    /*
+     * @param userName
+     * @param password
+     * @return response
+     */
+    @PostMapping("/add")
+    @PassToken
+    public Response addUser(@RequestParam String userName, @RequestParam String password, Response response) {
+        UserQuery query = new UserQuery();
+        User userData = null;
+        
+        query.setUserName(userName);
+        query.setPassword(password);
+        
+        int result;
+        String message = "";
+        
+        // 判断用户是否已经存在
+        UserQuery findUserQuery = new UserQuery();
+        findUserQuery.setUserName(userName);
+        User existUser = this.userService.findUserByName(findUserQuery);
+        if (existUser == null) {
+            
+            // 插入用户
+            try {
+                result = this.userService.addUser(query);
+                message = "success";
+            } catch (Exception e) {
+                result = 0;
+                message = "error";
+                e.printStackTrace();
+            }
+            
+            // 插入用户成功后返回用户信息
+            if (result == 1) {
+                userData = this.userService.findUserByName(findUserQuery);
+                
+                // 生成token
+                String token = null;
+                
+                // 当前用户
+                User currentUser = new User();
+                if (userData != null) {
+                    currentUser.setUserId(userData.getUserId());
+                    currentUser.setUserName(userData.getUserName());
+                    currentUser.setPassword(password);
+                    token = JWTUtils.createToken(currentUser);
+                }
+                
+                if (token != null) {
+                    userData.setToken(token);
+                    
+                    // 获取token用户信息
+                    // Claims userDataFromToken = JWTUtils.parseToken(token, currentUser);
+                }
+            }
+            
+        } else {
+            message = "用户已经存在";
+        }
+        
+        response.setData(userData);
+        response.setMsg(message);
+        return response;
+    }
+    
+    /**
+     * 登录
+     *
+     * @param userName 用户名
+     * @param password 密码
+     * @return {}
+     */
+    @PostMapping("/login")
+    @PassToken
+    public Response login(@RequestParam String userName, @RequestParam String password, Response response) {
+        
+        UserQuery query = new UserQuery();
+        query.setUserName(userName);
+        query.setPassword(password);
+        
+        // 验证用户和密码
+        try {
+            // 判断用户是否已经存在
+            User existUser = this.userService.findUserByName(query);
+            
+            // 生成token
+            String token = null;
+            
+            // 当前用户
+            User currentUser = new User();
+            if (existUser != null) {
+                currentUser.setUserId(existUser.getUserId());
+                currentUser.setUserName(existUser.getUserName());
+                currentUser.setPassword(password);
+                token = JWTUtils.createToken(currentUser);
+                if (token != null) {
+                    existUser.setToken(token);
+                }
+                response.setMsg("success");
+                response.setData(existUser);
+            } else {
+                // 登录失败
+                response.setMsg("登录失败，请检查用户名和密码");
+                response.setData(null);
+            }
+            
+        } catch (Exception e) {
+            response.setMsg("login failed");
+            response.setData(null);
+            e.printStackTrace();
+        }
+        return response;
+    }
+    
+    /**
+     * 获取个人信息
+     *
+     * @return {}
+     */
+    @GetMapping("/info")
+    public Response getUserInfo(Response response) {
+        // 获取token
+        String token = BaseApplicationController.getToken();
+        User userData2 = BaseApplicationController.getCurrentUser();
+        Map<String, Object> headerData = BaseApplicationController.getHeader();
+        if (token != null && !token.equals("null")) {
+            User userData = new User();
+            DecodedJWT claims = JWT.decode(token);
+            userData.setUserName(claims.getClaim("userName").asString());
+            userData.setUserId(claims.getClaim("userId").asLong());
+            response.setData(userData);
+            response.setMsg("success");
+        } else {
+            response.setMsg("token不存在");
+        }
+        return response;
+    }
+    
+}
+
+```
+
+我们新写了一个接口，获取用户信息，如上，其余代码不再赘述；
+
+> 成功获取用户信息
+
+![image-20191207154357109](assets/image-20191207154357109.png)
+
+> 删除token
+
+![image-20191207154505224](assets/image-20191207154505224.png)
+
+![image-20191207154542523](assets/image-20191207154542523.png)
+
+> Token 故意改错
+
+![image-20191207154655011](assets/image-20191207154655011.png)
+
+
+
+![image-20191207154738162](assets/image-20191207154738162.png)
+
+![image-20191207154806418](assets/image-20191207154806418.png)
+
+到此，验证过程完美成功；
+
+#### 14、总结
+
+以上过程，只是一个简单服务的搭建，真实的服务还需要更多配置，比如XSS配置防止XSS攻击等。好了，本篇文章到此为止，如果有哪里描述得不清楚，请多多包涵。
