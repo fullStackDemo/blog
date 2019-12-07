@@ -878,7 +878,7 @@ public interface UserMapper {
 
 到此，整个接口书写过程已全部完成，这就是在当前架构下写一个接口的全部过程。
 
-#### 10、搭建web实例
+#### 10、搭建web实例 ——注册用户
 
 由于我们在配置文件里已经配置静态资源的路径，所以我们可以在resources里面写一个不分离的we b实例进行访问。
 
@@ -1117,5 +1117,373 @@ submitBtn.onclick = () => {
 
 效果如图：
 
-![image-20191207144736880](assets/image-20191207144736880.png)
+![](assets/image-20191207144736880.png)
+
+> 增加一些基本的校验
+
+![image-20191207145008765](assets/image-20191207145008765.png)
+
+> 用户密码加密传输，并验证新用户是否已经注册
+
+![image-20191207145612200](assets/image-20191207145612200.png)
+
+
+
+![image-20191207150016196](assets/image-20191207150016196.png)
+
+> mysql 查看下用户表
+
+![image-20191207150530465](assets/image-20191207150530465.png)
+
+#### 11、后端-用户登录功能
+
+按上面第9步骤所述，下面的添加内容，请直接添加到上述服务中，不再全部展示代码。
+
+>com.zz.newController.UserController
+>
+>首先要判断用户是否存在，如果存在，返回基本信息并返回用户凭证token
+
+```java
+/**
+     * 登录
+     *
+     * @param userName 用户名
+     * @param password 密码
+     * @return {}
+     */
+    @PostMapping("/login")
+    @PassToken
+    public Response login(@RequestParam String userName, @RequestParam String password, Response response) {
+        
+        UserQuery query = new UserQuery();
+        query.setUserName(userName);
+        query.setPassword(password);
+        
+        // 验证用户和密码
+        try {
+            // 判断用户是否已经存在
+            User existUser = this.userService.findUserByName(query);
+            
+            // 生成token
+            String token = null;
+            
+            // 当前用户
+            User currentUser = new User();
+            if (existUser != null) {
+                currentUser.setUserId(existUser.getUserId());
+                currentUser.setUserName(existUser.getUserName());
+                currentUser.setPassword(password);
+               // 生成用户凭证
+                token = JWTUtils.createToken(currentUser);
+                if (token != null) {
+                    existUser.setToken(token);
+                }
+                response.setMsg("success");
+                response.setData(existUser);
+            } else {
+                // 登录失败
+                response.setMsg("登录失败，请检查用户名和密码");
+                response.setData(null);
+            }
+            
+        } catch (Exception e) {
+            response.setMsg("login failed");
+            response.setData(null);
+            e.printStackTrace();
+        }
+        return response;
+    }
+```
+
+> com.zz.service.UserService
+
+```java
+package com.zz.service;
+
+import com.zz.entity.User;
+import com.zz.query.UserQuery;
+
+import java.util.List;
+import java.util.Map;
+
+public interface UserService {
+    
+    // 添加用户
+    int addUser(UserQuery query);
+    
+    //查找单个用户
+    User findUserById(UserQuery query);
+    
+    User findUserByName(UserQuery query);
+    
+}
+
+```
+
+> com.zz.service.impl.UserServiceImpl
+
+```java
+package com.zz.service.impl;
+
+import com.zz.entity.User;
+import com.zz.mapper.UserMapper;
+import com.zz.query.UserQuery;
+import com.zz.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class UserServiceImpl implements UserService {
+    
+    @Autowired
+    private UserMapper userMapper;
+    
+    @Override
+    public int addUser(UserQuery query){
+        return this.userMapper.insert(query);
+    }
+    
+    @Override
+    public User findUserById(UserQuery query) {
+        return this.userMapper.findUserById(query);
+    }
+    
+    @Override
+    public User findUserByName(UserQuery query) {
+        return this.userMapper.findUserByName(query);
+    }
+    
+    @Override
+    public List<User> findAllUser(UserQuery query) {
+        return this.userMapper.findAllUser(query);
+    }
+}
+
+```
+
+> com.zz.mapper.UserMapper
+
+```java
+package com.zz.mapper;
+
+import com.zz.entity.User;
+import com.zz.query.UserQuery;
+
+import java.util.List;
+
+public interface UserMapper {
+    
+    int insert(UserQuery query);
+    
+    User findUserById(UserQuery query);
+    
+    User findUserByName(UserQuery query);
+    
+    List<User> findAllUser(UserQuery query);
+    
+}
+
+```
+
+> mapper/UserMapper.xml
+
+```yaml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zz.mapper.UserMapper">
+
+    <resultMap id="BaseResult" type="com.zz.entity.User">
+        <id column="user_id" property="userId"></id>
+        <id column="user_name" property="userName"></id>
+    </resultMap>
+
+    <sql id="base">
+        user_id,
+        user_name
+        <if test="showPassword">
+            , password
+        </if>
+    </sql>
+
+    <sql id="base_condition">
+        <where>
+            <if test="userName!=null and userName!=''">
+                user_name=#{userName}
+            </if>
+            <if test="password!=null and password!=''">
+                and password=#{password}
+            </if>
+        </where>
+
+    </sql>
+
+    <!-- 查询所有user -->
+    <select id="findAllUser" resultMap="BaseResult">
+        select
+        <include refid="base"/>
+        from user
+    </select>
+
+    <!-- 查询user -->
+    <select id="findUserById" resultMap="BaseResult">
+        select
+        <include refid="base"/>
+        from user
+        where
+        user_id = #{userId}
+    </select>
+
+    <select id="findUserByName" resultMap="BaseResult">
+        select
+        <include refid="base"/>
+        from user
+        <include refid="base_condition"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO user(
+        user_name,
+        password
+        ) VALUES (
+        #{userName},
+        #{password}
+        )
+    </insert>
+
+
+</mapper>
+
+```
+
+#### 12、搭建web实例 ——登录用户
+
+> static/login.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>login</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="css/regist.css"/>
+    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.1.3/weui.min.css">
+    
+</head>
+<body>
+<div class="container">
+    <div class="page form_page js_show">
+        <div class="weui-form">
+            <div class="weui-form__text-area">
+                <h2 class="weui-form__title">登录</h2>
+            </div>
+            <div class="weui-form__control-area">
+                <div class="weui-cells__group weui-cells__group_form">
+                    <div class="weui-cells weui-cells_form">
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+                            <div class="weui-cell__bd">
+                                <input id="js_input——user" class="weui-input" placeholder="请输入用户名">
+                            </div>
+                        </div>
+                        <div class="weui-cell">
+                            <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+                            <div class="weui-cell__bd">
+                                <input id="js_input——pwd" type="password" class="weui-input" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+<!--            <div class="weui-form__tips-area">-->
+<!--                <p class="weui-form__tips">-->
+<!--                    表单页提示，居中对齐-->
+<!--                </p>-->
+<!--            </div>-->
+            <div class="weui-form__opr-area">
+                <a class="weui-btn weui-btn_primary" href="javascript:" id="submit">确定</a>
+            </div>
+
+            <div class="weui-form__extra-area">
+                <div class="weui-footer">
+<!--                    <p class="weui-footer__links">-->
+<!--                        <a href="javascript:void(0);" class="weui-footer__link">底部链接文本</a>-->
+<!--                    </p>-->
+                    <p class="weui-footer__text">Copyright © 2019 alex wong</p>
+                </div>
+            </div>
+        </div>
+        <div id="js_toast" style="display: none;">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                <p class="weui-toast__content">已完成</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/md5.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/dataService.js"></script>
+<script type="text/javascript" src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script>
+<script src="js/login.js"></script>
+</html>
+```
+
+> static/js/login.js
+
+```javascript
+// 获取相关用户信息
+const userNameInput = document.getElementById("js_input——user");
+const passwordInput = document.getElementById("js_input——pwd");
+const submitBtn = document.getElementById("submit");
+
+// submit
+submitBtn.onclick = () => {
+
+	const userName = userNameInput.value;
+	const password = passwordInput.value;
+
+	// verify
+	if (!userName) {
+		weui.topTips('用户姓名不能为空');
+		return;
+	} else if (!password) {
+		weui.topTips('用户密码不能为空');
+		return;
+	}
+
+	// 加密密码
+	const newPassword = utils.generateMd5(userName, password);
+
+	// 注册
+	dataService.login({
+		userName,
+		password: newPassword,
+	}).then(res => {
+		const {code, data, msg} = res;
+		if (!data) {
+			weui.topTips(msg);
+		} else {
+			weui.topTips(`登录成功，欢迎 ${data.userName}`);
+			utils.setCookie('token', data.token);
+			location.href = location.origin + '/home.html';
+		}
+	})
+};
+```
+
+![image-20191207152034072](assets/image-20191207152034072.png)
+
+![image-20191207152244301](assets/image-20191207152244301.png)
+
+![image-20191207152343686](assets/image-20191207152343686.png)
+
+登录接口返回用户凭证token，后续用来校验用户接口，增加安全性。
 
