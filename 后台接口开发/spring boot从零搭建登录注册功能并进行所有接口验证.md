@@ -181,3 +181,47 @@
 
 ![image-20191207125851843](assets/image-20191207125851843.png)
 
+> application.yml
+
+```yaml
+# mysql
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  profiles:
+    active: dev
+  # 静态资源配置
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: file:/Users/wz/projects/blog/uploadFile/,classpath:/static/,classpath:/resources/,classpath:/file/,classpath:/templates/
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.zz.entity
+
+```
+
+> application-dev.yml
+
+```yaml
+# mysql
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: ******
+server:
+  port: 8080
+
+
+
+```
+
