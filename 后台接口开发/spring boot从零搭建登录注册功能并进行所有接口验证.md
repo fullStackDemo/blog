@@ -14,6 +14,10 @@
 
 ![image-20191207125203878](assets/image-20191207125203878.png)
 
+或者在线生成，[点击进入](https://start.spring.io/)
+
+![](assets/16ee2c228a6ffd63.png)
+
 > pom.xml
 
 ```xml
@@ -176,6 +180,30 @@
 </project>
 
 ```
+> maven更改为国内阿里云镜像，这样比较快
+
+![](assets/16ee2c8c324e66aa.png)
+
+settings.xml:
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+    https://maven.apache.org/xsd/settings-1.0.0.xsd">
+    
+    <mirrors>
+        <mirror>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <mirrorOf>central</mirrorOf>
+        </mirror>
+    </mirrors>
+</settings>
+```
+
+
 
 > Mybatis 推荐插件如下：
 
@@ -1493,7 +1521,7 @@ submitBtn.onclick = () => {
 
 
 
-问题是我们如果自定义控制，哪些接口是需要经过验证，哪些接口是不需要通过验证的呢？有人可能会说，直接全部验证不久可以来，何苦纠结。但是在真实的业务中，有些接口是不能强制校验的，比如一些用户分享到微信的那种接口，是不能增加验证，否则分享的页面无法正常显示。
+问题是我们如果自定义控制，哪些接口是需要经过验证，哪些接口是不需要通过验证的呢？有人可能会说，直接全部验证不就可以啦，何苦纠结。但是在真实的业务中，有些接口是不能强制校验的，比如一些用户分享到微信的那种接口，是不能增加验证，否则分享的页面无法正常显示。
 
 
 
