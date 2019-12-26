@@ -18,6 +18,8 @@ java/workspace/.idea/*.xml
 后台接口开发/Java/api/target
 后台接口开发/Java/api/.mvn
 后台接口开发/Java/api/src/main/file
+后台接口开发/rest-api/target/*
+后台接口开发/rest-api/.idea/*
 
 .vscode
 
@@ -31,3 +33,7 @@ package-lock.json
 后台接口开发/Java/api/.factorypath
 后台接口开发/Java\initial\src\main\file/dacc73d0-92f0-4c50-9d24-07a21478c1e2.png
 后台接口开发/Java\initial\src\main\file/pm.jpeg
+后台接口开发/rest-api/target/classes/com/zz/utils/Utils.class
+后台接口开发/rest-api/target/classes/com/zz/utils/MD5Utils.class
+后台接口开发/rest-api/target/classes/com/zz/newController/UserController.class
+后台接口开发/rest-api/.idea/workspace.xml

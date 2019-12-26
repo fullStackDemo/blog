@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="107a5b09-dd84-4096-907f-48f85aeab134" name="Default Changelist" comment="8888">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zz/common/interceptor/AuthenticationInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zz/common/interceptor/AuthenticationInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring boot从零搭建登录注册功能并进行所有接口验证.md" beforeDir="false" afterPath="$PROJECT_DIR$/../spring boot从零搭建登录注册功能并进行所有接口验证.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +68,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -111,8 +110,6 @@
       <workItem from="1574744862300" duration="1711000" />
       <workItem from="1574746586663" duration="2100000" />
       <workItem from="1574918247838" duration="215000" />
-      <workItem from="1575264357787" duration="468000" />
-      <workItem from="1575288647674" duration="13000" />
     </task>
     <servers />
   </component>
