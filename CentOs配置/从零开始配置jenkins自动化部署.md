@@ -29,11 +29,11 @@ Jenkins是一个开源软件项目，是基于Java开发的广泛用于持续构
 
 ![1577360744865](%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AEjenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2.assets/1577360744865.png)
 
-等待安装后，建立admin账号…
+等待安装后，建立第一个用户admin账号…
 
 ![1577360822399](%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AEjenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2.assets/1577360822399.png)
 
-安装配置
+安装插件
 
 ![1577361343355](%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AEjenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2.assets/1577361343355.png)
 
