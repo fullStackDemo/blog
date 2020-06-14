@@ -235,7 +235,7 @@ spring:
 logging:
   level:
     root: warn
-    com.mp.test.mapper: trace
+    com.scaffold.test.mapper: trace
 
 ~~~
 
