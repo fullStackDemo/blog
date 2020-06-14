@@ -699,3 +699,244 @@ public class JobController {
 
 ![image-20200614101522830](assets/image-20200614101522830.png)
 
+测试成功；
+
+### 6.2 其余操作
+
+其余增删改查操作不再赘述：
+
+代码如下：
+
+> src/main/resources/mapper/JobMapper.xml
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scaffold.test.mapper.JobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.scaffold.test.entity.Job">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="position" property="position"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, age, position
+    </sql>
+
+    <insert id="insertJob">
+        insert into job
+        (name, age, position)
+        values
+        (#{name}, #{age}, #{position})
+    </insert>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from job
+    </select>
+
+    <update id="updateJob">
+        update job set
+        name = #{name},
+        age = #{age},
+        position = #{position}
+    </update>
+
+    <delete id="deleteJobById">
+        delete from job
+        where id = #{id}
+    </delete>
+
+</mapper>
+
+~~~
+
+> com.scaffold.test.mapper.JobMapper
+
+~~~java
+package com.scaffold.test.mapper;
+
+import com.scaffold.test.entity.Job;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
+
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author alex wong
+ * @since 2020-06-14
+ */
+public interface JobMapper extends BaseMapper<Job> {
+
+    public void insertJob(Job job);
+
+    public List<Job> selectAll();
+
+    public void updateJob(Job job);
+
+    public void deleteJobById(int id);
+
+}
+
+~~~
+
+> com.scaffold.test.service.JobService
+
+~~~java
+package com.scaffold.test.service;
+
+import com.scaffold.test.entity.Job;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+
+/**
+ * <p>
+ *  服务类
+ * </p>
+ *
+ * @author alex wong
+ * @since 2020-06-14
+ */
+public interface JobService extends IService<Job> {
+
+    public String addJob(Job job);
+
+    public List<Job> findAll();
+
+    public String updateJob(Job job);
+
+    public String deleteJobById(int id);
+
+}
+
+~~~
+
+> com.scaffold.test.service.impl.JobServiceImpl
+
+~~~java
+package com.scaffold.test.service.impl;
+
+import com.scaffold.test.entity.Job;
+import com.scaffold.test.mapper.JobMapper;
+import com.scaffold.test.service.JobService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 服务实现类
+ * </p>
+ *
+ * @author alex wong
+ * @since 2020-06-14
+ */
+@Service
+public class JobServiceImpl extends ServiceImpl<JobMapper, Job> implements JobService {
+
+    @Autowired
+    private JobMapper jobMapper;
+
+    @Override
+    public String addJob(Job job) {
+        jobMapper.insertJob(job);
+        return "添加成功";
+    }
+
+    @Override
+    public List<Job> findAll() {
+        return jobMapper.selectAll();
+    }
+
+    @Override
+    public String updateJob(Job job) {
+        jobMapper.updateJob(job);
+        return "更新成功";
+    }
+
+    @Override
+    public String deleteJobById(int id) {
+        jobMapper.deleteJobById(id);
+        return "删除成功";
+    }
+}
+
+~~~
+
+> com.scaffold.test.controller.JobController
+
+~~~java
+package com.scaffold.test.controller;
+
+
+import com.scaffold.test.entity.Job;
+import com.scaffold.test.service.JobService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 前端控制器
+ * </p>
+ *
+ * @author alex wong
+ * @since 2020-06-14
+ */
+@RestController
+@RequestMapping("/job")
+public class JobController {
+
+    @Autowired
+    private JobService jobService;
+
+    // 添加
+    @PostMapping("/add")
+    public String add() {
+        Job job = new Job();
+        job.setAge(20);
+        job.setPosition("总经理");
+        job.setName("汪汪");
+        return jobService.addJob(job);
+    }
+
+    // 查询所有
+    @GetMapping("/list")
+    public List<Job> getList() {
+        return jobService.findAll();
+    }
+
+    // 更新
+    @PostMapping("/update")
+    public String update() {
+        Job job = new Job();
+        job.setAge(20);
+        // 汪汪被降职
+        job.setPosition("总经理助理");
+        job.setName("汪汪");
+        return jobService.updateJob(job);
+    }
+
+    // 删除
+    @PostMapping("/delete")
+    public String delete(@RequestParam int id) {
+        // 汪汪被删除
+        return jobService.deleteJobById(id);
+    }
+
+
+}
+
+
+~~~
+
