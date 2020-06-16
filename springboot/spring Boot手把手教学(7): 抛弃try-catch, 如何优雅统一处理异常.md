@@ -19,7 +19,7 @@
 
 > JobController
 
-~~~
+~~~java
  // 查询所有
     @GetMapping("/list")
     public Result getList() {
@@ -170,7 +170,29 @@ if (e instanceof ServiceException) {
 }
 ~~~
 
-报错400代码;
+可以自定义项目业务代码异常处理；
+
+代码举例说明：
+
+~~~java
+		// 更新
+    @PostMapping("/update")
+    public String update() {
+        Job job = new Job();
+        job.setAge(20);
+        // 汪汪被降职
+        job.setPosition("总经理助理");
+        job.setName("汪汪");
+        if (job.getAge() != 50) {
+            throw new ServiceException("test ServiceException 50");
+        }
+        return jobService.updateJob(job);
+    }
+~~~
+
+如图：
+
+![image-20200617074915708](assets/image-20200617074915708.png)
 
 > 2、调用失败: Servlet异常
 
