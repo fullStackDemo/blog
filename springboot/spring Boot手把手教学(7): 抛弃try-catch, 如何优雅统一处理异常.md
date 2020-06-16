@@ -138,7 +138,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 }
 ~~~
 
-> 1、业务失败的异常：  ServiceException 服务异常类
+### 1、业务失败的异常：  ServiceException 服务异常类
 
 ~~~java
 package com.scaffold.test.base;
@@ -194,7 +194,7 @@ if (e instanceof ServiceException) {
 
 ![image-20200617074915708](assets/image-20200617074915708.png)
 
-> 2、调用失败: Servlet异常
+### 2、调用失败: Servlet异常
 
 ~~~java
 if (e instanceof ServletException) {
@@ -207,7 +207,7 @@ if (e instanceof ServletException) {
 
 ![image-20200616233710184](assets/image-20200616233710184.png)
 
-> 3、内部代码异常：比如 mysql 查询表名错误
+### 3、内部代码异常：比如 mysql 查询表名错误
 
 ~~~java
 String message;
@@ -229,7 +229,7 @@ logger.error(message, e);
 
 ![image-20200616233759270](assets/image-20200616233759270.png)
 
-> 4、请求接口404：这个在统一异常中无法获取，需要额外处理
+### 4、请求接口404：这个在统一异常中无法获取，需要额外处理
 
 `404进入不了统一异常处理，如下图：`
 
