@@ -1,5 +1,3 @@
-# spring Boot手把手教学(6)：发送邮件
-
 [TOC]
 
 ## 1、前言
@@ -27,7 +25,6 @@
 > src/main/resources/application.yml
 
 ~~~yaml
-
 server:
   port: 9002
 
@@ -192,7 +189,8 @@ public class MailController {
 
 结果如图：
 
-![image-20200615231014690](assets/image-20200615231014690.png)
+
+![](assets/172b89ceacbb5c0d.png)
 
 到此为止，简单的发送邮件功能完成了，如果要自动发布，就要加入定时任务了，可以参考上一篇文章：
 
@@ -270,7 +268,8 @@ public interface MailService {
 ~~~
 
 结果如图：
-![image-20200615232558757](assets/image-20200615232558757.png)
+
+![](assets/172b89d5461e5aad.png)
 
 ### 5.2、发送带附件的邮件
 
@@ -345,7 +344,121 @@ public interface MailService {
 
 效果如图：
 
-![image-20200615233118725](assets/image-20200615233118725.png)
+
+![](assets/172b89d9804be7a8.png)
+
+
+### 5.3、使用`thymeleaf`模板发送邮件
+
+另外，为了格式的优美，有时候我们需要`使用模板发送邮件`；
+
+这里我们使用`thymeleaf` ：
+
+> 安装依赖
+
+~~~xml
+<!-- thymeleaf 模板 -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>ognl</groupId>
+    <artifactId>ognl</artifactId>
+    <version>3.2.14</version>
+</dpendency>
+~~~
+
+> 控制器调用：com.scaffold.test.controller.MailController
+
+~~~java
+ 	@Autowired
+    private SpringTemplateEngine templateEngine;
+
+    // 发送 Html 模板邮件
+    @Async
+    @GetMapping("postTemplate")
+    public void postTemplateMail() throws MessagingException {
+        Context context = new Context();
+        Map<String, Object> emailParam = new HashMap<>();
+        emailParam.put("name", "产品终端更换名字");
+        emailParam.put("content", "牛牛终端");
+        emailParam.put("person", "Alex Wong");
+        context.setVariable("emailParam", emailParam);
+        String emailTemplate = templateEngine.process("emailTemplate", context);
+
+        Mail mail = new Mail();
+        mail.setTo("*****@qq.com");
+        mail.setSubject("模板邮件");
+        mail.setContent(emailTemplate);
+        mailService.sendHtmlMail(mail);
+    }
+~~~
+
+> 模板文件：`src/main/resources/templates/emailTemplate.html`
+
+~~~html
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>mail</title>
+</head>
+<body>
+
+
+<table align="center" cellpadding="0" cellspacing="0" width="600px">
+    <tr>
+        <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="600"
+                   style="border-collapse: collapse;">
+                <tr>
+                    <td align="center" style="padding: 40px 0 30px 0;">
+                        <img src='你的图片地址' style='width:183px height:47.50px'>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td bgcolor="#ffffff" style="padding: 0px 30px 20px 30px">
+                        <h3>产品名称变更通知</h3>
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td colspan="2" style="padding: 0 0 3px 0">
+                                    通知事项：<span th:text="${emailParam.name}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0 3px 0">
+                                    产品名称：<span th:text="${emailParam.content}"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0 3px">
+                                    审批人：<span th:text="${emailParam.person}"></span>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>
+~~~
+
+效果如图：
+
+
+![](assets/172bb9abcfab8ee8.png)
 
 ## 6、完整代码
 
@@ -488,8 +601,6 @@ public class MailServiceImpl implements MailService {
 ~~~java
 package com.scaffold.test.controller;
 
-import com.scaffold.test.base.Result;
-import com.scaffold.test.base.ResultGenerator;
 import com.scaffold.test.entity.Mail;
 import com.scaffold.test.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -497,10 +608,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/mail")
@@ -509,49 +622,72 @@ public class MailController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private SpringTemplateEngine templateEngine;
+
     // 发送不带格式的文本
     @Async
     @GetMapping("post")
-    public Result postMail() {
+    public void postMail() {
         Mail mail = new Mail();
-        mail.setTo("******@qq.com");
+        mail.setTo("**@qq.com");
         mail.setSubject("automatic");
         mail.setContent("自动邮件发布");
         mailService.sendMail(mail);
-        return ResultGenerator.getSuccessResult().setMessage("发送成功");
+//        return ResultGenerator.getSuccessResult().setMessage("发送成功");
     }
-  
 
     // 发送Html邮件
     @Async
     @GetMapping("postHtml")
-    public Result postHtmlMail() throws MessagingException {
+    public void postHtmlMail() throws MessagingException {
         String content = "<html>\n" +
                 "<body>\n" +
                 "<h3>hello! test Html test!</h3>\n" +
                 "</body>\n" +
                 "</html>";
         Mail mail = new Mail();
-        mail.setTo("1498097245@qq.com");
+        mail.setTo("***@qq.com");
         mail.setSubject("Html格式邮件");
         mail.setContent(content);
         mailService.sendHtmlMail(mail);
-        return ResultGenerator.getSuccessResult().setMessage("发送成功");
+//        return ResultGenerator.getSuccessResult().setMessage("发送成功");
     }
 
     // 发送带附件的邮件
     @Async
     @GetMapping("postAttachment")
-    public Result postAttachmentsMail() throws MessagingException {
+    public void postAttachmentsMail() throws MessagingException {
         Mail mail = new Mail();
-        mail.setTo("1498097245@qq.com");
+        mail.setTo("****@qq.com");
         mail.setSubject("附件");
         mail.setContent("有附件，赶紧看下");
         mail.setFilePath("E:\\test.png");
         mailService.sendAttachmentsMail(mail);
-        return ResultGenerator.getSuccessResult().setMessage("发送成功");
-    }    
+//        return ResultGenerator.getSuccessResult().setMessage("发送成功");
+    }
+
+    // 发送 Html 模板邮件
+    @Async
+    @GetMapping("postTemplate")
+    public void postTemplateMail() throws MessagingException {
+        Context context = new Context();
+        Map<String, Object> emailParam = new HashMap<>();
+        emailParam.put("name", "产品终端更换名字");
+        emailParam.put("content", "牛牛终端");
+        emailParam.put("person", "Alex Wong");
+        context.setVariable("emailParam", emailParam);
+        String emailTemplate = templateEngine.process("emailTemplate", context);
+
+        Mail mail = new Mail();
+        mail.setTo("***@qq.com");
+        mail.setSubject("模板邮件");
+        mail.setContent(emailTemplate);
+        mailService.sendHtmlMail(mail);
+//        return ResultGenerator.getSuccessResult().setMessage("发送成功");
+    }
+
 }
 
-~~~
 
+~~~
