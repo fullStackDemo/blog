@@ -9,7 +9,7 @@
         "static": "webpack --config webpack.dll.config.js"
     },
     "dependencies": {
-        "lodash": "^4.17.11"
+        "lodash": "^4.17.19"
     },
     "devDependencies": {
         "@babel/cli": "^7.6.2",
