@@ -266,6 +266,8 @@ ALTER user 'root'@'localhost' IDENTIFIED BY '你的新密码'
 
 ### 5.1 修改host
 
+> 对用户授权，允许指定用户远程访问，最简单的方式是将mysql库中user表中的对应的用户的host设置为%，亦即允许该用户从任意ip远程访问
+
 ~~~shell
 mysql> select user,host from user;
 +------------------+-----------+
