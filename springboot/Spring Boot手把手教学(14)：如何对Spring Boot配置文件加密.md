@@ -290,4 +290,127 @@ java -jar -Djasypt.encryptor.password=1qaz2wsx3edc -Djasypt.encryptor.algorithm=
 
 加密不仅仅可以加密数据库连接信息，也可以加密你认为比较隐私的数据；
 
-内容到此 结束，感兴趣的小伙伴，赶紧去试试吧；
+## 4、踩坑指南
+
+`2.1.0`版本，打包后，在Window和Mac，运行很正常，但是到我的服务器Centos6, 一直报错，`Failed to bind properties under 'spring.datasource.password' to java.lang.String`
+
+![image-20200801213343619](assets/image-20200801213343619.png)
+
+[官方ISSUE：https://github.com/ulisesbocchio/jasypt-spring-boot/issues/154/](https://github.com/ulisesbocchio/jasypt-spring-boot/issues/154/)
+
+应该是版本问题，所以我尝试使用了`3.0.3版本`
+
+~~~xml
+<dependency>
+	<groupId>com.github.ulisesbocchio</groupId>
+	<artifactId>jasypt-spring-boot-starter</artifactId>
+	<version>3.0.3</version>
+</dependency>
+~~~
+
+> 工具类方法
+
+~~~java
+package com.scaffold.test.utils;
+
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+
+/**
+ * Jasypt 3.0.3 加密
+ * @author alex
+ */
+public class JasyptUtil {
+
+    /**
+     * 配置项
+     * @param password 加密使用的盐值
+     * @return config
+     */
+    public static SimpleStringPBEConfig cryptor(String password){
+        SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+        config.setPassword(password);
+        config.setAlgorithm("PBEWithMD5AndDES");
+        config.setKeyObtentionIterations("1000");
+        config.setPoolSize("1");
+        config.setProviderName("SunJCE");
+        config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+        config.setStringOutputType("base64");
+        return config;
+    }
+
+    /**
+     * 加密
+     * @param salt 加密使用的盐值
+     * @param value 被加密的值
+     * @return string
+     */
+    public static String encypt(String salt, String value){
+        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        encryptor.setConfig(cryptor(salt));
+        return encryptor.encrypt(value);
+    }
+
+    /**
+     * 解密
+     * @param salt 加密使用的盐值
+     * @param value 加密后的密文
+     * @return string
+     */
+    public static String decypt(String salt, String value){
+        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        encryptor.setConfig(cryptor(salt));
+        return encryptor.decrypt(value);
+    }
+
+    public static void main(String[] args) {
+        String encryptPwd = encypt("salt", "1qaz2345");
+        System.out.println(encryptPwd);
+        String decryptPwd = decypt("salt", encryptPwd);
+        System.out.println(decryptPwd);
+    }
+
+}
+~~~
+
+> 本地DEV配置也之前有所不同
+
+~~~yaml
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+#    3.0.0 之前版本
+#    # 加密所需的salt(盐)
+#    # 加密方式和算法一定要对应一致
+#    # BasicTextEncryptor 对应加密方式：PBEWithMD5AndDES，StrongTextEncryptor 对应加密方式： PBEWithMD5AndTripleDES
+#    # 部署时配置salt(盐)值 java -jar -Djasypt.encryptor.password=1qaz2wsx3edc -Djasypt.encryptor.algorithm=PBEWithMD5AndDES xxx.jar
+#    # 或者在服务器的环境变量里配置,进一步提高安全性
+#    # 打开/etc/profile文件 vim /etc/profile
+#    # 文件末尾插入 export JASYPT_PASSWORD = SALT
+#    # 文件末尾插入 export JASYPT_ALGORITHM = ALGORITHM
+#    # 编译 source /etc/profile
+#    # 运行 java -jar -Djasypt.encryptor.password=${JASYPT_PASSWORD} -Djasypt.encryptor.algorithm=${JASYPT_ALGORITHM} xxx.jar
+#    password: salt
+#    # 默认加密方式PBEWithMD5AndDES,可以更改为PBEWithMD5AndTripleDES
+#    algorithm: PBEWithMD5AndTripleDES
+    # 3.0.0 以后
+    password: salt
+    # 加密算法设置
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+~~~
+
+> 生产环境部署，同之前 3.2  服务器部署，不过要多一个iv-generator-classname
+
+~~~yaml
+#jasypt加密的密匙
+jasypt:
+  encryptor:
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+~~~
+
+
+
+CentOs6 服务器部署后，完美解决问题，看来还是版本问题；
+
+本章完结；
