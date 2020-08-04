@@ -29,10 +29,10 @@
 > 分为三部分，分别用`.`点分隔开，每个部分保存不同的信息
 
 ~~~json
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3fSIsInBhc3N3b3JkIjoiMmFkMGZhODVkMGU4ZmM1NTkzYmI5Y2I4OTM3NTAzMDIiLCJ1c2VyTmFtZSI6InRlc3QiLCJleHAiOjE1OTUwODAzNDgsInVzZXJJZCI6IjBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3IiwiaWF0IjoxNTk1MDczMTQ4LCJqdGkiOiJmZDUzMzFkMy0xODk3LTQ5MWQtYmY4Ny0xZjRhNDllMmI4MGIifQ.OpVIfLE4IeV4UXdzpocTO6k1f5tnkolBHEkHEL9vPtM
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7dXNlck5hbWU9dGVzdDEsIHVzZXJJZD1mY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmM30iLCJ1c2VyTmFtZSI6InRlc3QxIiwiZXhwIjoxNTk2NTU2MTg3LCJ1c2VySWQiOiJmY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmMyIsImlhdCI6MTU5NjU0ODk4NywianRpIjoiNjdkNWY4MTAtN2U4Ny00OGEzLThiZjgtOGEwOWI4NTc4ODdjIn0.8p-wG0DWecC6nQKYD6EDaPi4Yf_Zx5Xe75S4qRYp7GI
 ~~~
 
-![image-20200718195706716](assets/image-20200718195706716.png)
+![image-20200804215204641](assets/image-20200804215204641.png)
 
 三部分每一个部分都是使用[Base64URL](https://en.wikipedia.org/wiki/Base64)编码。
 
@@ -42,9 +42,9 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTR
 
 ![image-20200718201404600](assets/image-20200718201404600.png)
 
-> 第二段：eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3fSIsInBhc3N3b3JkIjoiMmFkMGZhODVkMGU4ZmM1NTkzYmI5Y2I4OTM3NTAzMDIiLCJ1c2VyTmFtZSI6InRlc3QiLCJleHAiOjE1OTUwODAzNDgsInVzZXJJZCI6IjBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3IiwiaWF0IjoxNTk1MDczMTQ4LCJqdGkiOiJmZDUzMzFkMy0xODk3LTQ5MWQtYmY4Ny0xZjRhNDllMmI4MGIifQ
+> 第二段：eyJzdWIiOiJ7dXNlck5hbWU9dGVzdDEsIHVzZXJJZD1mY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmM30iLCJ1c2VyTmFtZSI6InRlc3QxIiwiZXhwIjoxNTk2NTU2MTg3LCJ1c2VySWQiOiJmY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmMyIsImlhdCI6MTU5NjU0ODk4NywianRpIjoiNjdkNWY4MTAtN2U4Ny00OGEzLThiZjgtOGEwOWI4NTc4ODdjIn0
 
-![image-20200718202209167](assets/image-20200718202209167.png)
+![image-20200804215401943](assets/image-20200804215401943.png)
 
 结果发现，反编译竟然失败了，第二段没有第一段那么容易反编译出来；
 
@@ -54,31 +54,28 @@ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTR
 
 ~~~json
 {
-  "sub": "{userName=test, userId=0b13dd6ce7e54d8d84b748541299a927}",
-  "password": "2ad0fa85d0e8fc5593bb9cb893750302",
-  "userName": "test",
-  "exp": 1595080348,
-  "userId": "0b13dd6ce7e54d8d84b748541299a927",
-  "iat": 1595073148,
-  "jti": "fd5331d3-1897-491d-bf87-1f4a49e2b80b"
+  "sub": "{userName=test1, userId=fcfbb2b3d61944f2b31237d2338b54f3}",
+  "userName": "test1",
+  "exp": 1596556187,
+  "userId": "fcfbb2b3d61944f2b31237d2338b54f3",
+  "iat": 1596548987,
+  "jti": "67d5f810-7e87-48a3-8bf8-8a09b857887c"
 }
 ~~~
 
-![image-20200718203059904](assets/image-20200718203059904.png)
+![image-20200804215541165](assets/image-20200804215541165.png)
 
-结果为不一致的，但是每次修改左侧内容，👉右边生成的最后一个字符都是==, 莫非和这个有关？
+结果和第二段是不一致的，但是每次修改左侧内容，👉右边生成的最后一个字符都是==, 莫非和这个有关？
 
 所以我打算试一下，在第二段代码后加==后反编码一下：
 
-![image-20200718203203598](assets/image-20200718203203598.png)
+![image-20200804215731735](assets/image-20200804215731735.png)
 
 神奇的一幕发生了，竟然反编译成功了，第二段信息和官网debugger出来的信息一模一样，我只能呵呵了。
 
-![image-20200718203320243](assets/image-20200718203320243.png)
+![image-20200804215815415](assets/image-20200804215815415.png)
 
-🈸️
-
-![image-20200718203439448](assets/image-20200718203439448.png)
+![image-20200804215903123](assets/image-20200804215903123.png)
 
 > 对于这个疑惑，我还是打算深究一下，最终在维基百科中找到了答案
 
@@ -129,11 +126,13 @@ public class Base64Url {
     }
 
 
-    public static void main(String[] args){
+   public static void main(String[] args){
 
-        System.out.println(Base64Url.encode(JSON.parseObject("{\"sub\":\"{userName=test, userId=0b13dd6ce7e54d8d84b748541299a927}\",\"password\":\"2ad0fa85d0e8fc5593bb9cb893750302\",\"userName\":\"test\",\"exp\":1595080348,\"userId\":\"0b13dd6ce7e54d8d84b748541299a927\",\"iat\":1595073148,\"jti\":\"fd5331d3-1897-491d-bf87-1f4a49e2b80b\"}")));
+        System.out.println(Base64Url.encode(JSON.parseObject("{\"sub\":\"{userName=test1, userId=fcfbb2b3d61944f2b31237d2338b54f3}\",\"userName\":\"test1\",\"exp\":1596556187,\"userId\":\"fcfbb2b3d61944f2b31237d2338b54f3\",\"iat\":1596548987,\"jti\":\"67d5f810-7e87-48a3-8bf8-8a09b857887c\"}")));
 
-        System.out.println(Base64Url.decode("eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3fSIsInBhc3N3b3JkIjoiMmFkMGZhODVkMGU4ZmM1NTkzYmI5Y2I4OTM3NTAzMDIiLCJ1c2VyTmFtZSI6InRlc3QiLCJleHAiOjE1OTUwODAzNDgsInVzZXJJZCI6IjBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3IiwiaWF0IjoxNTk1MDczMTQ4LCJqdGkiOiJmZDUzMzFkMy0xODk3LTQ5MWQtYmY4Ny0xZjRhNDllMmI4MGIifQ"));
+        System.out.println(Base64Url.decode("eyJzdWIiOiJ7dXNlck5hbWU9dGVzdDEsIHVzZXJJZD1mY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmM30iLCJ1c2VyTmFtZSI6InRlc3QxIiwiZXhwIjoxNTk2NTU2MTg3LCJ1c2VySWQiOiJmY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmMyIsImlhdCI6MTU5NjU0ODk4NywianRpIjoiNjdkNWY4MTAtN2U4Ny00OGEzLThiZjgtOGEwOWI4NTc4ODdjIn0"));
+
+
     }
 
 }
@@ -141,17 +140,13 @@ public class Base64Url {
 
 ~~~json
 # 加密之后同样带有==，应该原字符长度不够3的倍数
-eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEy
-OTlhOTI3fSIsInBhc3N3b3JkIjoiMmFkMGZhODVkMGU4ZmM1NTkzYmI5Y2I4OTM3NTAzMDIiLCJ1
-c2VyTmFtZSI6InRlc3QiLCJleHAiOjE1OTUwODAzNDgsInVzZXJJZCI6IjBiMTNkZDZjZTdlNTRk
-OGQ4NGI3NDg1NDEyOTlhOTI3IiwiaWF0IjoxNTk1MDczMTQ4LCJqdGkiOiJmZDUzMzFkMy0xODk3
-LTQ5MWQtYmY4Ny0xZjRhNDllMmI4MGIifQ==
+eyJzdWIiOiJ7dXNlck5hbWU9dGVzdDEsIHVzZXJJZD1mY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmM30iLCJ1c2VyTmFtZSI6InRlc3QxIiwiZXhwIjoxNTk2NTU2MTg3LCJ1c2VySWQiOiJmY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmMyIsImlhdCI6MTU5NjU0ODk4NywianRpIjoiNjdkNWY4MTAtN2U4Ny00OGEzLThiZjgtOGEwOWI4NTc4ODdjIn0=
 
 # 我们解密不带==的加密后的字符串，不用补全==，内部方法对==有相关处理，可以直接被解密
-{"sub":"{userName=test, userId=0b13dd6ce7e54d8d84b748541299a927}","password":"2ad0fa85d0e8fc5593bb9cb893750302","userName":"test","exp":1595080348,"userId":"0b13dd6ce7e54d8d84b748541299a927","iat":1595073148,"jti":"fd5331d3-1897-491d-bf87-1f4a49e2b80b"}"
+{"sub":"{userName=test1, userId=fcfbb2b3d61944f2b31237d2338b54f3}","userName":"test1","exp":1596556187,"userId":"fcfbb2b3d61944f2b31237d2338b54f3","iat":1596548987,"jti":"67d5f810-7e87-48a3-8bf8-8a09b857887c"}
 ~~~
 好了，这个疑问到此结束，让我们继续往下进行。
-> 第三段：OpVIfLE4IeV4UXdzpocTO6k1f5tnkolBHEkHEL9vPtM
+> 第三段：8p-wG0DWecC6nQKYD6EDaPi4Yf_Zx5Xe75S4qRYp7GI
 >
 > 这段是数字签名算法逻辑
 
@@ -183,13 +178,12 @@ HMACSHA256(
 
 ~~~json
 {
-  "sub": "{userName=test, userId=0b13dd6ce7e54d8d84b748541299a927}",
-  "password": "2ad0fa85d0e8fc5593bb9cb893750302",
-  "userName": "test",
-  "exp": 1595080348,
-  "userId": "0b13dd6ce7e54d8d84b748541299a927",
-  "iat": 1595073148,
-  "jti": "fd5331d3-1897-491d-bf87-1f4a49e2b80b"
+  "sub": "{userName=test1, userId=fcfbb2b3d61944f2b31237d2338b54f3}",
+  "userName": "test1",
+  "exp": 1596556187,
+  "userId": "fcfbb2b3d61944f2b31237d2338b54f3",
+  "iat": 1596548987,
+  "jti": "67d5f810-7e87-48a3-8bf8-8a09b857887c"
 }
 ~~~
 
@@ -238,13 +232,12 @@ HMACSHA256(
 
 ~~~json
 {
-  "sub": "{userName=test, userId=0b13dd6ce7e54d8d84b748541299a927}",
-  "password": "2ad0fa85d0e8fc5593bb9cb893750302",
-  "userName": "test",
-  "exp": 1595080348,
-  "userId": "0b13dd6ce7e54d8d84b748541299a927",
-  "iat": 1595073148,
-  "jti": "fd5331d3-1897-491d-bf87-1f4a49e2b80b"
+  "sub": "{userName=test1, userId=fcfbb2b3d61944f2b31237d2338b54f3}",
+  "userName": "test1",
+  "exp": 1596556187,
+  "userId": "fcfbb2b3d61944f2b31237d2338b54f3",
+  "iat": 1596548987,
+  "jti": "67d5f810-7e87-48a3-8bf8-8a09b857887c"
 }
 ~~~
 
@@ -252,7 +245,7 @@ HMACSHA256(
 
 ~~~java
 String header = '{"alg":"HS256"}';
-String claims = "{"sub":"{userName=test, userId=0b13dd6ce7e54d8d84b748541299a927}","password":"2ad0fa85d0e8fc5593bb9cb893750302","userName":"test","exp":1595080348,"userId":"0b13dd6ce7e54d8d84b748541299a927","iat":1595073148,"jti":"fd5331d3-1897-491d-bf87-1f4a49e2b80b"}";
+String claims = "{"sub":"{userName=test1, userId=fcfbb2b3d61944f2b31237d2338b54f3}","userName":"test1","exp":1596556187,"userId":"fcfbb2b3d61944f2b31237d2338b54f3","iat":1596548987,"jti":"67d5f810-7e87-48a3-8bf8-8a09b857887c"}";
 ~~~
 
 > 3、获取UTF-8字节和使用`Base64URL`编码
@@ -283,8 +276,8 @@ String jws = concatenated + '.' + base64URLEncode( signature );
 
 然后你都得到了一个`JWS`如下：
 
-~~~java
-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7dXNlck5hbWU9dGVzdCwgdXNlcklkPTBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3fSIsInBhc3N3b3JkIjoiMmFkMGZhODVkMGU4ZmM1NTkzYmI5Y2I4OTM3NTAzMDIiLCJ1c2VyTmFtZSI6InRlc3QiLCJleHAiOjE1OTUwODAzNDgsInVzZXJJZCI6IjBiMTNkZDZjZTdlNTRkOGQ4NGI3NDg1NDEyOTlhOTI3IiwiaWF0IjoxNTk1MDczMTQ4LCJqdGkiOiJmZDUzMzFkMy0xODk3LTQ5MWQtYmY4Ny0xZjRhNDllMmI4MGIifQ.OpVIfLE4IeV4UXdzpocTO6k1f5tnkolBHEkHEL9vPtM
+~~~json
+eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7dXNlck5hbWU9dGVzdDEsIHVzZXJJZD1mY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmM30iLCJ1c2VyTmFtZSI6InRlc3QxIiwiZXhwIjoxNTk2NTU2MTg3LCJ1c2VySWQiOiJmY2ZiYjJiM2Q2MTk0NGYyYjMxMjM3ZDIzMzhiNTRmMyIsImlhdCI6MTU5NjU0ODk4NywianRpIjoiNjdkNWY4MTAtN2U4Ny00OGEzLThiZjgtOGEwOWI4NTc4ODdjIn0.8p-wG0DWecC6nQKYD6EDaPi4Yf_Zx5Xe75S4qRYp7GI
 ~~~
 
 `JWS（Json web signature）`也是`JWT`的简称。
@@ -357,7 +350,6 @@ String jws = Jwts.builder()
 Map<String, Object> claims = new HashMap<>();
 claims.put("userId", user.getUserId());
 claims.put("userName", user.getUserName());
-claims.put("password", user.getPassword());
 
 ~~~
 
@@ -497,8 +489,7 @@ catch (JwtException ex) {
 ~~~
 
 ~~~java
-/**
-     * 校验token
+   /* 校验token
      *
      * @param token 加密后的token
      * @param user  用户信息
@@ -510,13 +501,13 @@ catch (JwtException ex) {
         Claims claims = parseToken(token, user);
 
         try {
-            // 数据库用户密码
-            String userPassword = user.getPassword();
+            // 数据库用户
+            String userName = user.getUserName();
 
-            // token中获取的用户密码
-            String tokenPassword = (String) claims.get("password");
+            // token中用户
+            String tokenUserName = (String) claims.get("userName");
 
-            return tokenPassword.equals(userPassword);
+            return tokenUserName.equals(userName);
         } catch (Exception e) {
             return false;
         }
@@ -1436,7 +1427,6 @@ submitBtn.onclick = () => {
 		password: newPassword,
 	}).then(res => {
 		const {code, data, message} = res;
-		debugger
 		if (code != 200) {
 			weui.topTips(message);
 		} else {
