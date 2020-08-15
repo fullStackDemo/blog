@@ -34,7 +34,7 @@ Tomcat是其中一个开源的且免费的java Web服务器，是Apache软件基
 
 ![image-20200815090943064](assets/image-20200815090943064.png)
 
-这里我们使用的是``apache-tomcat-9.0.37.tar.gz
+这里我们使用的是`apache-tomcat-9.0.37.tar.gz`
 
 可以手动下载，也可以在服务器上使用``wget命令下载``；
 
