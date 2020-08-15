@@ -1,4 +1,4 @@
-## Liunx服务器：安装tomcat并部署war应用
+## Linux服务器：安装tomcat并部署war应用
 
 [TOC]
 
@@ -111,7 +111,7 @@ drwxr-x--- 2 root root  4096 7月   1 04:09 work
 > 启动 tomcat
 
 ~~~shell
-[root@10 bin]# sh startup.sh 
+[root@10 bin]# sh startup.sh
 Using CATALINA_BASE:   /opt/apache-tomcat-9.0.37
 Using CATALINA_HOME:   /opt/apache-tomcat-9.0.37
 Using CATALINA_TMPDIR: /opt/apache-tomcat-9.0.37/temp
@@ -136,7 +136,7 @@ service iptables restart
 
 #若不想修改iptables表，可以直接输入下面命令
 # linux iptables开放端口命令
-iptables -I INPUT -p tcp --dport 8080 -j ACCEPT  
+iptables -I INPUT -p tcp --dport 8080 -j ACCEPT
 ~~~
 
 ![image-20200815093909682](assets/image-20200815093909682.png)
@@ -150,7 +150,7 @@ OK，Tomcat部署成功, 访问正常；
 COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 java    26236 root   56u  IPv6 795405      0t0  TCP *:webcache (LISTEN)
 [root@10 bin]# netstat -antlp|grep 8080
-tcp        0      0 :::8080                     :::*                        LISTEN      26236/java          
+tcp        0      0 :::8080                     :::*                        LISTEN      26236/java
 [root@10 bin]# cd /proc/26236
 [root@10 26236]# ll
 总用量 0
@@ -215,13 +215,13 @@ wget http://mirrors.jenkins-ci.org/war/2.252/jenkins.war
 `然后，重启Tomcat`
 
 ~~~shell
-[root@10 bin]# sh shutdown.sh 
+[root@10 bin]# sh shutdown.sh
 Using CATALINA_BASE:   /opt/apache-tomcat-9.0.37
 Using CATALINA_HOME:   /opt/apache-tomcat-9.0.37
 Using CATALINA_TMPDIR: /opt/apache-tomcat-9.0.37/temp
 Using JRE_HOME:        /usr
 Using CLASSPATH:       /opt/apache-tomcat-9.0.37/bin/bootstrap.jar:/opt/apache-tomcat-9.0.37/bin/tomcat-juli.jar
-[root@10 bin]# sh startup.sh 
+[root@10 bin]# sh startup.sh
 Using CATALINA_BASE:   /opt/apache-tomcat-9.0.37
 Using CATALINA_HOME:   /opt/apache-tomcat-9.0.37
 Using CATALINA_TMPDIR: /opt/apache-tomcat-9.0.37/temp
@@ -231,4 +231,3 @@ Tomcat started.
 ~~~
 
 ![image-20200815103620770](assets/image-20200815103620770.png)
-
