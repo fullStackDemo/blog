@@ -125,6 +125,26 @@ flush privileges;
 
 ![1596455617531](assets/1596455617531.png)
 
+#### 2.6 允许某一个IP段访问
+
+有时候我们需要一个IP段的所有客户端可以远程访问，那么该怎么设置呢？
+
+`192.168.%.%代表者可以允许192.168.*.*的所有IP可以远程连接；`
+
+~~~mysql
+# 更新Host
+UPDATE `user` SET `Host`='192.168.%.%' WHERE `user`='test' AND `Host`='192.168.6.199';
+
+# Mysql 8 赋权
+GRANT ALL ON test.* to 'test'@'192.168.%.%';
+
+# 配置生效
+flush privileges;
+
+~~~
+
+
+
 ### 3、 重置密码
 
 ~~~mysql
