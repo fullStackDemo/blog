@@ -338,7 +338,9 @@ apnic|CN|ipv4|14.1.24.0|1024|20151214|allocated
 每次被查询的IP结果也会被存储在redis中，下次查询同样的IP，可以直接返回结果。
 ~~~
 
-
+![](assets/aa6a36be36ca498ab00f2686a39154b9~tplv-k3u1fbpfcp-zoom-1.image)
+![](assets/2029204becdc4ca29e617a3b660715d5~tplv-k3u1fbpfcp-zoom-1.image)
+![](assets/a28d3b69c8bc41f6bdbc7ed7dfd44362~tplv-k3u1fbpfcp-zoom-1.image)
 
 ##### 2.2.2、代码实现
 
@@ -785,8 +787,9 @@ public class RedisController {
 
 ![image-20200923225301653](assets/image-20200923225301653.png)
 
-## 3、总结
+### 3、总结
 
 以上代码算是比较准确计算IP位置，但是目前只获取了CN。如果更加准确的话，应该加上HK、MO和TW的数据。
 
 他们都是中国的领土，不可分割。
+
