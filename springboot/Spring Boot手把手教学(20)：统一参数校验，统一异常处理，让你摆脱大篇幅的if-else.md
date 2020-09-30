@@ -265,7 +265,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 }
 ~~~
 
-![1601348587935](D:/Program%20Files/Typora/1601348587935.png)
+![1601348587935](assets/1601348587935.png)
 
 但是, 这样的错误`message`看起来是还是比较乱。
 
