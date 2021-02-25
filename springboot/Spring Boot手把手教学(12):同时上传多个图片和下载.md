@@ -222,12 +222,8 @@ uploadBtn.onchange = function (e) {
 
 区别于之前的单个`formData.append();` 这里我们可以同时`append`多个相同名字的文件二进制文件流；
 
-![image-20191123234150228](assets/image-20191123234150228-4523763.png)
+![image-20210223083513947](assets/image-20210223083513947.png)
 
-![image-20191123234325831](assets/image-20191123234325831.png)
-
-![image-20191123234358451](assets/image-20191123234358451.png)
-
-![image-20191123234557023](assets/image-20191123234557023.png)
+![image-20210223083631020](assets/image-20210223083631020.png)cu
 
 如图结果正常显示，当我们部署到服务器的时候，这个就可以当作一个web服务器供大家使用。
