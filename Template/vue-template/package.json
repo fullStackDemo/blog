@@ -33,7 +33,7 @@
         "vuejs-clipper": "^1.1.4",
         "vuex": "^3.1.1",
         "vuex-local-sync": "^0.0.8",
-        "xlsx": "^0.15.1"
+        "xlsx": "^0.17.0"
     },
     "devDependencies": {
         "@gfx/zopfli": "^1.0.13",
