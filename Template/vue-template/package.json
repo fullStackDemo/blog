@@ -21,7 +21,7 @@
         "es6-promise": "^4.2.8",
         "html2canvas": "^1.0.0-rc.3",
         "http-proxy-middleware": "^0.19.1",
-        "node-sass": "^4.12.0",
+        "node-sass": "^7.0.0",
         "rx-js": "^0.0.0",
         "sass-loader": "^8.0.0",
         "vue": "^2.6.10",
